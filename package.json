@@ -17,6 +17,7 @@
     "framer-motion": "^11.2.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-iconly": "^2.2.10",
     "react-router-dom": "^6.23.1",
     "uuid": "^10.0.0"
   },
