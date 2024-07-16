@@ -1,1 +1,1 @@
-export { CustomToast } from './Toast';
+export { CustomToast } from './CustomToast';

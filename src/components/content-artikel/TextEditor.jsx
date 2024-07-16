@@ -2,7 +2,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useEffect, useState } from 'react';
 
-export function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduceHeight = 0 }) {
+function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduceHeight = 0 }) {
   const [textData, setTextData] = useState("");
   function uploadAdapter(loader) {
     return {
@@ -33,6 +33,7 @@ export function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduc
   return (
     <div className={`mt-6`}>
       <CKEditor
+      className="w-full"
         editor={ ClassicEditor }
         config={{
           extraPlugins: [uploadPlugin],
@@ -67,3 +68,5 @@ export function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduc
     </div>
   )
 }
+
+export default TextEditor

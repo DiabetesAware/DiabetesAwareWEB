@@ -9,7 +9,7 @@ export function Spinner({ width, height, containerSize, ...props }) {
 				thickness={"6px"}
 				speed={"0.65s"}
 				emptyColor={"gray.200"}
-				color={"#35CC33"}
+				color={"#073D5B"}
 				{...props}
 			/>
 		</Center>

@@ -93,8 +93,8 @@ export function Pagination({
 				{totalItems === 1 ? (
 					<Button
 						variant="outline"
-						borderColor="#35CC33"
-						color="#35CC33"
+						borderColor="#073D5B"
+						color="#073D5B"
 						fontSize="sm"
 						isDisabled
 					>
@@ -106,9 +106,9 @@ export function Pagination({
 							key={index}
 							variant={currentPage === startPage + index ? "outline" : "ghost"}
 							borderColor={
-								currentPage === startPage + index ? "#35CC33" : "none"
+								currentPage === startPage + index ? "#073D5B" : "none"
 							}
-							color={currentPage === startPage + index ? "#35CC33" : "black "}
+							color={currentPage === startPage + index ? "#073D5B" : "black "}
 							fontSize="sm"
 							onClick={() => onChangePage(startPage + index)}
 						>

@@ -1,52 +1,46 @@
 // library
 import { Route, Routes } from "react-router-dom";
-// layouts
-import { LayoutDashboardRoot } from "@/layouts/LayoutDashboardRoot";
-// pages
-import Login from "@/pages/Login";
+
+// routing rules
+// import PrivateRoute from "@/routes/private-route";
+
+// layout setting
+import LayoutDashboardRoot from "@/layouts/LayoutDashboardRoot";
+
+// landingpage
 import LandingPage from "@/pages/LandingPage";
+
+// pages admin
+import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
-import ManageUser from "@/pages/ManageUser";
-import ManageContentArticle from "@/pages/ManageContentArticle";
+import { ManageContentArticle } from "@/pages/ManageContentArticle";
 import ManageDataGulaDarah from "@/pages/ManageDataGulaDarah";
-import ManageDataKuesioner from "@/pages/ManageDataKuesioner";
-// error
-import Unauthorized from "@/error/Unauthorized";
-import PageNotFound from "@/error/PageNotFound";
-// routes
-import PrivateRoute from "@/routes/PrivateRoute";
+import ManageDataAdmin from "@/pages/ManageDataAdmin";
 
-export default function AppRoutes() {
+const AppRoutes = () => {
   return (
-    <>
-      <Routes>
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
 
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
+      {/* Private Routes */}
+      {/* <Route path="/dashboard" element={<PrivateRoute />}> */}
+      <Route element={<LayoutDashboardRoot />}>
+        <Route path="/dashboard-admin" element={<Dashboard />} />
+        <Route path="/manage-admin" element={<ManageDataAdmin />} />
+        <Route path="/manage-artikel" element={<ManageContentArticle />} />
+        <Route path="/manage-gds" element={<ManageDataGulaDarah />} />
 
-        {/* Private Routes */}
-        <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route element={<LayoutDashboardRoot />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/manage-user" element={<ManageUser />} />
-            <Route path="/manage-content" element={<ManageContentArticle />} />
-            <Route
-              path="/manage-data-gula-darah"
-              element={<ManageDataGulaDarah />}
-            />
-            <Route
-              path="/manage-data-kuesioner"
-              element={<ManageDataKuesioner />}
-            />
-          </Route>
-        </Route>
+        {/* Tambahkan rute lain di dalam dashboard di sini */}
+      </Route>
+      {/* </Route> */}
 
-  `     {/* Routes Error */}
-        <Route path="unauthorized" element={<Unauthorized />} />
-        <Route path="*" element={<PageNotFound />} />
-
-      </Routes>
-    </>
+      {/* Routes Error */}
+      <Route path="/unauthorized" element={<div>Unauthorized</div>} />
+      <Route path="*" element={<div>Page Not Found</div>} />
+    </Routes>
   );
-}
+};
+
+export default AppRoutes;
