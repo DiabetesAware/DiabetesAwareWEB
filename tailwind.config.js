@@ -8,6 +8,13 @@ export default {
       lg: "976px",
       xl: "1440px",
     },
+    extend: {
+      backgroundImage: (theme) => ({
+        specialist: "url('/src/assets/dashboard-admin/specialist.jpg')",
+        specialista: "url('/src/assets/dashboard-admin/specialist2.jpg')",
+
+      }),
+    },
   },
   plugins: [],
 };
