@@ -11,8 +11,8 @@ export default defineConfig({
     },
   },
   build: {
-    rollupOptions: {
-      external: ['react-redux','@reduxjs/toolkit','react-icons/bs','react-hook-form']
-    }
+    // rollupOptions: {
+    //   external: ['react-redux','@reduxjs/toolkit','react-icons/bs','react-hook-form']
+    // }
   }
 });
