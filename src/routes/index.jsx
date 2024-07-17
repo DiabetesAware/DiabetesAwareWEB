@@ -16,6 +16,8 @@ import Dashboard from "@/pages/Dashboard";
 import { ManageContentArticle } from "@/pages/ManageContentArticle";
 import ManageDataGulaDarah from "@/pages/ManageDataGulaDarah";
 import ManageDataAdmin from "@/pages/ManageDataAdmin";
+import FormPendaftaran from "@/pages/FormPendaftaran";
+import FormPemantauanGDS from "@/pages/FormPemantauanGDS";
 
 const AppRoutes = () => {
   return (
@@ -23,6 +25,8 @@ const AppRoutes = () => {
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register-form" element={<FormPendaftaran />} />
+      <Route path="/pemantauan-form" element={<FormPemantauanGDS />} />
 
       {/* Private Routes */}
       {/* <Route path="/dashboard" element={<PrivateRoute />}> */}

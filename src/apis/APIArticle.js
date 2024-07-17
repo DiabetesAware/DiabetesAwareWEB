@@ -54,7 +54,7 @@ export const APIArticle = {
       throw error;
     }
   },
-  pathArticle: async (data, id) => {
+  updateArticle: async (data, id) => {
     try {
       const response = await axiosInstance.patch(
         `/article/update-article/${id}`,

@@ -9,8 +9,8 @@ function AddArticle({ onClose, setToastMessage }) {
   const [previewImage, setPreviewImage] = useState(false);
   const [articleData, setArticleData] = useState({
     title: "",
-    description: "",
-    img_url: null,
+    content: "",
+    image: null,
   });
   const [errorImage, setErrorImage] = useState("");
   const categoryHeight = useRef(null);
@@ -28,7 +28,7 @@ function AddArticle({ onClose, setToastMessage }) {
           return setErrorImage("ukuran file maksimal 5 Mb");
         const objUrl = URL.createObjectURL(e.target.files[0]);
         setPreviewImage(objUrl);
-        setArticleData((prev) => ({ ...prev, img_url: e.target.files[0] }));
+        setArticleData((prev) => ({ ...prev, image: e.target.files[0] }));
       }
     } catch (error) {
       console.log(error);
@@ -43,19 +43,19 @@ function AddArticle({ onClose, setToastMessage }) {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("title", articleData.title);
-    formData.append("description", articleData.description);
-    formData.append("img_url", articleData.img_url);
-    console.log("Sending article data:", articleData); // Log untuk memeriksa data yang dikirim
+    formData.append("content", articleData.content);
+    formData.append("image", articleData.image);
+    console.log("Sending article data:", articleData);
 
     APIArticle.addArticle(formData)
       .then((res) => {
-        console.log("Article added successfully:", res); // Log respons sukses
+        console.log("Article added successfully:", res);
         setToastMessage({ status: "success", message: res.message });
         setIsLoading(false);
         onClose(true);
       })
       .catch((err) => {
-        console.error("Error adding article:", err); // Log untuk memeriksa kesalahan
+        console.error("Error adding article:", err);
         setToastMessage({ status: "error", message: err.message });
         setIsLoading(false);
       });
@@ -69,10 +69,10 @@ function AddArticle({ onClose, setToastMessage }) {
           <p className="mb-2 text-sm font-medium">Masukkan Judul</p>
           <input
             ref={titleWidth}
-            onChange={(event) =>
+            onChange={(e) =>
               setArticleData((prev) => ({
                 ...prev,
-                title: event.target.value,
+                title: e.target.value,
               }))
             }
             maxLength={100}
@@ -130,8 +130,8 @@ function AddArticle({ onClose, setToastMessage }) {
               disabled={
                 isLoading ||
                 !articleData.title ||
-                !articleData.img_url ||
-                !articleData.description
+                !articleData.image ||
+                !articleData.content
               }
               onClick={handleCreateArticle}
               className="p-4 w-full rounded-lg bg-[#073D5B] disabled:opacity-50 hover:opacity-90 flex gap-2 justify-center"

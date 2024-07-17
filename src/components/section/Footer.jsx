@@ -2,7 +2,7 @@ import logo from '@/assets/logo.jpg'
 export const Footer = () => {
   return (
     <>
-      <footer className="bg-[#073D5B] mt-32 px-32 py-5  text-white">
+      <footer className="bg-[#073D5B] px-32 py-5  text-white">
         <div className="mx-auto w-full max-w-screen-xl p-6 lg:py-8">
           <div className="flex gap-20 my-14 text-xl">
             <a href="#" className="hover:underline font-bold">

@@ -1,7 +1,7 @@
 
 export const VideoSlide = () => {
   return (
-    <div className="py-5 container mx-auto">
+    <div className="py-5 mb-32 container mx-auto">
       <h2 className="text-[#073D5B] font-bold text-4xl text-center my-10">Cek Videonya!</h2>
       <div className="video-container">
         <iframe
