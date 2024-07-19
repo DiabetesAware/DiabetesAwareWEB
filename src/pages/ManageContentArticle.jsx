@@ -9,7 +9,7 @@ import { useCustomToast } from "@/hooks/useCustomToast";
 import { Spinner } from "@/components/spinner";
 import AddArticle from "@/components/content-artikel/AddArticle"; // Note the default import
 
-export const ManageContentArticle = () => {
+ const ManageContentArticle = () => {
   const [articleData, setArticleData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState({ status: "", message: "" });
@@ -89,3 +89,5 @@ export const ManageContentArticle = () => {
     </>
   );
 };
+
+export default ManageContentArticle
