@@ -1,6 +1,6 @@
 import { Modal, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { GoThumbsup, GoShareAndroid } from "react-icons/go";
-// import { formatDateToLocalDate } from "@/utils";
+import { formatDateToLocalDate } from "@/utils";
 import Parse from "html-react-parser";
 
 export function ModalDetailArticle({ setEditArticleData, currArticleData, onClose }) {

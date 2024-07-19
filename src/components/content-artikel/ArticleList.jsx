@@ -1,16 +1,25 @@
-import { ArticleCards } from './ArticleCards';
-
-export function ArticleList({ articleData }) {
-  if (!Array.isArray(articleData)) {
-    console.error('articleData should be an array but received:', articleData);
-    return null;
-  }
-
+import { ArticleCards } from "./ArticleCards";
+import { useState } from "react";
+import { ModalDetailArticle } from "../modals";
+export function ArticleList({
+  editArticleData,
+  setEditArticleData,
+  articleData,
+}) {
+  const [currArticleData, setCurrArticleData] = useState(null);
   return (
     <>
+      <ModalDetailArticle
+        currArticleData={currArticleData}
+        editArticleData={editArticleData}
+        setEditArticleData={setEditArticleData}
+        onClose={() => setCurrArticleData(null)}
+      />
+
       <div className=" flex flex-wrap justify-center gap-10">
         {articleData.map((article, index) => (
           <ArticleCards
+            setCurrArticleData={setCurrArticleData}
             data={article}
             key={index}
           />

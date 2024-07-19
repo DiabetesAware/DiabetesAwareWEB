@@ -1,9 +1,9 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FiLogOut } from "react-icons/fi";
-import PropTypes from "prop-types";
 import { authService } from "@/config";
 import { clearAuthState } from "@/store/auth";
+import PropTypes from "prop-types";
 
 export function SideBarItem({
   name,

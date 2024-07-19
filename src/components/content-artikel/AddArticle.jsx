@@ -2,15 +2,15 @@ import { useRef, useState } from "react";
 import TextEditor from "./TextEditor";
 import { UploadImageIcon } from "../icons";
 import { APIArticle } from "@/apis/APIArticle";
-import {Spinner} from '../spinner'
+import { Spinner } from "../spinner";
 
-function AddArticle({ onClose, setToastMessage }) {
+function AddArticle({ onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState(false);
   const [articleData, setArticleData] = useState({
     title: "",
-    content: "",
-    image: null,
+    description: "",
+    img_url: null,
   });
   const [errorImage, setErrorImage] = useState("");
   const categoryHeight = useRef(null);
@@ -28,35 +28,34 @@ function AddArticle({ onClose, setToastMessage }) {
           return setErrorImage("ukuran file maksimal 5 Mb");
         const objUrl = URL.createObjectURL(e.target.files[0]);
         setPreviewImage(objUrl);
-        setArticleData((prev) => ({ ...prev, image: e.target.files[0] }));
+        setArticleData((prev) => ({ ...prev, img_url: e.target.files[0] }));
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  // Log articleData to see if values are being set correctly
-  console.log('articleData:', articleData);
+  console.log("articleData:", articleData);
 
   // HandleCreate Article
   function handleCreateArticle() {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("title", articleData.title);
-    formData.append("content", articleData.content);
-    formData.append("image", articleData.image);
+    formData.append("description", articleData.description);
+    formData.append("img_url", articleData.img_url);
     console.log("Sending article data:", articleData);
 
     APIArticle.addArticle(formData)
       .then((res) => {
         console.log("Article added successfully:", res);
-        setToastMessage({ status: "success", message: res.message });
+        // setToastMessage({ status: "success", message: res.message });
         setIsLoading(false);
         onClose(true);
       })
       .catch((err) => {
         console.error("Error adding article:", err);
-        setToastMessage({ status: "error", message: err.message });
+        // setToastMessage({ status: "error", message: err.message });
         setIsLoading(false);
       });
   }
@@ -130,8 +129,8 @@ function AddArticle({ onClose, setToastMessage }) {
               disabled={
                 isLoading ||
                 !articleData.title ||
-                !articleData.image ||
-                !articleData.content
+                !articleData.img_url ||
+                !articleData.description
               }
               onClick={handleCreateArticle}
               className="p-4 w-full rounded-lg bg-[#073D5B] disabled:opacity-50 hover:opacity-90 flex gap-2 justify-center"
@@ -147,4 +146,3 @@ function AddArticle({ onClose, setToastMessage }) {
 }
 
 export default AddArticle;
-

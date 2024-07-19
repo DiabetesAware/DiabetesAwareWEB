@@ -1,8 +1,26 @@
 import Cookies from "js-cookie";
+import {jwtDecode} from "jwt-decode";
 
 export class AuthService {
+  isTokenValid() {
+    try {
+      const token = this.getToken();
+      if (!token) return false;
+
+      const { exp } = jwtDecode(token);
+      return Date.now() <= exp * 1000;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   isAuthorized() {
-    return !!this.getToken() || !!this.getRefreshToken();
+    if (!this.isTokenValid()) {
+      this.clearCredentialsFromCookie();
+      return false;
+    }
+    return true;
   }
 
   getToken() {
@@ -11,6 +29,11 @@ export class AuthService {
 
   getRefreshToken() {
     return Cookies.get("refreshToken");
+  }
+
+  setCredentialsToCookie({ token }) {
+    const { exp } = jwtDecode(token);
+    Cookies.set("token", token, { expires: new Date(exp * 1000) });
   }
 
   storeCredentialsToCookie({ idToken, oauthAccessToken, refreshToken }) {
@@ -23,6 +46,10 @@ export class AuthService {
     Cookies.remove("idToken");
     Cookies.remove("oauthAccessToken");
     Cookies.remove("refreshToken");
+  }
+
+  clearToken() {
+    Cookies.remove("token");
   }
 
   logout() {

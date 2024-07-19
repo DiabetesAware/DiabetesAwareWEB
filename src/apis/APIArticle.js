@@ -1,17 +1,18 @@
 import { AxiosError } from "axios";
 import { axiosInstance } from "@/config/axios";
-
+import {authService} from '@/config'
 export const APIArticle = {
-  getAllArticle: async (search, limit, page = 1) => {
+  getAllArticle: async () => {
     try {
-      const response = await axiosInstance.get(
-        `?search=${search}&limit=${limit}&page=${page}`
-      );
+      const response = await axiosInstance.get("/article");
       console.log("Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
+        if (error.response.status === 401) {
+          authService.clearToken();
+        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -26,6 +27,9 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
+        if (error.response.status === 401) {
+          authService.clearToken();
+        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -36,18 +40,16 @@ export const APIArticle = {
     try {
       const response = await axiosInstance.post(
         "/article/create-article",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        data
       );
       console.log("Create Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
+        if (error.response.status === 401) {
+          authService.clearToken();
+        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -65,6 +67,9 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
+        if (error.response.status === 401) {
+          authService.clearToken();
+        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -81,8 +86,13 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
+        if (error.response.status === 401) {
+          authService.clearToken();
+        }
         throw new Error(error.response.data.message);
       }
+      console.error("Unexpected error:", error);
+      throw error;
     }
   },
 };

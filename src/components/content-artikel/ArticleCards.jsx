@@ -1,8 +1,8 @@
-export function ArticleCards({ data, setArticleData }) {
+export function ArticleCards({ data, setCurrArticleData }) {
   return (
     <>
       <div
-        onClick={() => setArticleData(data)}
+        onClick={() => setCurrArticleData(data)}
         className="card border rounded-md cursor-pointer shadow-md max-w-[220px] max-h-[260px] mx-auto"
       >
         <img

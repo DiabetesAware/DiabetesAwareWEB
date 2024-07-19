@@ -62,7 +62,7 @@ function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduceHeight
         }}
         onChange={ ( _, editor ) => {
             const data = editor.getData();
-            setArticleData(prev => ({ ...prev, content: data }))
+            setArticleData(prev => ({ ...prev, description: data }))
         } }
       />
     </div>
