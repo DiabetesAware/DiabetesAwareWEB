@@ -7,11 +7,11 @@ export const SideBar = ({ setCollapse, collapse }) => {
 
 
   const menuItems = [
-    { name: "Dashboard", logo: <FaLaptop />, path: "/dashboard-admin" },
-    { name: "Manage Admin", logo: <FaRegUser />, path: "/manage-admin" },
-    { name: "Manage Artikel", logo: <LuScrollText />, path: "/manage-artikel" },
+    { name: "Dashboard", logo: <FaLaptop />, path: "/dashboard" },
+    { name: "Manage Admin", logo: <FaRegUser />, path: "manage-admin" },
+    { name: "Manage Artikel", logo: <LuScrollText />, path: "manage-article" },
 
-    { name: "Manage Gula Darah", logo: <FaStethoscope />, path: "/manage-gds" },
+    { name: "Manage Gula Darah", logo: <FaStethoscope />, path: "manage-gds" },
   ];
 
   return (
@@ -43,13 +43,7 @@ export const SideBar = ({ setCollapse, collapse }) => {
           />
         ))}
       </ul>
-      {/* <button
-        className="flex gap-4 text-xl text-center items-center"
-        onClick={handleLogout}
-      >
-        <FiLogOut />
-        <p className="font-medium">Logout</p>
-      </button> */}
+
       <LogoutItem
           expandedMenu={expandedMenu}
           setExpandedMenu={setExpandedMenu}

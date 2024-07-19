@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Show, Hide } from "react-iconly";
-import { FaUser, FaKey  } from "react-icons/fa";
+import { FaUser, FaKey } from "react-icons/fa";
 import { InputFieldsWithLogo } from "@/components/fields/InputFieldsWithLogo";
 import { useNavigate } from "react-router-dom";
 import { useCustomToast } from "@/hooks";
@@ -20,7 +20,9 @@ export const Login = () => {
   const [passwordType, setPasswordType] = useState("password");
   const { status, message } = useSelector(adminLoginSelector);
 
+  // react-router-dom
   const navigate = useNavigate();
+  // dispatch
   const dispatch = useDispatch();
 
   // handler submit-form
@@ -28,7 +30,7 @@ export const Login = () => {
     dispatch(adminLogin(data)).then((res) => {
       console.log(res);
       if (!res.payload.status) {
-        navigate("/dashboard-admin");
+        navigate("/dashboard");
       }
     });
   };
@@ -44,6 +46,7 @@ export const Login = () => {
   };
 
   useCustomToast(status, message);
+
   return (
     <>
       <div className="flex justify-center items-center mx-auto h-screen bg-[#073D5B]">
