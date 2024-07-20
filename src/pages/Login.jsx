@@ -28,8 +28,8 @@ export const Login = () => {
   // handler submit-form
   const handleOnSubmit = (data) => {
     dispatch(adminLogin(data)).then((res) => {
-      console.log(res);
-      if (!res.payload.status) {
+      console.log("ini response login:",res);
+      if (!res.payload?.status) {
         navigate("/dashboard");
       }
     });
@@ -77,7 +77,7 @@ export const Login = () => {
             <div className="wrapper-input flex flex-col w-8/12 mx-auto">
               {/* email */}
               <Controller
-                name="nik"
+                name="email"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
@@ -92,9 +92,9 @@ export const Login = () => {
                 )}
               />
               {/* error message email */}
-              {errors.nik && (
+              {errors.email && (
                 <span className="text-red-500 text-sm">
-                  {errors.nik.message}
+                  {errors.email.message}
                 </span>
               )}
 

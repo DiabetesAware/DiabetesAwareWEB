@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { axiosInstance } from "@/config/axios";
-import {authService} from '@/config'
+
 export const APIArticle = {
   getAllArticle: async () => {
     try {
@@ -10,9 +10,6 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
-        if (error.response.status === 401) {
-          authService.clearToken();
-        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -27,9 +24,6 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
-        if (error.response.status === 401) {
-          authService.clearToken();
-        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -47,9 +41,6 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
-        if (error.response.status === 401) {
-          authService.clearToken();
-        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -67,9 +58,6 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
-        if (error.response.status === 401) {
-          authService.clearToken();
-        }
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -86,13 +74,8 @@ export const APIArticle = {
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Article error response:", error.response);
-        if (error.response.status === 401) {
-          authService.clearToken();
-        }
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
-      throw error;
     }
   },
 };

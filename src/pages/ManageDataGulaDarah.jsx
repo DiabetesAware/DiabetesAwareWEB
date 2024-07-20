@@ -52,9 +52,7 @@ const ManageGulaDarah = () => {
         p={"1.5rem"}
       >
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <div className="wrapper w-4/12">
-            <Searchbar />
-          </div>
+          <Searchbar className="wrapper w-3/12" />
           <Button
             backgroundColor={"#073D5B"}
             color={"white"}
