@@ -44,18 +44,14 @@ function AddArticle({ onClose }) {
     formData.append("title", articleData.title);
     formData.append("description", articleData.description);
     formData.append("img_url", articleData.img_url);
-    console.log("Sending article data:", articleData);
-
     APIArticle.addArticle(formData)
       .then((res) => {
         console.log("Article added successfully:", res);
-        // setToastMessage({ status: "success", message: res.message });
         setIsLoading(false);
         onClose(true);
       })
       .catch((err) => {
         console.error("Error adding article:", err);
-        // setToastMessage({ status: "error", message: err.message });
         setIsLoading(false);
       });
   }

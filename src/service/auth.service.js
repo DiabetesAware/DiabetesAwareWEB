@@ -1,11 +1,14 @@
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export class AuthService {
   isTokenValid() {
     try {
       const token = this.getToken();
       console.log("token isTokenValid:", token);
-      if (!token) return false;
+      if (!token) {
+        return false;
+      }
       return true;
     } catch (error) {
       console.error(error);
@@ -27,7 +30,8 @@ export class AuthService {
   }
 
   setCredentialsToCookie({ token }) {
-    Cookies.set("idToken", token, { expires: 7 });
+    const { exp } = jwtDecode(token);
+    Cookies.set("idToken", token, { expires: new Date(exp * 1000) });
     console.log("ini token credential: ", token);
   }
 

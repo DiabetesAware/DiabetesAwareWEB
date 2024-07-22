@@ -9,40 +9,28 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const isAuthorized = authService.isAuthorized();
-    console.log("isAuthorized:", isAuthorized); // Debugging
-    if (isAuthorized) {
-      const token = authService.getToken();
-      console.log("token axiosInstance:", token); // Debugging
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    }
+axiosInstance.interceptors.request.use((config) => {
+	if (authService.isAuthorized()) {
+		const token = authService.getToken();
+		config.headers.Authorization = `Bearer ${token}`;
+	}
 
-    if (!config.headers["Content-Type"]) {
-      config.headers["Content-Type"] = "application/json";
-    }
+	if (!config.headers["Content-Type"]) {
+		config.headers["Content-Type"] = "application/json";
+	}
 
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+	return config;
+});
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      authService.clearCredentialsFromCookie();
-      if (globalRoute.navigate) {
-        globalRoute.navigate("/login");
-      }
-    }
-    return Promise.reject(error);
-  }
+	(response) => {
+		return response;
+	},
+	(error) => {
+		if (error.response.status === 401) {
+			authService.clearCredentialsFromCookie();
+			globalRoute.navigate && globalRoute.navigate("/login");
+		}
+		return Promise.reject(error);
+	}
 );

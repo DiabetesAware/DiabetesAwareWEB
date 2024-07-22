@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { axiosInstance } from "@/config/axios";
+import { axiosInstance } from "@/config";
 
 export const APIArticle = {
   getAllArticle: async () => {
@@ -32,10 +32,7 @@ export const APIArticle = {
   },
   addArticle: async (data) => {
     try {
-      const response = await axiosInstance.post(
-        "/article/create-article",
-        data
-      );
+      const response = await axiosInstance.post("/article/create-article", data);
       console.log("Create Article response:", response.data);
       return response.data;
     } catch (error) {
@@ -49,10 +46,7 @@ export const APIArticle = {
   },
   updateArticle: async (data, id) => {
     try {
-      const response = await axiosInstance.patch(
-        `/article/update-article/${id}`,
-        data
-      );
+      const response = await axiosInstance.patch(`/article/update-article/${id}`, data);
       console.log("Update Article response:", response.data);
       return response.data;
     } catch (error) {
@@ -66,9 +60,7 @@ export const APIArticle = {
   },
   deleteArticle: async (id) => {
     try {
-      const response = await axiosInstance.delete(
-        `/article/delete-article/${id}`
-      );
+      const response = await axiosInstance.delete(`/article/delete-article/${id}`);
       console.log("Delete Article response:", response.data);
       return response.data;
     } catch (error) {

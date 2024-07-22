@@ -1,71 +1,70 @@
-import { axiosInstance } from "@/config/axios";
-import { AxiosError } from "axios";
+import { axiosInstance } from "@/config";
 
 export const APIGulaDarah = {
-  postBlood: async (data) => {
+  postGds: async (data) => {
     try {
-      const response = await axiosInstance.post("/bp/create-bp", data);
-      console.log("Create Blood response:", response.data);
+      const response = await axiosInstance.post("/gds/create-gds", data);
+      console.log("Create Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Create Blood error response:", error.response);
+        console.error("Create Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
       throw error;
     }
   },
-  getAllBlood: async () => {
+  getAllGds: async () => {
     try {
-      const response = await axiosInstance.get("/bp");
-      console.log("Get Blood response:", response.data);
+      const response = await axiosInstance.get("/gds");
+      console.log("Get Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Get Blood error response:", error.response);
+        console.error("Get Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
       throw error;
     }
   },
-  getBloodById: async (data, id) => {
+  getGds: async (id) => {
     try {
-      const response = await axiosInstance.get(`/bp/${id}`, data);
-      console.log("Get Blood response:", response.data);
+      const response = await axiosInstance.get(`/gds/${id}`);
+      console.log("Get Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Get Blood error response:", error.response);
+        console.error("Get Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
       throw error;
     }
   },
-  pathBlood: async (data, id) => {
+  patchGds: async (data, id) => {
     try {
-      const response = await axiosInstance.patch(`/bp/update-bp/${id}`, data);
-      console.log("Update Blood response:", response.data);
+      const response = await axiosInstance.patch(`/gds/update-gds/${id}`, data);
+      console.log("Update Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Blood error response:", error.response);
+        console.error("Update  Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
       throw error;
     }
   },
-  deleteBlood: async (data, id) => {
+  deleteGds: async (data, id) => {
     try {
-      const response = await axiosInstance.delete(`/bp/delete-bp/${id}`, data);
-      console.log("Delete Blood response:", response.data);
+      const response = await axiosInstance.patch(`/gds/delete-gds/${id}`, data);
+      console.log("Delete Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Delete Blood error response:", error.response);
+        console.error("Delete  Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);

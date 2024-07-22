@@ -9,7 +9,7 @@ export const APIAuth = {
       if (response.data) {
         const { token } = response.data.data;
         authService.setCredentialsToCookie({ token });
-		console.log("token APILogin: ",token)
+        console.log("token APILogin: ", token);
       }
       return response.data;
     } catch (error) {
