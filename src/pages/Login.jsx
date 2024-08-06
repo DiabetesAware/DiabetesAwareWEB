@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useCustomToast } from "@/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { adminLogin, adminLoginSelector } from "@/store/auth";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 export const Login = () => {
   // react hooks-form
@@ -60,9 +60,9 @@ export const Login = () => {
             <div className="wrapper-text my-5">
               <img
                 src={logo}
-                className="border mx-auto my-5 rounded-full"
-                width={75}
-                height={75}
+                className="rounded-full mx-auto my-5 "
+                width={225}
+                height={225}
                 alt="Logo"
               />
               <h1 className="text-4xl font-bold text-center text-[#073D5B]">
@@ -144,7 +144,7 @@ export const Login = () => {
             <div className="button-group mt-10 w-8/12 mx-auto">
               <button
                 type="submit"
-                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-5 mr-2 mb-2 "
+                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-5 mr-2 mb-2 "
               >
                 Login
               </button>

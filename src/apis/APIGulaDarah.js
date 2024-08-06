@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/config";
 
 export const APIGulaDarah = {
-  postGds: async (data) => {
+  createGds: async (data) => {
     try {
       const response = await axiosInstance.post("/gds/create-gds", data);
       console.log("Create Gula Darah response:", response.data);
@@ -15,9 +15,9 @@ export const APIGulaDarah = {
       throw error;
     }
   },
-  getAllGds: async () => {
+  getAllGds: async (page = 1, pageSize = 1) => {
     try {
-      const response = await axiosInstance.get("/gds");
+      const response = await axiosInstance.get(`/gds?page=${page}&pageSize${pageSize}`);
       console.log("Get Gula Darah response:", response.data);
       return response.data;
     } catch (error) {

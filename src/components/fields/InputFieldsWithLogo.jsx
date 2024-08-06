@@ -1,7 +1,7 @@
 import { forwardRef, useId } from "react";
 
 export const InputFieldsWithLogo = forwardRef(
-  ({ className, label, type, Logo, value = "", ...props }, ref) => {
+  ({ className, label, type, Logo, value, maxLength = "", ...props }, ref) => {
     const id = useId();
 
     return (
@@ -15,9 +15,14 @@ export const InputFieldsWithLogo = forwardRef(
           ref={ref}
           type={type || "text"}
           value={value}
+          maxLength={maxLength}
           id={`floating_outlined${id}`}
           className={`block pl-16 px-4 py-4 w-full text-sm text-gray-900 bg-white border border-[#073D5B] rounded-full ${
-            props.error ? "border-red-600" : props.disabled ? "border-gray-300" : "border-gray-300"
+            props.error
+              ? "border-red-600"
+              : props.disabled
+              ? "border-gray-300"
+              : "border-gray-300"
           } appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer`}
           placeholder=" "
           autoComplete="off"

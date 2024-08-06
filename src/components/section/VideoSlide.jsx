@@ -1,4 +1,4 @@
-
+import video from '@/assets/video/Video Animasi DM & Hipertensi.mp4'
 export const VideoSlide = () => {
   return (
     <div className="py-5 mb-32 container mx-auto">
@@ -6,10 +6,10 @@ export const VideoSlide = () => {
       <div className="video-container">
         <iframe
           width="100%"
-          height="700"
-          src="https://www.youtube.com/embed/3JyNPm0GRPI"
+          height={"810px"}
+          src={video}
           title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
       </div>

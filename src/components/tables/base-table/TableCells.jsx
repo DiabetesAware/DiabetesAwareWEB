@@ -1,10 +1,10 @@
-import { Badge, Td, Text } from "@chakra-ui/react";
+import {  Td, Text } from "@chakra-ui/react";
 
 /**
  * Cell for showing text content
  * @param {{ content: string, maxWidth: string, props: any }} props
  */
-export function TextCell({ content, maxWidth = "8rem", ...props }) {
+export function TextCell({ content,maxWidth = "8rem", ...props }) {
 	return (
 		<Td
 			color={"#383838"}
@@ -14,49 +14,6 @@ export function TextCell({ content, maxWidth = "8rem", ...props }) {
 			<Text {...props}>{content}</Text>
 		</Td>
 	);
-}
-
-/**
- * Cell for showing badge content
- * @param {{ colorScheme: string, content: string }} props
- */
-export function BadgeCell({ colorScheme, content }) {
-	const badge = (color, bgColor, px = "8px", py = "4px", rounded = null) => (
-		<Td>
-			<Badge
-				px={px}
-				py={py}
-				rounded={rounded}
-				fontSize={"xs"}
-				fontWeight={"medium"}
-				color={color}
-				bg={bgColor}
-			>
-				{content}
-			</Badge>
-		</Td>
-	);
-
-	switch (colorScheme) {
-		case "green":
-			return badge("#154C3C", "#C7EBD1");
-		case "yellow":
-			return badge("#5F5207", "#FBF5D0");
-		case "red":
-			return badge("#76170F", "#FADCD9");
-		case "blue":
-			return badge("#19365D", "#D4E4FA");
-		case "azure":
-			return badge("#fff", "#5BD4EF", "9px", "5px", "2xl");
-		case "gold":
-			return badge("#fff", "#D4AF35", "9px", "5px", "2xl");
-		case "silver":
-			return badge("#fff", "#BBBBBB", "9px", "5px", "2xl");
-		case "bronze":
-			return badge("#fff", "#C97513", "9px", "5px", "2xl");
-		default:
-			return badge("#828282", "#E0E0E0");
-	}
 }
 
 /**

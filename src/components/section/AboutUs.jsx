@@ -1,7 +1,7 @@
 import about from "@/assets/landing-page/about-us-asset.png";
 import banner from "@/assets/landing-page/banner 1.png";
 import { FaStethoscope } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 export const AboutUs = () => {
   return (
     <>
@@ -46,12 +46,12 @@ export const AboutUs = () => {
               </p>
             </div>
           </div>
-          <button className="bg-[#073D5B] px-8 py-4 text-white mb-24 flex items-center gap-4 rounded-md mx-auto">
+          <Link to={"/form-pendaftaran"} className="max-w-[250px] bg-[#073D5B] px-8 py-4 text-white mb-24 flex justify-center items-center gap-4 rounded-md mx-auto cursor-pointer">
             <i className="text-xl">
               <FaStethoscope />
             </i>
             <p>Daftar Sekarang</p>
-          </button>
+          </Link>
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { axiosInstance } from "@/config/axios";
 
 export class AuthService {
   isTokenValid() {
@@ -25,6 +26,14 @@ export class AuthService {
     }
   }
 
+  // getAdminRole() {
+  //   if (this.isAuthorized()) {
+  //     const { id, role } = this.getToken()
+  //     return { id, role };
+  //   }
+  //   return null;
+  // }
+
   getToken() {
     return Cookies.get("idToken");
   }
@@ -41,5 +50,27 @@ export class AuthService {
 
   logout() {
     this.clearCredentialsFromCookie();
+  }
+
+  getAdminRole() {
+    if (this.isAuthorized()) {
+      const { id, role } = jwtDecode(this.getToken());
+      return { id, role };
+    }
+    return null;
+  }
+
+  async getUserData() {
+    if (this.isAuthorized()) {
+      try {
+        const response = await axiosInstance.get(`/patient/`);
+        return response.data;
+      } catch (error) {
+        console.error("Failed to fetch user data", error);
+        this.clearCredentialsFromCookie();
+        return null;
+      }
+    }
+    return null;
   }
 }

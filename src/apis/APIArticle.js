@@ -2,9 +2,11 @@ import { AxiosError } from "axios";
 import { axiosInstance } from "@/config";
 
 export const APIArticle = {
-  getAllArticle: async () => {
+  getAllArticle: async (title = "", page, pageSize) => {
     try {
-      const response = await axiosInstance.get("/article");
+      const response = await axiosInstance.get(
+        `/article?title=${title}&page=${page}&pageSize=${pageSize}`
+      );
       console.log("Article response:", response.data);
       return response.data;
     } catch (error) {
@@ -16,7 +18,7 @@ export const APIArticle = {
       throw error;
     }
   },
-  getArticleById: async (id) => {
+  getArticle: async (id) => {
     try {
       const response = await axiosInstance.get(`/article/${id}`);
       console.log("Article response:", response.data);
@@ -30,9 +32,17 @@ export const APIArticle = {
       throw error;
     }
   },
-  addArticle: async (data) => {
+  createArticle: async (data) => {
     try {
-      const response = await axiosInstance.post("/article/create-article", data);
+      const response = await axiosInstance.post(
+        "/article/create-article",
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
       console.log("Create Article response:", response.data);
       return response.data;
     } catch (error) {
@@ -44,9 +54,17 @@ export const APIArticle = {
       throw error;
     }
   },
-  updateArticle: async (data, id) => {
+  patchArticle: async ({data, id}) => {
     try {
-      const response = await axiosInstance.patch(`/article/update-article/${id}`, data);
+      const response = await axiosInstance.patch(
+        `/article/update-article/${id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
       console.log("Update Article response:", response.data);
       return response.data;
     } catch (error) {
@@ -60,7 +78,9 @@ export const APIArticle = {
   },
   deleteArticle: async (id) => {
     try {
-      const response = await axiosInstance.delete(`/article/delete-article/${id}`);
+      const response = await axiosInstance.delete(
+        `/article/delete-article/${id}`
+      );
       console.log("Delete Article response:", response.data);
       return response.data;
     } catch (error) {

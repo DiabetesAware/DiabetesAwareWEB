@@ -2,28 +2,77 @@ import { Controller } from "react-hook-form";
 import { InputFields } from "@/components/fields/InputFields";
 import { useForm } from "react-hook-form";
 import { Footer } from "@/components/section/Footer";
-import ilustrasi from "@/assets/ilustrasi-pendaftaran.png";
 import NavbarBack from "@/components/navigation/NavbarBack";
+import ilustrasi from "@/assets/ilustrasi-pendaftaran.png";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createPatient } from "@/store/manage-patient/CreatePatientSlice";
+import * as yup from "yup";
+
+export const validationSchema = yup.object().shape({
+  nama: yup.string().required("Nama lengkap wajib diisi"),
+  nik: yup
+    .string()
+    .length(16, "NIK harus 16 digit")
+    .required("NIK wajib diisi")
+    .matches(/^[0-9]*$/, "NIK hanya boleh berisi angka"),
+  alamat: yup.string().required("Alamat wajib diisi"),
+  tanggal_lahir: yup.date().required("Tanggal lahir wajib diisi").nullable(),
+});
+
 const FormPendaftaran = () => {
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOnSubmit = (data) => {
+    dispatch(createPatient(data))
+      .then((res) => {
+        console.log("Response from createPatient:", res);
+        if (res.payload && res.payload.code === 201) {
+          if (res.payload.data && res.payload.data.token) {
+            console.log("ini token patient", res.payload.data.token);
+            localStorage.setItem("idToken", res.payload.data.token);
+          } else {
+            console.warn("Token is not present in the response.");
+          }
+          navigate("/form-gds");
+        } else {
+          console.error("Unexpected response structure:", res);
+        }
+      })
+      .catch((error) => {
+        console.error("Error in createPatient:", error);
+      });
+  };
+
   return (
     <>
       <NavbarBack />
-      {/* Form Pendaftaran */}
       <div className="pt-5 px-10 bg-[#e7e7e7]">
-        <p className="text-4xl p-4 font-bold text-[#073D5B]">Form Pendaftaran Akun Baru</p>
+        <p className="text-4xl p-4 font-bold text-[#073D5B]">
+          Form Pendaftaran Akun Baru
+        </p>
         <div className="wrapper p-32 bg-white grid items-center justify-center lg:grid-cols-2 shadow-xl rounded-t-3xl">
           <form
             className="form-register p-16 bg-white shadow-xl rounded-lg border"
-            onSubmit={handleSubmit()}
+            onSubmit={handleSubmit(handleOnSubmit)}
           >
             {/* Nama Lengkap */}
             <div className="wrapper-input">
               <p>Nama Lengkap</p>
               <Controller
-                name="fullname"
+                name="nama"
                 control={control}
-                defaultValue={""}
+                defaultValue=""
                 render={({ field }) => (
                   <InputFields
                     type="text"
@@ -32,34 +81,45 @@ const FormPendaftaran = () => {
                     {...field}
                   />
                 )}
-              ></Controller>
+              />
+              {errors.nama && (
+                <span className="text-red-500 text-sm">
+                  {errors.nama.message}
+                </span>
+              )}
             </div>
 
             {/* NIK */}
             <div className="wrapper-input mt-4">
               <p>Nomor Induk Kependudukan (NIK)</p>
               <Controller
-                name="NIK"
+                name="nik"
                 control={control}
-                defaultValue={""}
+                defaultValue=""
                 render={({ field }) => (
                   <InputFields
-                    type="number"
+                    type="text"
                     className="input-text"
-                    placeholder="NIK"
+                    placeholder="Nomor Induk Penduduk"
+                    maxLength={16}
                     {...field}
                   />
                 )}
-              ></Controller>
+              />
+              {errors.nik && (
+                <span className="text-red-500 text-sm">
+                  {errors.nik.message}
+                </span>
+              )}
             </div>
 
             {/* Alamat */}
             <div className="wrapper-input mt-4">
               <p>Alamat</p>
               <Controller
-                name="Alamat"
+                name="alamat"
                 control={control}
-                defaultValue={""}
+                defaultValue=""
                 render={({ field }) => (
                   <InputFields
                     type="text"
@@ -68,37 +128,53 @@ const FormPendaftaran = () => {
                     {...field}
                   />
                 )}
-              ></Controller>
+              />
+              {errors.alamat && (
+                <span className="text-red-500 text-sm">
+                  {errors.alamat.message}
+                </span>
+              )}
             </div>
 
             {/* TGL Lahir */}
-            <div className="wrapper-input mt-4">
-              <p>TGL Lahir</p>
+            <div className="wrapper-input mt-4 mb-10">
+              <p>Tanggal Lahir</p>
               <Controller
-                name="fullname"
+                name="tanggal_lahir"
                 control={control}
-                defaultValue={""}
+                defaultValue=""
                 render={({ field }) => (
                   <InputFields
-                    type="text"
+                    type="date"
                     className="input-text"
-                    placeholder="TGL Lahir"
+                    placeholder="Tanggal Lahir"
                     {...field}
                   />
                 )}
-              ></Controller>
+              />
+              {errors.tanggal_lahir && (
+                <span className="text-red-500 text-sm">
+                  {errors.tanggal_lahir.message}
+                </span>
+              )}
             </div>
 
             {/* Button */}
-            <button className="w-full p-5 bg-[#073D5B] text-slate-100 font-semibold border rounded-lg mt-10">
+            <button
+              type="submit"
+              className="w-full p-5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg mt-10"
+            >
               Daftar
             </button>
           </form>
-          <img className="mx-auto" src={ilustrasi} alt="" />
+          <img
+            className="mx-auto"
+            src={ilustrasi}
+            alt="Ilustrasi Pendaftaran"
+          />
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </>
   );

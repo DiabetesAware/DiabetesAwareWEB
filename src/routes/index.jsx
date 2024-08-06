@@ -1,8 +1,9 @@
 //  import library
 import { Route, Routes } from "react-router-dom";
 //  rules routing
-import PrivateRoute from "@/routes/private-route";
+import PrivateRoute from "./private-route";
 import ProtectedRoute from "./protected-routed";
+import RoleBasedRoute from "./role-based-route";
 //  import layout
 import LayoutDashboardRoot from "@/layouts/LayoutDashboardRoot";
 //  import pages
@@ -12,8 +13,13 @@ import Dashboard from "@/pages/Dashboard";
 import ManageContentArticle from "@/pages/ManageContentArticle";
 import ManageDataGulaDarah from "@/pages/ManageDataGulaDarah";
 import ManageDataAdmin from "@/pages/ManageDataAdmin";
+import ManageDataPatient from "@/pages/ManageDataPatient";
 import FormPendaftaran from "@/pages/FormPendaftaran";
 import FormPemantauanGDS from "@/pages/FormPemantauanGDS";
+import { DoneRegistration } from "@/pages/DoneRegistration";
+// error pages
+import Unauthorized from "@/error/Unauthorized";
+import PageNotFound from "@/error/PageNotFound";
 
 const AppRoutes = () => {
   return (
@@ -23,22 +29,31 @@ const AppRoutes = () => {
       <Route path="/login" element={<ProtectedRoute />}>
         <Route index element={<Login />} />
       </Route>
-      <Route path="/register-form" element={<FormPendaftaran />} />
-      <Route path="/pemantauan-form" element={<FormPemantauanGDS />} />
+      <Route path="/form-pendaftaran" element={<FormPendaftaran />} />
+      <Route path="/form-gds" element={<FormPemantauanGDS />} />
+      <Route path="/done-gds" element={<DoneRegistration />} />
 
       {/* Private Routes */}
       <Route path="/dashboard" element={<PrivateRoute />}>
         <Route element={<LayoutDashboardRoot />}>
           <Route index element={<Dashboard />} />
-          <Route path="manage-admin" element={<ManageDataAdmin />} />
+          <Route
+            path="manage-admin"
+            element={
+              <RoleBasedRoute>
+                <ManageDataAdmin />
+              </RoleBasedRoute>
+            }
+          />
+          <Route path="manage-user" element={<ManageDataPatient />} />
           <Route path="manage-article" element={<ManageContentArticle />} />
           <Route path="manage-gds" element={<ManageDataGulaDarah />} />
         </Route>
       </Route>
 
       {/* Routes Error */}
-      <Route path="/unauthorized" element={<div>Unauthorized</div>} />
-      <Route path="*" element={<div>Page Not Found</div>} />
+      <Route path="*" element={<PageNotFound/>} />
+      <Route path="/unauthorized" element={<Unauthorized/>} />
     </Routes>
   );
 };

@@ -1,6 +1,7 @@
 import { Searchbar } from "../fields/Searchbar";
+import logo from '@/assets/logo.png'
 
-export const Navbar = () => {
+export const Navbar = ({className}) => {
   const menuItems = [
     { text: "Home", link: "#" },
     { text: "Tentang", link: "#" },
@@ -10,10 +11,10 @@ export const Navbar = () => {
 
   return (
     <>
-      <header className="flex justify-between items-center">
+      <header className={`flex justify-between items-center ${className}`}>
           <div className="wrapper flex items-center gap-2">
             <div className="nav-brand-logo bg-[#073D5B] pl-14 pr-2 py-4 rounded-r-full">
-              <img className="border-2 border-white rounded-full bg-white" src={"logo"} alt="" width={75} height={75}/>
+              <img className="border-2 border-white rounded-full bg-white object-cover" src={logo} alt="" width={75} height={75}/>
             </div>
             <a href="" className="text-3xl font-bold text-[#073D5B]">Si-Dihimen</a>
         </div>

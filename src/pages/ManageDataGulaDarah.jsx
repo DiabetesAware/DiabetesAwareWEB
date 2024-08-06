@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Flex, Heading, useDisclosure } from "@chakra-ui/react";
 import { BsPlus } from "react-icons/bs";
 import { DataTableGulaDarah } from "@/components/tables/manage-data-gula-darah/DataTableGulaDarah";
@@ -6,29 +7,104 @@ import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
 import { Searchbar } from "@/components/fields/Searchbar";
 import { Pagination } from "@/components/pagination";
 import { ModalGDS } from "@/components/modals/data-gds/ModalGDS";
-import { useDispatch } from "react-redux";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useCustomToast } from "@/hooks/useCustomToast";
+import {
+  fetchAllGds,
+  fetchAllGdsSelector,
+  createGds,
+  createGdsSelector,
+  patchGdsSelector,
+  deleteGdsSelector,
+  clearPatchGdsState,
+  clearDeleteGdsState,
+  clearCreateGdsState,
+  clearFetchAllGdsState,
+} from "../store/manage-gds";
 
 const ManageGulaDarah = () => {
   const dispatch = useDispatch();
 
-  //pagination
+  const {
+    data = [],
+    status,
+    message,
+    count_data,
+  } = useSelector(fetchAllGdsSelector);
+  const { status: updateStatus, message: updateMessage } =
+    useSelector(patchGdsSelector);
+  const { status: deleteStatus, message: deleteMessage } =
+    useSelector(deleteGdsSelector);
+  const { status: createStatus, message: createMessage } =
+    useSelector(createGdsSelector);
+
+  const [_searchTerm, setSearchTerm] = useState("");
+  const searchTerm = useDebounce(_searchTerm);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // handleOpenModal
-  const handleModalGDS = () => {
-    onOpen();
+  useCustomToast(updateStatus, updateMessage);
+  useCustomToast(deleteStatus, deleteMessage);
+  useCustomToast(createStatus, createMessage);
+
+  const fetchGdsData = useCallback(() => {
+    dispatch(
+      fetchAllGds({
+        adminName: searchTerm,
+        pageSize: itemsPerPage,
+        page: currentPage,
+      })
+    );
+  }, [dispatch, searchTerm, itemsPerPage, currentPage]);
+
+  useEffect(() => {
+    fetchGdsData();
+  }, [searchTerm, itemsPerPage, currentPage, fetchGdsData]);
+
+  useEffect(() => {
+    if (
+      updateStatus === "success" ||
+      deleteStatus === "success" ||
+      createStatus === "success"
+    ) {
+      fetchGdsData();
+      setSearchTerm("");
+      setCurrentPage(1);
+    }
+    return () => {
+      if (updateStatus !== "idle") dispatch(clearPatchGdsState());
+      if (deleteStatus !== "idle") dispatch(clearDeleteGdsState());
+      if (createStatus !== "idle") dispatch(clearCreateGdsState());
+    };
+  }, [fetchGdsData, updateStatus, deleteStatus, createStatus, dispatch, onClose]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearFetchAllGdsState());
+    };
+  }, [dispatch]);
+
+  const filteredData = data.filter((gds) => {
+    return gds.nama?.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setCurrentPage(1);
   };
 
-  // handleSubmit
   const handleSubmitData = (data) => {
-    // dispatch(createAdmins(data)).then((res) => {
-    //   if (res.payload) {
-    //     onClose();
-    //   }
-    // });
+    dispatch(createGds(data)).then((res) => {
+      if (res.payload) {
+        onClose();
+      }
+    });
+  };
+
+  const handleAddModal = () => {
+    onOpen();
   };
 
   return (
@@ -52,7 +128,7 @@ const ManageGulaDarah = () => {
         p={"1.5rem"}
       >
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <Searchbar className="wrapper w-3/12" />
+          <Searchbar className="wrapper w-3/12" onSearch={handleSearch} />
           <Button
             backgroundColor={"#073D5B"}
             color={"white"}
@@ -61,19 +137,23 @@ const ManageGulaDarah = () => {
             _hover={"#073D5B"}
             borderRadius={"10px"}
             gap={"10px"}
-            onClick={handleModalGDS}
+            onClick={handleAddModal}
           >
             <BsPlus className="text-2xl" />
             Tambah Data
           </Button>
         </Flex>
-        <DataTableGulaDarah />
+        <DataTableGulaDarah
+          currentPage={currentPage}
+          data={filteredData}
+          itemsPerPage={itemsPerPage}
+        />
         <Pagination
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onChangeItemsPerPage={setItemsPerPage}
           onChangePage={setCurrentPage}
-          totalItems={totalItems}
+          totalItems={count_data}
         />
       </Flex>
     </LayoutDashboardContent>

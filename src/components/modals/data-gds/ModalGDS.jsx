@@ -49,7 +49,7 @@ if(!isOpen) reset();
               _hover={{ bg: "transparent", color: "#333333" }}
               _focus={{ boxShadow: "none" }}
             />
-            <form onSubmit={handleSubmit(handleOnSubmit())}>
+            <form onSubmit={handleSubmit(handleOnSubmit)}>
               <ModalBody as={Flex} direction={"column"} gap={"1rem"}>
                 <Fields.GdpFields control={control} error={errors.gdp} />
                 <Fields.GdsFields control={control} error={errors.gds} />
@@ -73,7 +73,7 @@ if(!isOpen) reset();
                   borderRadius={"lg"}
                   px={"5rem"}
                   py={"1.75rem"}
-                  _hover={{ bg: "#2DA22D" }}
+                  _hover={{ opacity: "90%" }}
                   type="submit"
                 >
                   Tambah

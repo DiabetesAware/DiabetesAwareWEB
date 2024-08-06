@@ -1,6 +1,7 @@
 import { SideBarItem, LogoutItem } from "./SidebarItem";
 import { LuScrollText } from "react-icons/lu";
 import { FaRegUser, FaStethoscope, FaLaptop } from "react-icons/fa";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { useState } from "react";
 export const SideBar = ({ setCollapse, collapse }) => {
   const [expandedMenu, setExpandedMenu] = useState("");
@@ -8,7 +9,9 @@ export const SideBar = ({ setCollapse, collapse }) => {
 
   const menuItems = [
     { name: "Dashboard", logo: <FaLaptop />, path: "/dashboard" },
-    { name: "Manage Admin", logo: <FaRegUser />, path: "manage-admin" },
+    { name: "Manage Admin", logo: <MdOutlineAdminPanelSettings />, path: "manage-admin" }
+    ,
+    { name: "Manage User", logo: <FaRegUser />, path: "manage-user" },
     { name: "Manage Artikel", logo: <LuScrollText />, path: "manage-article" },
 
     { name: "Manage Gula Darah", logo: <FaStethoscope />, path: "manage-gds" },
