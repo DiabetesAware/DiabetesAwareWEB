@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import { InputFields } from "@/components/fields/InputFields";
 import { useForm } from "react-hook-form";
@@ -22,6 +23,9 @@ export const validationSchema = yup.object().shape({
 });
 
 const FormPendaftaran = () => {
+  const [loading, setLoading] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState(null);
+
   const {
     control,
     formState: { errors },
@@ -34,23 +38,29 @@ const FormPendaftaran = () => {
   const navigate = useNavigate();
 
   const handleOnSubmit = (data) => {
+    setLoading(true);
     dispatch(createPatient(data))
       .then((res) => {
         console.log("Response from createPatient:", res);
         if (res.payload && res.payload.code === 201) {
           if (res.payload.data && res.payload.data.token) {
             console.log("ini token patient", res.payload.data.token);
-            localStorage.setItem("idToken", res.payload.data.token);
+            localStorage.setItem("tokenPatient", res.payload.data.token);
           } else {
             console.warn("Token is not present in the response.");
           }
           navigate("/form-gds");
         } else {
           console.error("Unexpected response structure:", res);
+          setFeedbackMessage("Terjadi kesalahan saat mendaftar.");
         }
       })
       .catch((error) => {
         console.error("Error in createPatient:", error);
+        setFeedbackMessage("Terjadi kesalahan saat mendaftar.");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -66,6 +76,12 @@ const FormPendaftaran = () => {
             className="form-register p-16 bg-white shadow-xl rounded-lg border"
             onSubmit={handleSubmit(handleOnSubmit)}
           >
+            {feedbackMessage && (
+              <p className="text-red-500 text-center mb-4">
+                {feedbackMessage}
+              </p>
+            )}
+
             {/* Nama Lengkap */}
             <div className="wrapper-input">
               <p>Nama Lengkap</p>
@@ -162,9 +178,12 @@ const FormPendaftaran = () => {
             {/* Button */}
             <button
               type="submit"
-              className="w-full p-5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg mt-10"
+              className={`w-full p-5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg mt-10 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
             >
-              Daftar
+              {loading ? "Sedang Diproses..." : "Daftar"}
             </button>
           </form>
           <img

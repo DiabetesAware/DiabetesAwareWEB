@@ -10,6 +10,7 @@ import { createGds } from "@/store/manage-gds/CreateGdsSlice";
 import { authService } from "@/config";
 import { Button } from "@chakra-ui/react";
 import { axiosInstance } from "@/config/axios";
+
 const FormPemantauanGDS = () => {
   const {
     control,
@@ -21,11 +22,11 @@ const FormPemantauanGDS = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("idToken");
+    const token = localStorage.getItem("tokenPatient");
     if (!token) {
       navigate("/form-pendaftaran");
     } else {
-      authService.getUserData().then((data) => {
+      authService.getUserData(token).then((data) => {
         if (data) {
           setUserData(data);
         } else {
@@ -35,20 +36,28 @@ const FormPemantauanGDS = () => {
     }
   }, [navigate]);
 
-  const handleOnSubmit = (data) => {
-    const token = localStorage.getItem("idToken");
+  const handleOnSubmit = (formData) => {
+    const token = localStorage.getItem("tokenPatient");
     if (token) {
-      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
     }
+    const combinedData = {
+      ...formData,
+      patient_id: userData?.id,
+    };
 
-    const combinedData = { ...userData, ...data };
-
-    dispatch(createGds(combinedData)).then((res) => {
-      console.log("ini response gds", res);
-      if (!res.payload?.status) {
-        navigate("/done-gds");
-      }
-    });
+    dispatch(createGds(combinedData))
+      .then((res) => {
+        console.log("Response from createGds",res)
+        if (!res.payload?.status) {
+          navigate("/done-gds");
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating GDS form:", error);
+      });
   };
 
   return (
@@ -179,7 +188,7 @@ const FormPemantauanGDS = () => {
             <div className="wrapper-input mt-4 mb-10">
               <p>Frekuensi Nafas</p>
               <Controller
-                name="frekuensi_nafas"
+                name="frekuensi_nafas_per_min"
                 control={control}
                 defaultValue={""}
                 render={({ field }) => (
@@ -191,9 +200,9 @@ const FormPemantauanGDS = () => {
                   />
                 )}
               />
-              {errors.frekuensi_nafas && (
+              {errors.frekuensi_nafas_per_min && (
                 <span className="text-red-500 text-sm">
-                  {errors.frekuensi_nafas.message}
+                  {errors.frekuensi_nafas_per_min.message}
                 </span>
               )}
             </div>

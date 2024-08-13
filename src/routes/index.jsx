@@ -16,7 +16,10 @@ import ManageDataAdmin from "@/pages/ManageDataAdmin";
 import ManageDataPatient from "@/pages/ManageDataPatient";
 import FormPendaftaran from "@/pages/FormPendaftaran";
 import FormPemantauanGDS from "@/pages/FormPemantauanGDS";
-import { DoneRegistration } from "@/pages/DoneRegistration";
+import FormKuisoner from "@/pages/FormKuisoner";
+import AllArticle from '@/pages/AllArticle';
+import DetailArticle from '@/pages/DetailArticle';
+import {DoneRegistration}  from "@/pages/DoneRegistration";
 // error pages
 import Unauthorized from "@/error/Unauthorized";
 import PageNotFound from "@/error/PageNotFound";
@@ -30,8 +33,11 @@ const AppRoutes = () => {
         <Route index element={<Login />} />
       </Route>
       <Route path="/form-pendaftaran" element={<FormPendaftaran />} />
+      <Route path="/form-kuisoner" element={<FormKuisoner />} />
       <Route path="/form-gds" element={<FormPemantauanGDS />} />
       <Route path="/done-gds" element={<DoneRegistration />} />
+      <Route path="/articles" element={<AllArticle />} />
+      <Route path="/article/:id" element={<DetailArticle />} />
 
       {/* Private Routes */}
       <Route path="/dashboard" element={<PrivateRoute />}>

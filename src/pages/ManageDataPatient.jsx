@@ -7,6 +7,7 @@ import { DataTablePatient } from "@/components/tables/manage-patient/DataTablePa
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useDisclosure } from "@chakra-ui/react";
+import { Spinner } from "@/components/spinner";
 import { ModalAddPatient } from "@/components/modals/manage-patient/ModalAddPatient";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,7 +31,6 @@ const ManageDataUser = () => {
     message,
     count_data,
   } = useSelector(fetchAllPatientSelector);
-  // console.log("Fetched data from Redux store:", data);
 
   const { status: updateStatus, message: updateMessage } =
     useSelector(patchPatientSelector);
@@ -132,19 +132,25 @@ const ManageDataUser = () => {
               <p>Tambah Data</p>
             </button>
           </div>
-          <DataTablePatient
-            currentPage={currentPage}
-            data={filteredData}
-            itemsPerPage={itemsPerPage}
-          />
-          <Pagination
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-            onChangeItemsPerPage={setItemsPerPage}
-            onChangePage={setCurrentPage}
-            totalItems={count_data}
-          />
+          {status === "success" && (
+            <>
+              <DataTablePatient
+                currentPage={currentPage}
+                data={filteredData}
+                itemsPerPage={itemsPerPage}
+              />
+              <Pagination
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+                onChangeItemsPerPage={setItemsPerPage}
+                onChangePage={setCurrentPage}
+                totalItems={count_data}
+              />
+            </>
+          )}
         </div>
+        {status === "loading" && <Spinner />}
+        {status === "failed" && <p>{message}</p>}
       </LayoutDashboardContent>
     </>
   );

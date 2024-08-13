@@ -27,6 +27,7 @@ function AddArticle({ onClose }) {
     try {
       if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0];
+        console.log("File type:", file.type);
 
         if (!validTypes.includes(file.type)) {
           return setErrorImage("Format file berupa .jpg, .jpeg, atau .png");
@@ -78,14 +79,12 @@ function AddArticle({ onClose }) {
             console.error("Error converting PDF to base64:", error);
           });
       } else {
-        setErrorImage(
-          "Format file tidak sesuai, hanya PDF yang diperbolehkan."
-        );
+        setErrorImage("Format file tidak sesuai, hanya PDF yang diperbolehkan.");
       }
     }
   }
 
-  // Convert file gambar
+  // Convert file to base64
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -99,26 +98,26 @@ function AddArticle({ onClose }) {
     });
   };
 
-// HandleCreate Article
-function handleCreateArticle() {
-  setIsLoading(true);
-  const formData = new FormData();
-  formData.append("title", articleData.title);
-  formData.append("description", articleData.description);
-  formData.append("img_url", articleData.img_url);
-  formData.append("pdf_url", articleData.pdf_url);
+  // HandleCreate Article
+  function handleCreateArticle() {
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("title", articleData.title);
+    formData.append("description", articleData.description);
+    formData.append("img_url", articleData.img_url);  // Ensure this is handled correctly on the backend
+    formData.append("pdf_url", articleData.pdf_url);  // Ensure this is handled correctly on the backend
 
-  APIArticle.createArticle(formData)
-    .then((res) => {
-      console.log("Article added successfully:", res);
-      setIsLoading(false);
-      onClose(true);
-    })
-    .catch((err) => {
-      console.error("Error adding article:", err);
-      setIsLoading(false);
-    });
-}
+    APIArticle.createArticle(formData)
+      .then((res) => {
+        console.log("Article added successfully:", res);
+        setIsLoading(false);
+        onClose(true);
+      })
+      .catch((err) => {
+        console.error("Error adding article:", err);
+        setIsLoading(false);
+      });
+  }
 
   return (
     <div className="p-6 w-full bg-[#EBEBF0]">

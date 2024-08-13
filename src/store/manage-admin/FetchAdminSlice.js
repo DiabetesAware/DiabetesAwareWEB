@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   status: "idle",
   message: "",
+  data:{}
 };
 
 export const fetchAdmin = createAsyncThunk(
@@ -17,7 +18,8 @@ export const fetchAdminSlice = createSlice({
   reducers: {
     clearFetchAdminState: (state) => {
       state.status = "idle";
-      state.message = "";
+      state.message = ""
+      state.data = {};
     },
   },
   extraReducers: (builder) => {
@@ -26,7 +28,8 @@ export const fetchAdminSlice = createSlice({
     });
     builder.addCase(fetchAdmin.fulfilled, (state, action) => {
       state.status = "success";
-      state.message = action.payload.message;
+      state.message = action.payload?.message;
+      state.data = action.payload?.data;
     });
     builder.addCase(fetchAdmin.rejected, (state, action) => {
       state.status = "failed";

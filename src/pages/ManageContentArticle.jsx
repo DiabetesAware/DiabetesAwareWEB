@@ -58,7 +58,7 @@ const ManageContentArticle = () => {
           if (refresh) getArticleData();
         }}
       />
-    )
+    );
 
   if (editArticleData)
     return (

@@ -8,6 +8,7 @@ import { ModalAddAdmin } from "@/components/modals/manage-admin/ModalAddAdmin";
 import { useDisclosure } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCustomToast } from "@/hooks/useCustomToast";
+import { Spinner } from "@/components/spinner";
 import { useDebounce } from "@/hooks/useDebounce";
 import {
   fetchAllAdmin,
@@ -53,6 +54,8 @@ const ManageDataAdmin = () => {
   useCustomToast(createStatus, createMessage);
 
   const fetchAdminData = useCallback(() => {
+    console.log("Fetching GDS data with page:", currentPage, " and pageSize:", itemsPerPage);
+
     dispatch(
       fetchAllAdmin({
         adminName: searchTerm,
@@ -66,24 +69,22 @@ const ManageDataAdmin = () => {
     fetchAdminData();
   }, [searchTerm, itemsPerPage, currentPage, fetchAdminData]);
 
-  // useEffect di Komponen
-useEffect(() => {
-  if (
-    updateStatus === "success" ||
-    deleteStatus === "success" ||
-    createStatus === "success"
-  ) {
-    fetchAdminData();
-    setSearchTerm("");
-    setCurrentPage(1);
-  }
-  return () => {
-    if (updateStatus !== "idle") dispatch(clearPatchAdminState());
-    if (deleteStatus !== "idle") dispatch(clearDeleteAdminState());
-    if (createStatus !== "idle") dispatch(clearCreateAdminState());
-  };
-}, [fetchAdminData, updateStatus, deleteStatus, createStatus, dispatch]);
-
+  useEffect(() => {
+    if (
+      updateStatus === "success" ||
+      deleteStatus === "success" ||
+      createStatus === "success"
+    ) {
+      fetchAdminData();
+      setSearchTerm("");
+      setCurrentPage(1);
+    }
+    return () => {
+      if (updateStatus !== "idle") dispatch(clearPatchAdminState());
+      if (deleteStatus !== "idle") dispatch(clearDeleteAdminState());
+      if (createStatus !== "idle") dispatch(clearCreateAdminState());
+    };
+  }, [fetchAdminData, updateStatus, deleteStatus, createStatus, dispatch]);
 
   useEffect(() => {
     return () => {
@@ -115,7 +116,6 @@ useEffect(() => {
   };
 
   return (
-    <>
       <LayoutDashboardContent>
         <ModalAddAdmin
           isOpen={isOpen}
@@ -134,21 +134,26 @@ useEffect(() => {
               <p>Tambah Data</p>
             </button>
           </div>
-          <DataTableAdmin
-            currentPage={currentPage}
-            data={filteredData}
-            itemsPerPage={itemsPerPage}
-          />
-          <Pagination
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-            onChangeItemsPerPage={setItemsPerPage}
-            onChangePage={setCurrentPage}
-            totalItems={count_data}
-          />
+          {status === "success" && (
+            <>
+              <DataTableAdmin
+                currentPage={currentPage}
+                data={filteredData}
+                itemsPerPage={itemsPerPage}
+              />
+              <Pagination
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+                onChangeItemsPerPage={setItemsPerPage}
+                onChangePage={setCurrentPage}
+                totalItems={count_data}
+              />
+            </>
+          )}
+          {status === "loading" && <Spinner />}
+          {status === "failed" && <p>{message}</p>}
         </div>
       </LayoutDashboardContent>
-    </>
   );
 };
 

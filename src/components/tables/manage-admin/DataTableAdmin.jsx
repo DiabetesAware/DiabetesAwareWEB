@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
 import { BaseTable } from "../base-table/BaseTable";
 import { Edit2, Trash } from "iconsax-react";
@@ -11,12 +11,14 @@ import { ModalDelete } from "@/components/modals/action-feedback/ModalDelete";
 import {
   deleteAdmin,
   patchAdmin,
+  deleteAdminSelector,
   fetchAdmin,
 } from "@/store/manage-admin";
 
 export const DataTableAdmin = ({ data, currentPage, itemsPerPage }) => {
-  // console.log("DataTableAdmin Data:", data);
+  // console.log("DataTableAdmin Data:", data)
   const [id, setId] = useState(null);
+  const [idAdmin, setIdAdmin] = useState(null);
   const dispatch = useDispatch();
   const TablesHead = ["ID", "Nama Admin", "Email", "Aksi"];
 
@@ -32,6 +34,14 @@ export const DataTableAdmin = ({ data, currentPage, itemsPerPage }) => {
     onClose: onCloseDelete,
   } = useDisclosure();
 
+  const { status: deleteStatusAdmin } = useSelector(deleteAdminSelector);
+
+  useEffect(() => {
+    if (deleteStatusAdmin === "success" || deleteStatusAdmin === "failed") {
+      onCloseDelete();
+    }
+  }, [deleteStatusAdmin, onCloseDelete]);
+
   const handleEditModal = (target) => {
     setId(target);
     dispatch(fetchAdmin(target));
@@ -39,14 +49,13 @@ export const DataTableAdmin = ({ data, currentPage, itemsPerPage }) => {
   };
 
   const handleDeleteModal = (id) => {
-    setId(id);
+    setIdAdmin(id);
     onOpenDelete();
   };
 
   const handleDelete = (id) => {
     dispatch(deleteAdmin(id));
   };
-
 
   const handleSubmitEdited = (data) => {
     dispatch(patchAdmin({ id, data }));
@@ -61,7 +70,10 @@ export const DataTableAdmin = ({ data, currentPage, itemsPerPage }) => {
       <ModalDelete
         isOpen={isOpenDelete}
         onClose={onCloseDelete}
-        onSubmit={() => handleDelete(id)}
+        target={idAdmin}
+        onDelete={handleDelete}
+        deleteStatus={deleteStatusAdmin}
+        isLoading={deleteStatusAdmin === "loading"}
       />
       <BaseTable data={data} heads={TablesHead}>
         {data.map((row, rowIndex) => (

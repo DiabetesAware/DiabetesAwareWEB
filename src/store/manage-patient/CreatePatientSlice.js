@@ -1,37 +1,74 @@
-import { APIManageUser } from "@/apis/";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { APIManageUser } from "@/apis"; 
 
 const initialState = {
   status: "idle",
   message: "",
+  token: null,
 };
 
-export const createPatient = createAsyncThunk("POST /patient/create", APIManageUser.createPatient);
+// Async thunk untuk membuat pasien
+export const createPatient = createAsyncThunk(
+  "POST /patient/create",
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await APIManageUser.createPatient(data);
+      const { token } = response.data;
+      if (token) {
+        dispatch(setToken(token));
+      }
+
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 
 export const createPatientSlice = createSlice({
   name: "createPatient",
   initialState,
   reducers: {
-    clearCreatePatientState: (state) => {
+    setToken(state, action) {
+      state.token = action.payload;
+      localStorage.setItem("patient_token", action.payload);
+    },
+    clearToken(state) {
+      state.token = null;
+      localStorage.removeItem("patient_token");
+    },
+    clearCreatePatientState(state) {
       state.status = "idle";
       state.message = "";
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(createPatient.pending, (state) => {
-      state.status = "loading";
-    });
-    builder.addCase(createPatient.fulfilled, (state, action) => {
-      state.status = "success";
-      state.message = action.payload.message;
-    });
-    builder.addCase(createPatient.rejected, (state, action) => {
-      state.status = "failed";
-      state.message = action.error.message ;
-    });
+    builder
+      .addCase(createPatient.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createPatient.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.message = "Patient created successfully!";
+        const { token } = action.payload.data;
+        if (token) {
+          state.token = token;
+          localStorage.setItem("patient_token", token);
+        }
+      })
+      .addCase(createPatient.rejected, (state, action) => {
+        state.status = "failed";
+          state.message = action.error.message;
+      });
   },
 });
 
 export const createPatientSelector = (state) => state.createPatient;
-export const { clearCreatePatientState } = createPatientSlice.actions;
+  createPatientSlice.actions;
+  export const { setToken, clearToken, clearCreatePatientState } =
+    createPatientSlice.actions;
 export const createPatientReducer = createPatientSlice.reducer;
+
+

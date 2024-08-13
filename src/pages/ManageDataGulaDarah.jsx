@@ -8,6 +8,7 @@ import { Searchbar } from "@/components/fields/Searchbar";
 import { Pagination } from "@/components/pagination";
 import { ModalGDS } from "@/components/modals/data-gds/ModalGDS";
 import { useDebounce } from "@/hooks/useDebounce";
+import { Spinner } from "@/components/spinner";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import {
   fetchAllGds,
@@ -50,14 +51,20 @@ const ManageGulaDarah = () => {
   useCustomToast(createStatus, createMessage);
 
   const fetchGdsData = useCallback(() => {
+    console.log("Fetching GDS data with params:", {
+      keyword: searchTerm,
+      pageSize: itemsPerPage,
+      page: currentPage,
+    });
+
     dispatch(
       fetchAllGds({
-        adminName: searchTerm,
+        keyword: searchTerm,
         pageSize: itemsPerPage,
         page: currentPage,
       })
     );
-  }, [dispatch, searchTerm, itemsPerPage, currentPage]);
+  }, [dispatch, itemsPerPage, currentPage, searchTerm]);
 
   useEffect(() => {
     fetchGdsData();
@@ -78,7 +85,14 @@ const ManageGulaDarah = () => {
       if (deleteStatus !== "idle") dispatch(clearDeleteGdsState());
       if (createStatus !== "idle") dispatch(clearCreateGdsState());
     };
-  }, [fetchGdsData, updateStatus, deleteStatus, createStatus, dispatch, onClose]);
+  }, [
+    fetchGdsData,
+    updateStatus,
+    deleteStatus,
+    createStatus,
+    dispatch,
+    onClose,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -86,9 +100,7 @@ const ManageGulaDarah = () => {
     };
   }, [dispatch]);
 
-  const filteredData = data.filter((gds) => {
-    return gds.nama?.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  const filteredData = data.filter((gds) => gds.nama);
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -143,18 +155,24 @@ const ManageGulaDarah = () => {
             Tambah Data
           </Button>
         </Flex>
-        <DataTableGulaDarah
-          currentPage={currentPage}
-          data={filteredData}
-          itemsPerPage={itemsPerPage}
-        />
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          onChangeItemsPerPage={setItemsPerPage}
-          onChangePage={setCurrentPage}
-          totalItems={count_data}
-        />
+        {status === "success" && (
+          <>
+            <DataTableGulaDarah
+              currentPage={currentPage}
+              data={filteredData}
+              itemsPerPage={itemsPerPage}
+            />
+            <Pagination
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              onChangeItemsPerPage={setItemsPerPage}
+              onChangePage={setCurrentPage}
+              totalItems={count_data}
+            />
+          </>
+        )}
+        {status === "loading" && <Spinner />}
+        {status === "failed" && <p>{message}</p>}
       </Flex>
     </LayoutDashboardContent>
   );

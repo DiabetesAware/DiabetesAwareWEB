@@ -25,8 +25,8 @@ export const fetchPatientSlice = createSlice({
     });
     builder.addCase(fetchPatient.fulfilled, (state, action) => {
       state.status = "success";
-      state.message = action.payload?.message || "Login successful";
-      state.data = action.payload?.data || {};
+      state.message = action.payload?.message
+      state.data = action.payload?.data;
     });
     builder.addCase(fetchPatient.rejected, (state, action) => {
       state.status = "failed";

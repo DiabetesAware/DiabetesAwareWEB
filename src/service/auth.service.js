@@ -1,18 +1,18 @@
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import { axiosInstance } from "@/config/axios";
 
 export class AuthService {
   isTokenValid() {
     try {
       const token = this.getToken();
-      console.log("token isTokenValid:", token);
+      console.log("Token in isTokenValid:", token);
       if (!token) {
         return false;
       }
       return true;
     } catch (error) {
-      console.error(error);
+      console.error("Token validation error:", error);
       return false;
     }
   }
@@ -26,14 +26,6 @@ export class AuthService {
     }
   }
 
-  // getAdminRole() {
-  //   if (this.isAuthorized()) {
-  //     const { id, role } = this.getToken()
-  //     return { id, role };
-  //   }
-  //   return null;
-  // }
-
   getToken() {
     return Cookies.get("idToken");
   }
@@ -41,7 +33,7 @@ export class AuthService {
   setCredentialsToCookie({ token }) {
     const { exp } = jwtDecode(token);
     Cookies.set("idToken", token, { expires: new Date(exp * 1000) });
-    console.log("ini token credential: ", token);
+    console.log("Set credentials to cookie, token:", token);
   }
 
   clearCredentialsFromCookie() {
@@ -55,22 +47,29 @@ export class AuthService {
   getAdminRole() {
     if (this.isAuthorized()) {
       const { id, role } = jwtDecode(this.getToken());
+      console.log("Admin role:", role);
       return { id, role };
     }
     return null;
   }
 
-  async getUserData() {
-    if (this.isAuthorized()) {
-      try {
-        const response = await axiosInstance.get(`/patient/`);
-        return response.data;
-      } catch (error) {
-        console.error("Failed to fetch user data", error);
-        this.clearCredentialsFromCookie();
-        return null;
-      }
+  async getUserData(token) {
+    if (!token) {
+      console.error("Patient token is missing.");
+      return null;
     }
-    return null;
+
+    try {
+      const response = await axiosInstance.get(`/patient/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch patient data", error);
+      this.clearCredentialsFromCookie();
+      return null;
+    }
   }
 }

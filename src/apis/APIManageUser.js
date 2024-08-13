@@ -9,6 +9,7 @@ export const APIManageUser = {
           "Content-Type": "application/json",
         },
       });
+
       console.log("Create Patient response:", response.data);
       return response.data;
     } catch (error) {

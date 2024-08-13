@@ -1,14 +1,15 @@
-// src/config/axios/index.js
 import axios from "axios";
 import { authService } from "@/config";
 import { globalRoute } from "@/utils";
+
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     Accept: "application/json",
   },
-});
-axiosInstance.interceptors.request.use((config) => {
+})
+
+  axiosInstance.interceptors.request.use((config) => {
 	console.log("Request config before adding token:", config);
 
 	if (authService.isAuthorized()) {

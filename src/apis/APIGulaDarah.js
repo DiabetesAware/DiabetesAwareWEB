@@ -1,9 +1,22 @@
 import { axiosInstance } from "@/config";
+import { AxiosError } from "axios";
 
 export const APIGulaDarah = {
   createGds: async (data) => {
     try {
-      const response = await axiosInstance.post("/gds/create-gds", data);
+      const token = store.getState().patient.token;
+      if (!token) {
+        console.error("No token found, cannot create GDS form");
+        throw new Error("Authorization token is missing");
+      }
+
+      const response = await axiosInstance.post("/gds/create-gds", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       console.log("Create Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
@@ -15,13 +28,15 @@ export const APIGulaDarah = {
       throw error;
     }
   },
-  getAllGds: async (page = 1, pageSize = 1) => {
+  getAllGds: async ({ page = 1, pageSize = 10, keyword = "" }) => {
     try {
-      const response = await axiosInstance.get(`/gds?page=${page}&pageSize${pageSize}`);
+      const response = await axiosInstance.get(
+        `/gds?keyword=${keyword}&page=${page}&pageSize=${pageSize}`
+      );
       console.log("Get Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
+      if (error.response) {
         console.error("Get Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
@@ -29,6 +44,7 @@ export const APIGulaDarah = {
       throw error;
     }
   },
+
   getGds: async (id) => {
     try {
       const response = await axiosInstance.get(`/gds/${id}`);
@@ -45,7 +61,15 @@ export const APIGulaDarah = {
   },
   patchGds: async (data, id) => {
     try {
-      const response = await axiosInstance.patch(`/gds/update-gds/${id}`, data);
+      const response = await axiosInstance.patch(
+        `/gds/update-gds/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log("Update Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
