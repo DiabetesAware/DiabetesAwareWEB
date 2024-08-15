@@ -5,7 +5,7 @@ export const VideoSlide = () => {
       <h2 className="text-[#073D5B] font-bold xl:text-4xl sm:text-lg  text-center xl:my-10 sm:my-5">Cek Videonya!</h2>
       <div className="video-container">
         <iframe
-          className='xl:w-full sm:w-11/12xl:h-[800px] sm:h-[165px] mx-auto'
+          className='xl:w-full sm:w-11/12 xl:h-[810px] sm:h-[165px] mx-auto'
           controls
           src={video}
           title="YouTube video player"
