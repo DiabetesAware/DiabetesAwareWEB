@@ -1,8 +1,6 @@
-import React from "react";
 import { BaseTable } from "../base-table/BaseTable";
 import { TextCell } from "../base-table/TableCells";
 import { TableBodyRow } from "../base-table/TableRows";
-import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
 import { Link } from "react-router-dom";
 
 export const DetailDataTableGulaDarah = ({ data }) => {

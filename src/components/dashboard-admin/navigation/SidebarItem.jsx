@@ -4,6 +4,7 @@ import { FiLogOut } from "react-icons/fi";
 import { authService } from "@/config";
 import { clearAuthState } from "@/store/auth";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
 export function SideBarItem({
   name,
@@ -14,6 +15,11 @@ export function SideBarItem({
 }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    setIsActive(pathname === path);
+  }, [pathname, path]);
 
   function handleClickMenu() {
     if (path) {
@@ -22,30 +28,18 @@ export function SideBarItem({
     setCollapse(false);
   }
 
-  if (sideBarCollapse)
-    return (
-      <div
-        onClick={handleClickMenu}
-        className={`cursor-pointer  text-xl p-3 rounded-lg ${
-          pathname.startsWith(path)
-            ? "bg-[#073D5B] text-white"
-            : "hover:bg-slate-100"
-        }`}
-      >
-        {logo}
-      </div>
-    );
-
   return (
     <div
       onClick={handleClickMenu}
-      className={`cursor-pointer min-w-[350px] pl-4 pr-3 py-5 flex justify-between rounded-xl shadow-lg border ${
-        pathname === path ? "bg-[#073D5B] text-white" : "hover:bg-slate-100"
+      className={`cursor-pointer ${
+        sideBarCollapse ? "text-xl p-3 rounded-lg" : "min-w-[350px] pl-4 pr-3 py-5 flex justify-between rounded-xl shadow-lg border"
+      } ${
+        isActive ? "bg-[#073D5B] text-white" : "hover:bg-slate-100"
       }`}
     >
-      <div className="flex gap-4 items-center text-xl">
+      <div className={`flex ${sideBarCollapse ? "" : "gap-4 items-center text-xl"}`}>
         {logo}
-        <p className="font-medium">{name}</p>
+        {!sideBarCollapse && <p className="font-medium">{name}</p>}
       </div>
     </div>
   );
@@ -53,10 +47,10 @@ export function SideBarItem({
 
 SideBarItem.propTypes = {
   name: PropTypes.string.isRequired,
-  logo: PropTypes.any.isRequired,
+  logo: PropTypes.node.isRequired,
   path: PropTypes.string.isRequired,
-  sideBarCollapse: PropTypes.bool,
-  setCollapse: PropTypes.func,
+  sideBarCollapse: PropTypes.bool.isRequired,
+  setCollapse: PropTypes.func.isRequired,
 };
 
 export function LogoutItem({ setCollapse, sideBarCollapse }) {
@@ -65,7 +59,6 @@ export function LogoutItem({ setCollapse, sideBarCollapse }) {
   const { pathname } = useLocation();
 
   const handleLogout = () => {
-    // Pastikan metode logout pada AuthService diimpor dan digunakan dengan benar
     authService.logout();
     dispatch(clearAuthState());
     setCollapse(false);

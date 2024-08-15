@@ -12,19 +12,19 @@ import {
 } from "@/store/manage-gds";
 
 const DetailGulaDarah = () => {
-  const { patient_id } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const { data, status } = useSelector(fetchGdsSelector);
   console.log("Data dari Redux store:", data);
 
   useEffect(() => {
-    if (patient_id) {
-      dispatch(fetchGds(patient_id));
+    if (id) {
+      dispatch(fetchGds(id));
     }
     return () => {
       dispatch(clearFetchGdsState());
     };
-  }, [patient_id, dispatch]);
+  }, [id, dispatch]);
 
   const tableData = Array.isArray(data) ? data : [data];
 
