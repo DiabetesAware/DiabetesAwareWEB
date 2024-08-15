@@ -17,9 +17,10 @@ import ManageDataPatient from "@/pages/ManageDataPatient";
 import FormPendaftaran from "@/pages/FormPendaftaran";
 import FormPemantauanGDS from "@/pages/FormPemantauanGDS";
 import FormKuisoner from "@/pages/FormKuisoner";
-import AllArticle from '@/pages/AllArticle';
-import DetailArticle from '@/pages/DetailArticle';
-import {DoneRegistration}  from "@/pages/DoneRegistration";
+import AllArticle from "@/pages/AllArticle";
+import DetailArticle from "@/pages/DetailArticle";
+import { DoneRegistration } from "@/pages/DoneRegistration";
+import DetailGulaDarah from "@/pages/DetailGulaDarah";
 // error pages
 import Unauthorized from "@/error/Unauthorized";
 import PageNotFound from "@/error/PageNotFound";
@@ -51,6 +52,7 @@ const AppRoutes = () => {
               </RoleBasedRoute>
             }
           />
+          <Route path="manage-gds/detail-gds/:id" element={<DetailGulaDarah />} />
           <Route path="manage-user" element={<ManageDataPatient />} />
           <Route path="manage-article" element={<ManageContentArticle />} />
           <Route path="manage-gds" element={<ManageDataGulaDarah />} />
@@ -58,8 +60,8 @@ const AppRoutes = () => {
       </Route>
 
       {/* Routes Error */}
-      <Route path="*" element={<PageNotFound/>} />
-      <Route path="/unauthorized" element={<Unauthorized/>} />
+      <Route path="*" element={<PageNotFound />} />
+      <Route path="/unauthorized" element={<Unauthorized />} />
     </Routes>
   );
 };

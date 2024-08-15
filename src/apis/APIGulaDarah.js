@@ -1,15 +1,11 @@
+
 import { axiosInstance } from "@/config";
 import { AxiosError } from "axios";
 
 export const APIGulaDarah = {
   createGds: async (data) => {
     try {
-      const token = store.getState().patient.token;
-      if (!token) {
-        console.error("No token found, cannot create GDS form");
-        throw new Error("Authorization token is missing");
-      }
-
+      const token = localStorage.getItem("patient_token");
       const response = await axiosInstance.post("/gds/create-gds", data, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -28,7 +24,7 @@ export const APIGulaDarah = {
       throw error;
     }
   },
-  getAllGds: async ({ page = 1, pageSize = 10, keyword = "" }) => {
+  getAllGds: async ({ page, pageSize, keyword = "" }) => {
     try {
       const response = await axiosInstance.get(
         `/gds?keyword=${keyword}&page=${page}&pageSize=${pageSize}`

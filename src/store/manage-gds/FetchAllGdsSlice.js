@@ -30,12 +30,12 @@ export const fetchAllGdsSlice = createSlice({
     builder.addCase(fetchAllGds.fulfilled, (state, action) => {
       state.status = "success";
       state.message = action.payload.message;
-      state.data = action.payload.datas;
+      state.data = action.payload.data.datas; // Pastikan ini mengacu ke 'datas'
       state.pagination = {
-        current_page: action.payload.current_page,
-        total_pages: action.payload.total_pages,
+        current_page: action.payload.data.current_page,
+        total_pages: action.payload.data.total_pages,
       };
-      state.count_data = action.payload.total_data;
+      state.count_data = action.payload.data.total_data;
     });
     builder.addCase(fetchAllGds.rejected, (state, action) => {
       state.status = "failed";

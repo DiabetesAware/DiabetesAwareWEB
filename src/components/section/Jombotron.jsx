@@ -7,11 +7,15 @@ export const Jombotron = () => {
         <img className="w-full relative z-0" src={banner} alt="Banner" />
         <div className="cover absolute inset-0 z-10 bg-gradient-to-r from-[#073D5B] to-transparent"></div>
       </div>
-      <div className="absolute inset-0 flex flex-col justify-center pl-44 z-20 text-white">
-        <h1 className="text-6xl font-bold mb-2">WE PROTECT</h1>
-        <div className="wrapper ml-10 my-5">
-          <h2 className="text-4xl mb-4 font-semibold">Be Aware,</h2>
-          <p className="text-2xl font-thin tracking-wide max-w-xs">
+      <div className="absolute inset-0 flex flex-col justify-center lg:pl-44 sm:pl-20 z-20 text-white">
+        <h1 className="lg:text-6xl md:text-4xl sm:text-xl font-bold lg:mb-2 sm:mb-0">
+          WE PROTECT
+        </h1>
+        <div className="wrapper lg:ml-10 lg:my-5">
+          <h2 className="lg:text-4xl md:text-2xl sm:text-xl mb-4 font-semibold">
+            Be Aware,
+          </h2>
+          <p className="lg:text-2xl md:text-xl sm:text-md font-thin tracking-wide max-w-xs">
             Kebanyakan kasus kematian lansia disebabkan karena diabetes yang
             terlalu banyak dan gejala komplikasi.
           </p>

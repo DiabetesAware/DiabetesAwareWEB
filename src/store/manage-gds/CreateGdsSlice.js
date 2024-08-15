@@ -4,7 +4,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   status: "idle",
   message: "",
-  data: {},
 };
 
 export const createGds = createAsyncThunk("POST /gds/create-gds", APIGulaDarah.createGds);
@@ -16,7 +15,6 @@ export const createGdsSlice = createSlice({
     clearCreateGdsState: (state) => {
       state.status = "idle";
       state.message = "";
-      state.data = {};
     },
   },
   extraReducers: (builder) => {
@@ -26,7 +24,6 @@ export const createGdsSlice = createSlice({
     builder.addCase(createGds.fulfilled, (state, action) => {
       state.status = "success";
       state.message = action.payload.message;
-      state.data = action.payload.data;
     });
     builder.addCase(createGds.rejected, (state, action) => {
       state.status = "failed";

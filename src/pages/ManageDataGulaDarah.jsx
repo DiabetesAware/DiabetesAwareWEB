@@ -1,28 +1,28 @@
-import { useState, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Flex, Heading, useDisclosure } from "@chakra-ui/react";
+import { Pagination } from "@/components/pagination/Pagination";
 import { BsPlus } from "react-icons/bs";
-import { DataTableGulaDarah } from "@/components/tables/manage-data-gula-darah/DataTableGulaDarah";
-import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
 import { Searchbar } from "@/components/fields/Searchbar";
-import { Pagination } from "@/components/pagination";
-import { ModalGDS } from "@/components/modals/data-gds/ModalGDS";
-import { useDebounce } from "@/hooks/useDebounce";
-import { Spinner } from "@/components/spinner";
+import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
+import { useState, useCallback, useEffect } from "react";
+import { DataTableGulaDarah } from "@/components/tables/manage-data-gula-darah/DataTableGulaDarah";
 import { useCustomToast } from "@/hooks/useCustomToast";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useDisclosure } from "@chakra-ui/react";
+import { Spinner } from "@/components/spinner";
+import { ModalGDS } from "@/components/modals/data-gds/ModalGDS";
+import { Heading, Flex, Button } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllGds,
-  fetchAllGdsSelector,
-  createGds,
-  createGdsSelector,
-  patchGdsSelector,
-  deleteGdsSelector,
-  clearPatchGdsState,
-  clearDeleteGdsState,
-  clearCreateGdsState,
-  clearFetchAllGdsState,
-} from "../store/manage-gds";
-
+  createPatient,
+  fetchAllPatient,
+  fetchAllPatientSelector,
+  clearPatchPatientState,
+  clearDeletePatientState,
+  clearCreatePatientState,
+  clearFetchAllPatientState,
+  patchPatientSelector,
+  deletePatientSelector,
+  createPatientSelector,
+} from "@/store/manage-patient";
 const ManageGulaDarah = () => {
   const dispatch = useDispatch();
 
@@ -31,13 +31,16 @@ const ManageGulaDarah = () => {
     status,
     message,
     count_data,
-  } = useSelector(fetchAllGdsSelector);
+  } = useSelector(fetchAllPatientSelector);
+
   const { status: updateStatus, message: updateMessage } =
-    useSelector(patchGdsSelector);
-  const { status: deleteStatus, message: deleteMessage } =
-    useSelector(deleteGdsSelector);
-  const { status: createStatus, message: createMessage } =
-    useSelector(createGdsSelector);
+    useSelector(patchPatientSelector);
+  const { status: deleteStatus, message: deleteMessage } = useSelector(
+    deletePatientSelector
+  );
+  const { status: createStatus, message: createMessage } = useSelector(
+    createPatientSelector
+  );
 
   const [_searchTerm, setSearchTerm] = useState("");
   const searchTerm = useDebounce(_searchTerm);
@@ -50,25 +53,20 @@ const ManageGulaDarah = () => {
   useCustomToast(deleteStatus, deleteMessage);
   useCustomToast(createStatus, createMessage);
 
-  const fetchGdsData = useCallback(() => {
-    console.log("Fetching GDS data with params:", {
-      keyword: searchTerm,
-      pageSize: itemsPerPage,
-      page: currentPage,
-    });
-
+  // fetching data users
+  const fetchPatientData = useCallback(() => {
     dispatch(
-      fetchAllGds({
-        keyword: searchTerm,
+      fetchAllPatient({
+        adminName: searchTerm,
         pageSize: itemsPerPage,
         page: currentPage,
       })
     );
-  }, [dispatch, itemsPerPage, currentPage, searchTerm]);
+  }, [dispatch, searchTerm, itemsPerPage, currentPage]);
 
   useEffect(() => {
-    fetchGdsData();
-  }, [searchTerm, itemsPerPage, currentPage, fetchGdsData]);
+    fetchPatientData();
+  }, [searchTerm, itemsPerPage, currentPage, fetchPatientData]);
 
   useEffect(() => {
     if (
@@ -76,31 +74,26 @@ const ManageGulaDarah = () => {
       deleteStatus === "success" ||
       createStatus === "success"
     ) {
-      fetchGdsData();
+      fetchPatientData();
       setSearchTerm("");
       setCurrentPage(1);
     }
     return () => {
-      if (updateStatus !== "idle") dispatch(clearPatchGdsState());
-      if (deleteStatus !== "idle") dispatch(clearDeleteGdsState());
-      if (createStatus !== "idle") dispatch(clearCreateGdsState());
+      if (updateStatus !== "idle") dispatch(clearPatchPatientState());
+      if (deleteStatus !== "idle") dispatch(clearDeletePatientState());
+      if (createStatus !== "idle") dispatch(clearCreatePatientState());
     };
-  }, [
-    fetchGdsData,
-    updateStatus,
-    deleteStatus,
-    createStatus,
-    dispatch,
-    onClose,
-  ]);
+  }, [fetchPatientData, updateStatus, deleteStatus, createStatus, dispatch]);
 
   useEffect(() => {
     return () => {
-      dispatch(clearFetchAllGdsState());
+      dispatch(clearFetchAllPatientState());
     };
   }, [dispatch]);
 
-  const filteredData = data.filter((gds) => gds.nama);
+  const filteredData = data.filter((patient) => {
+    return patient.nama?.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -108,8 +101,10 @@ const ManageGulaDarah = () => {
   };
 
   const handleSubmitData = (data) => {
-    dispatch(createGds(data)).then((res) => {
+    console.log("Submitting Data from Modal:", data);
+    dispatch(createPatient(data)).then((res) => {
       if (res.payload) {
+        console.log("Response from CreatePatientSlice:", res.payload);
         onClose();
       }
     });

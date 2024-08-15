@@ -4,9 +4,10 @@ import {  Td, Text } from "@chakra-ui/react";
  * Cell for showing text content
  * @param {{ content: string, maxWidth: string, props: any }} props
  */
-export function TextCell({ content,maxWidth = "8rem", ...props }) {
+export function TextCell({ content, className ,maxWidth = "8rem", ...props }) {
 	return (
 		<Td
+		className={`${className}`}
 			color={"#383838"}
 			maxW={maxWidth}
 			isTruncated

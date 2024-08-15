@@ -88,18 +88,7 @@ export function ModalAddAdmin({ isOpen, onClose, onSubmit }) {
                 />
               </ModalBody>
               <ModalFooter justifyContent={"center"} gap={"12px"}>
-                <Button
-                  onClick={onClose}
-                  color={"white"}
-                  bg={"#828282"}
-                  borderRadius={"lg"}
-                  px={"5.5rem"}
-                  py={"1.75rem"}
-                  _hover={{ bg: "#333333" }}
-                  isDisabled={createStatus === "loading"}
-                >
-                  Batal
-                </Button>
+
                 <Button
                   color={"white"}
                   bg={"#073D5B"}

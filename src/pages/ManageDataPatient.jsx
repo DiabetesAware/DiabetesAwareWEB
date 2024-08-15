@@ -112,6 +112,7 @@ const ManageDataUser = () => {
   const handleAddModal = () => {
     onOpen();
   };
+
   return (
     <>
       <LayoutDashboardContent>
