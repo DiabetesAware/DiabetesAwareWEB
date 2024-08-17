@@ -2,15 +2,16 @@ import { useState } from "react";
 import { Searchbar } from "../fields/Searchbar";
 import logo from '@/assets/logo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 
 export const Navbar = ({ className }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { text: "Home", link: "#" },
-    { text: "Tentang", link: "#" },
-    { text: "Artikel", link: "#" },
-    { text: "Information", link: "#" },
+    { text: "Home", link: "#home" },
+    { text: "Tentang", link: "#tentang" },
+    { text: "Artikel", link: "#artikel" },
+    { text: "Information", link: "#informasi" },
   ];
 
   const toggleMenu = () => {
@@ -29,7 +30,7 @@ export const Navbar = ({ className }) => {
             height={75}
           />
         </div>
-        <a href="" className="xl:text-3xl sm:text-md font-bold text-[#073D5B]">Si-Dihimen</a>
+        <Link to={"/"} className="xl:text-3xl sm:text-md font-bold text-[#073D5B]">Si-Dihimen</Link>
       </div>
 
       {/* Hamburger Icon */}

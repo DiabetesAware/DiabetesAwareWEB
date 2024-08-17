@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const AboutUs = () => {
   return (
     <>
-      <div className="lg:py-5 md:py-3 sm:py-1 lg:mt-14 md:mt-8 sm:mt-4 mx-auto">
+      <div id="tentang" className="lg:py-5 md:py-3 sm:py-1 lg:mt-14 md:mt-8 sm:mt-4 mx-auto">
         <div className="flex sm:flex-wrap sm:justify-end items-center">
           <div className="wrapper-text mx-auto sm:my-5 xl:w-7/12 sm:w-full xl:pl-32 sm:pl-14 sm:pr-5">
             <p className="title-text xl:text-7xl lg:text-5xl sm:text-xl  font-bold capitalize text-[#073D5B] max-w-5xl">

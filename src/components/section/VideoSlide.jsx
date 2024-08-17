@@ -1,7 +1,7 @@
 import video from '@/assets/video/Video Animasi DM & Hipertensi.mp4'
 export const VideoSlide = () => {
   return (
-    <div className="py-5 xl:mb-32 sm:mb-10 container mx-auto">
+    <div id='informasi' className="py-5 xl:mb-32 sm:mb-10 container mx-auto">
       <h2 className="text-[#073D5B] font-bold xl:text-4xl sm:text-lg  text-center xl:my-10 sm:my-5">Cek Videonya!</h2>
       <div className="video-container">
         <iframe

@@ -1,7 +1,7 @@
 import { FormControl, FormErrorMessage } from "@chakra-ui/react";
 import { Message, User } from "react-iconly";
 import { Controller } from "react-hook-form";
-import { InputFieldsWithLogo } from "@/components/fields";
+import { InputFields } from "@/components/fields";
 
 export function PatientNameFields({ control, error }) {
   return (
@@ -11,10 +11,9 @@ export function PatientNameFields({ control, error }) {
       defaultValue={""}
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label="Nama"
             placeholder="Nama Lengkap"
-            Logo={User}
             autoComplete="off"
             error={error}
             {...field}
@@ -35,10 +34,9 @@ export function PatientJenisKelaminFields({ control, error }) {
       defaultValue={""}
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label="Jenis Kelamin"
             placeholder="Jenis Kelamin"
-            Logo={User}
             autoComplete="off"
             error={error}
             {...field}
@@ -59,10 +57,9 @@ export function PatientAlamatFields({ control, error }) {
       defaultValue={""}
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label="Alamat"
             placeholder="Alamat"
-            Logo={User}
             autoComplete="off"
             error={error}
             {...field}
@@ -83,12 +80,11 @@ export function PatientNikFields({ control, error }) {
       defaultValue={""}
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label="Nomor Induk Kependudukan"
             placeholder="Nomor Induk Kependudukan"
             type="text"
             maxLength={16}
-            Logo={Message}
             autoComplete="off"
             error={error}
             {...field}
@@ -108,10 +104,9 @@ export function PatientTglLahirFields({ control, error }) {
       defaultValue={""}
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label="Tanggal Lahir"
             type="date"
-            Logo={Message}
             autoComplete="off"
             error={error}
             {...field}

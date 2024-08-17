@@ -1,7 +1,7 @@
 import { FormControl, FormErrorMessage } from "@chakra-ui/react";
-import { Hide, Lock, Message, Show, User } from "react-iconly";
+import { Hide ,Show, User } from "react-iconly";
 import { Controller } from "react-hook-form";
-import { InputFieldsWithLogo } from "@/components/fields";
+import { InputFields} from "@/components/fields";
 import { useState } from "react";
 
 export function AdminNameFields({ control, error }) {
@@ -12,9 +12,8 @@ export function AdminNameFields({ control, error }) {
       defaultValue=""
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label="Nama"
-            Logo={User}
             autoComplete="off"
             error={error}
             {...field}
@@ -35,9 +34,8 @@ export function AdminEmailFields({ control, error }) {
       defaultValue=""
       render={({ field }) => (
         <FormControl isInvalid={error}>
-          <InputFieldsWithLogo
+          <InputFields
             label={field.value ? "Email" : "Tambahkan Email"}
-            Logo={Message}
             autoComplete="off"
             error={error}
             {...field}
@@ -64,9 +62,8 @@ export function AdminPasswordFields({ name, control, error, label }) {
       render={({ field }) => (
         <FormControl isInvalid={error}>
           <div className="relative">
-            <InputFieldsWithLogo
+            <InputFields
               label={label || "Masukkan Kata Sandi"}
-              Logo={Lock}
               type={type}
               error={error}
               {...field}

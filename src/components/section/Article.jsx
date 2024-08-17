@@ -41,7 +41,7 @@ export const Article = () => {
 
   return (
     <>
-      <div className="relative sm:px-5">
+      <div id="artikel" className="relative sm:px-5">
         <div className="bg-[#073D5B] container mx-auto rounded-3xl xl:px-24 xl:py-5 sm:px-8">
           <div className="flex xl:gap-3 sm:gap-1 justify-center items-center text-white">
             <i className="xl:text-3xl sm:text-xl">
