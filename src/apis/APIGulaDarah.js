@@ -4,14 +4,11 @@ import { AxiosError } from "axios";
 export const APIGulaDarah = {
   createGds: async (data) => {
     try {
-      const token = localStorage.getItem("patient_token");
       const response = await axiosInstance.post("/gds/create-gds", data, {
         headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json", // Ubah jika data yang dikirim bukan multipart/form-data
         },
       });
-
       console.log("Create Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
@@ -54,14 +51,14 @@ export const APIGulaDarah = {
       throw error;
     }
   },
-  patchGds: async ({data, id}) => {
+  patchGds: async ({ data, id }) => {
     try {
       const response = await axiosInstance.patch(
         `/gds/update-gds/${id}`,
         data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json", // Ubah jika data yang dikirim bukan multipart/form-data
           },
         }
       );
@@ -69,7 +66,7 @@ export const APIGulaDarah = {
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Update  Gula Darah error response:", error.response);
+        console.error("Update Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);
@@ -83,7 +80,7 @@ export const APIGulaDarah = {
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Delete  Gula Darah error response:", error.response);
+        console.error("Delete Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
       console.error("Unexpected error:", error);

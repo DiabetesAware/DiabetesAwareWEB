@@ -1,12 +1,14 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
 import { Flex, Heading } from "@chakra-ui/react";
 import { DetailDataTableGulaDarah } from "@/components/tables/manage-data-gula-darah/DetailDataTableGulaDarah";
 import { Spinner } from "@/components/spinner";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPatient, fetchPatientSelector } from "@/store/manage-patient";
-import { clearPatchGdsState, patchGdsSelector } from "@/store/manage-gds";
+import {
+  fetchPatient,
+  fetchPatientSelector,
+} from "@/store/manage-patient";
 
 const DetailGulaDarah = () => {
   const { id } = useParams();
@@ -14,31 +16,16 @@ const DetailGulaDarah = () => {
   const { status, data } = useSelector(fetchPatientSelector);
   console.log("data from redux", data);
 
-  const { updateStatus } = useSelector(patchGdsSelector);
-
   useEffect(() => {
-    if (updateStatus === "success") {
-      fetchPatientData();
+    if(id){
+      dispatch(fetchPatient(id));
     }
-    return () => {
-      if (updateStatus !== "idle") dispatch(clearPatchGdsState());
-    };
-  }, []);
-
-  const fetchPatientData = useCallback(() => {
-    dispatch(fetchPatient(id));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (id) {
-      fetchPatientData();
-    }
-  }, [fetchPatientData]);
+  }, [dispatch, id]);
 
   if (status === "loading") return <Spinner />;
 
   const tableData = Array.isArray(data) ? data : [data];
-  console.log("ini data table", tableData);
+console.log("ini data table",tableData)
 
   return (
     <LayoutDashboardContent>

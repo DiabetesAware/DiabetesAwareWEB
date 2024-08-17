@@ -6,7 +6,7 @@ export function AllArticleList({ articleData }) {
     const maxDescriptionLength = 100;
 
     const handleClick = (articleId) => {
-        navigate(`/article/${articleId}`); // Mengarahkan ke halaman detail artikel
+        navigate(`/article/${articleId}`);
     };
 
     return (

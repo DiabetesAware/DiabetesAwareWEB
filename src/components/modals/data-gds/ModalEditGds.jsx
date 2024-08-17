@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Spinner } from "@/components/spinner";
 import { CloseSquare } from "react-iconly";
 import { schema } from "./GdsFormSchema";
+import { useDispatch } from "react-redux";
 import * as Fields from "./GdsFormFields";
 import {
   Button,
@@ -25,7 +26,6 @@ export function ModalEditGds({ isOpen, onClose, onSubmit }) {
     control,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm({ resolver: yupResolver(schema) });
 
@@ -33,7 +33,6 @@ export function ModalEditGds({ isOpen, onClose, onSubmit }) {
   const { status: updateStatus } = useSelector(patchGdsSelector);
 
   useEffect(() => {
-    console.log("ini data dari useEffect",data)
     if (data) {
       setValue("tanggal_periksa", data.tanggal_periksa);
       setValue("gds", data.gds);
@@ -42,26 +41,13 @@ export function ModalEditGds({ isOpen, onClose, onSubmit }) {
       setValue("nadi_per_min", data.nadi_per_min);
       setValue("frekuensi_napas_per_min", data.frekuensi_napas_per_min);
     }
-  }, [setValue, data]);
+  }, [data, setValue]);
 
   const handleOnSubmit = (data) => {
-    console.log("data modal edit gds", data);
+    console.log("ini data dari modal",data)
     onSubmit(data);
-    onClose();
+    onClose()
   };
-
-  useEffect(() => {
-    if (!isOpen) {
-      reset();
-    }
-  }, [isOpen, reset]);
-
-  useEffect(() => {
-    console.log("updateStatus:", updateStatus);
-    if (updateStatus === "success") {
-      onClose();
-    }
-  }, [updateStatus, onClose]);
 
   return (
     <Modal

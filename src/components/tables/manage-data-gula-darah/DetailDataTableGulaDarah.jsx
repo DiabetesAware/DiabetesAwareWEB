@@ -8,7 +8,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { ModalEditGds } from "@/components/modals/data-gds/ModalEditGds";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchGds ,patchGds } from "@/store/manage-gds/";
+import { fetchGds, patchGds } from "@/store/manage-gds/";
 
 export const DetailDataTableGulaDarah = ({ data }) => {
   const TablesHead = [
@@ -20,7 +20,6 @@ export const DetailDataTableGulaDarah = ({ data }) => {
     "Nafas /menit",
     "Actions",
   ];
-
 
   const [id, setId] = useState(null);
   const dispatch = useDispatch();
@@ -34,10 +33,10 @@ export const DetailDataTableGulaDarah = ({ data }) => {
   };
 
   const handleSubmitEdit = (data) => {
+    console.log("ini data dari tabel detail", data);
     dispatch(patchGds({ id, data }));
     onClose();
   };
-
 
   const gulaDarahData = data[0]?.gula_darah;
 

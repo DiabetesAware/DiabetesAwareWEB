@@ -63,24 +63,17 @@ const FormPemantauanGDS = () => {
     }
   }, [navigate]);
 
-
   const handleOnSubmit = async (formData) => {
-    const token = localStorage.getItem("patient_token"); // Pastikan ini sesuai
-    if (token) {
-      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    }
-
-    const combinedData = {
-      ...formData,
-      patient_id: userData?.id, // Pastikan `userData?.id` ada dan sesuai
-    };
-
-    console.log("Form Data:", formData);
-    console.log("Combined Data:", combinedData);
-
     setLoading(true);
     try {
-      const res = await dispatch(createGds(combinedData));
+      const token = localStorage.getItem("patient_token");
+      if (token) {
+        axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token}`;
+      }
+
+      const res = await dispatch(createGds(formData));
       if (res.payload?.code === 201) {
         console.log("Response from createGds", res);
         navigate("/done-gds");
@@ -94,12 +87,11 @@ const FormPemantauanGDS = () => {
     }
   };
 
-
   return (
     <>
       <NavbarBack />
       <div className="pt-5 xl:px-10 sm:p-5 bg-[#e7e7e7]">
-        <p className="xl:text-4xl sm:text-lg sm:text-center xl:p-4 sm:p-2 font-bold text-[#073D5B]">
+        <p className="xl:text-4xl sm:text-lg xl:text-left sm:text-center xl:p-4 sm:p-2 font-bold text-[#073D5B]">
           Form Pemantauan
         </p>
         <div className="wrapper xl:p-32 sm:p-5 bg-white grid items-center justify-center lg:grid-cols-2 shadow-xl xl:rounded-t-3xl sm:rounded-3xl">

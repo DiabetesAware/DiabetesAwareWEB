@@ -1,12 +1,12 @@
 import Cookies from "js-cookie";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { axiosInstance } from "@/config/axios";
 
 export class AuthService {
   isTokenValid() {
     try {
       const token = this.getToken();
-      console.log("Token in isTokenValid:", token);
+      // console.log("Token in isTokenValid:", token);
       if (!token) {
         return false;
       }

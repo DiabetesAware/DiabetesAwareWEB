@@ -46,7 +46,7 @@ const AllArticle = () => {
   return (
     <>
       <Navbar />
-      <div className="p-10 bg-[#e7e7e7]">
+      <div className="p-10 bg-[#e7e7e7] h-screen">
         <div className="px-20 py-10 border bg-white rounded-xl ">
           <div className="header-article flex justify-between items-center">
             <p className="text-xl text-[#073D5B] py-2 px-3 border-b-[4px] border-[#073D5B] font-bold uppercase">semua article</p>
