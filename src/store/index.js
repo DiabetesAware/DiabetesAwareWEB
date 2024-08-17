@@ -39,7 +39,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   // auth reducer
-  auth: loginReducer,
+  adminLogin: loginReducer,
   createAdmin: createAdminReducer,
 
   // admin reducers

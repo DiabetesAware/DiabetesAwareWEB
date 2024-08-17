@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { adminLogin, adminLoginSelector } from "@/store/auth";
 import logo from "@/assets/logo.png";
 
-export const Login = () => {
+const Login = () => {
   // react hooks-form
   const {
     control,
@@ -17,23 +17,30 @@ export const Login = () => {
     formState: { errors },
   } = useForm();
 
+  // use-state
   const [passwordType, setPasswordType] = useState("password");
   const { status, message } = useSelector(adminLoginSelector);
+  console.log("Toast status:", status);
+  console.log("Toast message:", message);
 
   // react-router-dom
   const navigate = useNavigate();
+
   // dispatch
   const dispatch = useDispatch();
 
   // handler submit-form
-  const handleOnSubmit = (data) => {
-    dispatch(adminLogin(data)).then((res) => {
-      console.log("ini response login:",res);
-      if (!res.payload?.status) {
+  const handleOnSubmit = async (data) => {
+    try {
+      const res = await dispatch(adminLogin(data));
+      if (res.payload.success) {
         navigate("/dashboard");
       }
-    });
+    }catch(error){
+      throw error
+    }
   };
+
 
   // handler showing password
   const handleShowPassword = (e) => {
@@ -78,6 +85,13 @@ export const Login = () => {
                 name="email"
                 control={control}
                 defaultValue=""
+                rules={{
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "Invalid email address",
+                  },
+                }}
                 render={({ field }) => (
                   <InputFieldsWithLogo
                     type="text"
@@ -101,7 +115,7 @@ export const Login = () => {
                 <Controller
                   name="password"
                   control={control}
-                  defaultValue="" // Menentukan nilai default untuk menghindari uncontrolled input
+                  defaultValue=""
                   rules={{
                     required: "Password is required",
                     minLength: {
@@ -116,6 +130,11 @@ export const Login = () => {
                       className="z-10 relative my-2"
                       placeholder="Password"
                       {...field}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleSubmit(handleOnSubmit)();
+                        }
+                      }}
                     />
                   )}
                 />
@@ -142,9 +161,10 @@ export const Login = () => {
             <div className="button-group xl:mt-10 sm:mt-5 xl:w-8/12 sm:w-10/12 mx-auto">
               <button
                 type="submit"
-                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm xl:p-5 sm:p-3 mr-2 mb-2 "
+                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm xl:p-5 sm:p-3 mr-2 mb-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                disabled={status === "loading"}
               >
-                Login
+                {status === "loading" ? "Loading..." : "Login"}
               </button>
             </div>
           </form>

@@ -30,7 +30,6 @@ const DetailGulaDarah = () => {
   const patientData = data?.datas?.find((patient) => patient.id === id);
 
   console.log("ini data table", tableData);
-  console.log("ini data patient", patientData);
 
   return (
     <LayoutDashboardContent>

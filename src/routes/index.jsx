@@ -1,5 +1,6 @@
+import { globalRoute } from "@/utils";
 //  import library
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 //  rules routing
 import PrivateRoute from "./private-route";
 import ProtectedRoute from "./protected-routed";
@@ -26,6 +27,8 @@ import Unauthorized from "@/error/Unauthorized";
 import PageNotFound from "@/error/PageNotFound";
 
 const AppRoutes = () => {
+  const navigate = useNavigate();
+  globalRoute.navigate = navigate;
   return (
     <Routes>
       {/* Public Routes */}
@@ -52,7 +55,10 @@ const AppRoutes = () => {
               </RoleBasedRoute>
             }
           />
-          <Route path="manage-gds/detail-gds/:id" element={<DetailGulaDarah />} />
+          <Route
+            path="manage-gds/detail-gds/:id"
+            element={<DetailGulaDarah />}
+          />
           <Route path="manage-user" element={<ManageDataPatient />} />
           <Route path="manage-article" element={<ManageContentArticle />} />
           <Route path="manage-gds" element={<ManageDataGulaDarah />} />

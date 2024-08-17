@@ -23,6 +23,9 @@ import {
   deletePatientSelector,
   createPatientSelector,
 } from "@/store/manage-patient";
+import {
+  clearFetchGdsState
+} from "@/store/manage-gds"
 const ManageGulaDarah = () => {
   const dispatch = useDispatch();
 
@@ -85,6 +88,11 @@ const ManageGulaDarah = () => {
     };
   }, [fetchPatientData, updateStatus, deleteStatus, createStatus, dispatch]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearFetchGdsState());
+    };
+  }, [dispatch]);
   useEffect(() => {
     return () => {
       dispatch(clearFetchAllPatientState());

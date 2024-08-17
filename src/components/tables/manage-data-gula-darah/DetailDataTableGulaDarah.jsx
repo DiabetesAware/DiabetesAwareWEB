@@ -7,9 +7,10 @@ import { CustomIconButton } from "@/components/buttons/IconButton";
 import { useDisclosure } from "@chakra-ui/react";
 import { ModalEditGds } from "@/components/modals/data-gds/ModalEditGds";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchGds, patchGds } from "@/store/manage-gds/";
-import { clearFetchGdsState } from "@/store/manage-gds";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGds, patchGds, clearFetchGdsState } from "@/store/manage-gds/";
+import { fetchGdsSelector } from "@/store/manage-gds";
+
 export const DetailDataTableGulaDarah = ({ data }) => {
   const TablesHead = [
     "Tanggal Periksa",
@@ -23,8 +24,9 @@ export const DetailDataTableGulaDarah = ({ data }) => {
 
   const [id, setId] = useState(null);
   const dispatch = useDispatch();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const gdsState = useSelector(fetchGdsSelector);
 
   const handleEditModal = (target) => {
     setId(target);
@@ -39,9 +41,10 @@ export const DetailDataTableGulaDarah = ({ data }) => {
   }, [dispatch]);
 
   const handleSubmitEdit = (data) => {
-    console.log("ini data dari tabel detail", data);
-    dispatch(patchGds({ id, data }));
-    onClose();
+    dispatch(patchGds({ id, data })).then(() => {
+      dispatch(clearFetchGdsState()); // Clear state after patch is successful
+      onClose();
+    });
   };
 
   const gulaDarahData = data[0]?.gula_darah;

@@ -10,7 +10,7 @@ const initialState = {
 export const adminLogin = createAsyncThunk("/auth/login-admin", APIAuth.login);
 
 export const loginSlice = createSlice({
-  name: "AdminLogin",
+  name: "adminLogin",
   initialState,
   reducers: {
     clearAuthState: (state) => {
@@ -25,16 +25,16 @@ export const loginSlice = createSlice({
     });
     builder.addCase(adminLogin.fulfilled, (state, action) => {
       state.status = "success";
-      state.message = action.payload?.message || "Login successful";
-      state.data = action.payload?.data || {};
+      state.message = action.payload.message;
+      state.data = action.payload.data;
     });
     builder.addCase(adminLogin.rejected, (state, action) => {
       state.status = "failed";
-      state.message = action.payload?.message || action.error.message || "Login failed";
+      state.message = action.error.message
     });
   },
 });
 
-export const adminLoginSelector = (state) => state.auth;
+export const adminLoginSelector = (state) => state.adminLogin;
 export const { clearAuthState } = loginSlice.actions;
 export const loginReducer = loginSlice.reducer;
