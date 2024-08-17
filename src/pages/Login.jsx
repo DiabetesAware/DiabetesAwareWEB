@@ -50,31 +50,29 @@ export const Login = () => {
   return (
     <>
       <div className="flex justify-center items-center mx-auto h-screen bg-[#073D5B]">
-        <div className="container">
+        <div className="container sm:p-5">
           {/* Form */}
           <form
-            className="px-16 py-20 w-6/12  mx-auto border bg-white rounded-3xl"
+            className="xl:px-16 xl:py-20 xl:w-6/12 sm:py-4 mx-auto border bg-white rounded-3xl"
             onSubmit={handleSubmit(handleOnSubmit)}
           >
             {/* wrapper text */}
             <div className="wrapper-text my-5">
               <img
                 src={logo}
-                className="rounded-full mx-auto my-5 "
-                width={225}
-                height={225}
+                className="rounded-full mx-auto my-5 sm:w-[150px] sm:h-[150px]"
                 alt="Logo"
               />
-              <h1 className="text-4xl font-bold text-center text-[#073D5B]">
+              <h1 className="xl:text-4xl sm:text-2xl font-bold text-center text-[#073D5B]">
                 Selamat Datang
               </h1>
-              <p className="text-[#073D5B] text-xl text-center capitalize mt-2">
+              <p className="text-[#073D5B] xl:text-xl sm:text-sm text-center capitalize mt-2">
                 Silahkan login terlebih dahulu
               </p>
             </div>
 
             {/* wrapper input */}
-            <div className="wrapper-input flex flex-col w-8/12 mx-auto">
+            <div className="wrapper-input flex flex-col xl:w-8/12 sm:w-10/12 mx-auto">
               {/* email */}
               <Controller
                 name="email"
@@ -141,10 +139,10 @@ export const Login = () => {
             </div>
 
             {/* wrapper button */}
-            <div className="button-group mt-10 w-8/12 mx-auto">
+            <div className="button-group xl:mt-10 sm:mt-5 xl:w-8/12 sm:w-6/12 mx-auto">
               <button
                 type="submit"
-                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-5 mr-2 mb-2 "
+                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm xl:p-5 sm:p-3 mr-2 mb-2 "
               >
                 Login
               </button>
