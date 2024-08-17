@@ -2,7 +2,6 @@ import { APIGulaDarah } from "@/apis/APIGulaDarah";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: {},
   status: "idle",
   message: "",
 };
@@ -25,12 +24,11 @@ export const patchGdsSlice = createSlice({
     });
     builder.addCase(patchGds.fulfilled, (state, action) => {
       state.status = "success";
-      state.message = action.payload?.message || "Login successful";
-      state.data = action.payload?.data || {};
+      state.message = action.payload?.message;
     });
     builder.addCase(patchGds.rejected, (state, action) => {
       state.status = "failed";
-      state.message = action.payload?.message || action.error.message || "Login failed";
+      state.message = action.error.message;
     });
   },
 });

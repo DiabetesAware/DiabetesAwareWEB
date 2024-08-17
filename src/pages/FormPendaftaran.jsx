@@ -45,7 +45,7 @@ const FormPendaftaran = () => {
         if (res.payload && res.payload.code === 201) {
           if (res.payload.data && res.payload.data.token) {
             console.log("ini token patient", res.payload.data.token);
-            localStorage.setItem("tokenPatient", res.payload.data.token);
+            localStorage.setItem("patient_token", res.payload.data.token);
           } else {
             console.warn("Token is not present in the response.");
           }
@@ -67,19 +67,17 @@ const FormPendaftaran = () => {
   return (
     <>
       <NavbarBack />
-      <div className="pt-5 px-10 bg-[#e7e7e7]">
-        <p className="text-4xl p-4 font-bold text-[#073D5B]">
+      <div className="pt-5 xl:px-10 sm:p-5 bg-[#e7e7e7]">
+        <p className="xl:text-4xl sm:text-lg sm:text-center xl:p-4 sm:p-2 font-bold text-[#073D5B]">
           Form Pendaftaran Akun Baru
         </p>
-        <div className="wrapper p-32 bg-white grid items-center justify-center lg:grid-cols-2 shadow-xl rounded-t-3xl">
+        <div className="wrapper xl:p-32 sm:p-5 bg-white grid items-center justify-center lg:grid-cols-2  shadow-xl xl:rounded-t-3xl sm:rounded-3xl">
           <form
-            className="form-register p-16 bg-white shadow-xl rounded-lg border"
+            className="form-register xl:p-16 sm:p-8 bg-white xl:shadow-xl rounded-lg xl:border"
             onSubmit={handleSubmit(handleOnSubmit)}
           >
             {feedbackMessage && (
-              <p className="text-red-500 text-center mb-4">
-                {feedbackMessage}
-              </p>
+              <p className="text-red-500 text-center mb-4">{feedbackMessage}</p>
             )}
 
             {/* Nama Lengkap */}
@@ -178,7 +176,7 @@ const FormPendaftaran = () => {
             {/* Button */}
             <button
               type="submit"
-              className={`w-full p-5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg mt-10 ${
+              className={`w-full xl:p-5 sm:p-2.5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg xl:mt-10  ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={loading}
@@ -187,7 +185,7 @@ const FormPendaftaran = () => {
             </button>
           </form>
           <img
-            className="mx-auto"
+            className="mx-auto sm:mt-10 sm:order-first"
             src={ilustrasi}
             alt="Ilustrasi Pendaftaran"
           />

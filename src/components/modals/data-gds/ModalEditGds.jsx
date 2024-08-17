@@ -1,3 +1,10 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { Spinner } from "@/components/spinner";
+import { CloseSquare } from "react-iconly";
+import { schema } from "./GdsFormSchema";
+import * as Fields from "./GdsFormFields";
 import {
   Button,
   Flex,
@@ -10,37 +17,35 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { CloseSquare } from "react-iconly";
-import { fetchAdminSelector, patchAdminSelector } from "@/store/manage-admin";
-import { schema } from "./AdminFormSchema";
-import { Spinner } from "@/components/spinner";
+import { fetchGdsSelector, patchGdsSelector } from "@/store/manage-gds";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Fields from "./AdminFormFields";
 
-export function ModalEditAdmin({ isOpen, onClose, onSubmit }) {
+export function ModalEditGds({ isOpen, onClose, onSubmit }) {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
+    reset,
     setValue,
   } = useForm({ resolver: yupResolver(schema) });
 
-  const { data, status } = useSelector(fetchAdminSelector);
-  const { status: updateStatus } = useSelector(patchAdminSelector);
+  const { data, status } = useSelector(fetchGdsSelector);
+  const { status: updateStatus } = useSelector(patchGdsSelector);
 
   useEffect(() => {
+    console.log("ini data dari useEffect",data)
     if (data) {
-      setValue("nama", data.nama);
-      setValue("email", data.email);
-      setValue("password", data.password);
+      setValue("tanggal_periksa", data.tanggal_periksa);
+      setValue("gds", data.gds);
+      setValue("tekanan_darah_sistolik", data.tekanan_darah_sistolik);
+      setValue("tekanan_darah_diastolik", data.tekanan_darah_diastolik);
+      setValue("nadi_per_min", data.nadi_per_min);
+      setValue("frekuensi_napas_per_min", data.frekuensi_napas_per_min);
     }
-  }, [setValue,data]);
+  }, [setValue, data]);
 
   const handleOnSubmit = (data) => {
+    console.log("data modal edit gds", data);
     onSubmit(data);
     onClose();
   };
@@ -52,10 +57,11 @@ export function ModalEditAdmin({ isOpen, onClose, onSubmit }) {
   }, [isOpen, reset]);
 
   useEffect(() => {
+    console.log("updateStatus:", updateStatus);
     if (updateStatus === "success") {
       onClose();
     }
-  }, [onClose, updateStatus]);
+  }, [updateStatus, onClose]);
 
   return (
     <Modal
@@ -71,7 +77,7 @@ export function ModalEditAdmin({ isOpen, onClose, onSubmit }) {
           <Spinner containerSize={"lg"} />
         ) : (
           <>
-            <ModalHeader fontSize={20}>Edit Data Admin</ModalHeader>
+            <ModalHeader fontSize={20}>Edit Data GDS</ModalHeader>
             <IconButton
               as={ModalCloseButton}
               icon={<CloseSquare size={"large"} />}
@@ -87,21 +93,26 @@ export function ModalEditAdmin({ isOpen, onClose, onSubmit }) {
 
             <form onSubmit={handleSubmit(handleOnSubmit)}>
               <ModalBody as={Flex} direction={"column"} gap={"1rem"}>
-                <Fields.AdminNameFields control={control} error={errors.nama} />
-                <Fields.AdminEmailFields
+                <Fields.TanggalPeriksaFields
                   control={control}
-                  error={errors.email}
+                  error={errors.tanggal_periksa}
                 />
-                <Fields.AdminPasswordFields
-                  name={"password"}
+                <Fields.GdsFields control={control} error={errors.gds} />
+                <Fields.TekananDarahSistolikFields
                   control={control}
-                  error={errors.password}
+                  error={errors.tekanan_darah_sistolik}
                 />
-                <Fields.AdminPasswordFields
-                  name={"confirm_password"}
-                  label={"Konfirmasi Kata Sandi"}
+                <Fields.TekananDarahDiastolikFields
                   control={control}
-                  error={errors.confirm_password}
+                  error={errors.tekanan_darah_diastolik}
+                />
+                <Fields.NadiPerMenitFields
+                  control={control}
+                  error={errors.nadi_per_min}
+                />
+                <Fields.FrekuensiNafasFields
+                  control={control}
+                  error={errors.frekuensi_napas_per_min}
                 />
               </ModalBody>
               <ModalFooter justifyContent={"center"} gap={"12px"}>

@@ -1,13 +1,10 @@
 import { useState } from "react";
-import {
-  MdKeyboardArrowRight,
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowDown,
-} from "react-icons/md";
-import pp from "@/assets/PP.jpg";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { authService } from "@/config";
+// import pp from "@/assets/PP.jpg";
 export const NavbarDashboard = ({ setCollapse, collapse }) => {
   const [toast, setToast] = useState(false);
-
+  const { nama, email } = authService.getDataAdmin();
   const handleClick = () => {
     setToast(!toast);
   };
@@ -31,12 +28,16 @@ export const NavbarDashboard = ({ setCollapse, collapse }) => {
       >
         <div className="flex items-center gap-5">
           <div className="wrapper">
-            <p className="text-white text-xl font-semibold">Admin</p>
-            <p className="text-white text-sm">admin@gmail.com</p>
+            <p className="text-white text-xl font-semibold" >
+              {nama}
+            </p>
+            <p className="text-white text-sm" >
+              {email}
+            </p>
           </div>
           <img
             className="w-[50px] h-[50px] rounded-full border"
-            src={pp}
+            src={`https://ui-avatars.com/api/?name=${nama}&background=0D8ABC&color=fff&size=128`}
             alt=""
           />
         </div>
@@ -45,3 +46,11 @@ export const NavbarDashboard = ({ setCollapse, collapse }) => {
   );
 };
 
+// const namaStyle = {
+//   lineHeight: "1.2rem",
+// };
+// const emailStyle = {
+//   fontSize: "10px",
+//   color: "#828282",
+//   lineHeight: "1rem",
+// };

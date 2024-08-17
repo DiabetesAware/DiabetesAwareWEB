@@ -30,11 +30,16 @@ export const APIAdmin = {
       throw error;
     }
   },
-  patchAdmin: async (data, id) => {
+  patchAdmin: async ({data, id}) => {
     try {
       const response = await axiosInstance.patch(
         `/management-admin/update/${id}`,
-        data
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("Update Admin response:", response.data);
       return response.data;

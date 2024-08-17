@@ -59,6 +59,7 @@ export const DataTableAdmin = ({ data, currentPage, itemsPerPage }) => {
 
   const handleSubmitEdited = (data) => {
     dispatch(patchAdmin({ id, data }));
+    onCloseEdit();
   };
   return (
     <>

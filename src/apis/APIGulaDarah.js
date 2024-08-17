@@ -1,4 +1,3 @@
-
 import { axiosInstance } from "@/config";
 import { AxiosError } from "axios";
 
@@ -55,7 +54,7 @@ export const APIGulaDarah = {
       throw error;
     }
   },
-  patchGds: async (data, id) => {
+  patchGds: async ({data, id}) => {
     try {
       const response = await axiosInstance.patch(
         `/gds/update-gds/${id}`,

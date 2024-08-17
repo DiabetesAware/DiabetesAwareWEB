@@ -1,4 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from "redux";
 
 // auth
 import { loginReducer, createAdminReducer } from "./auth";
@@ -29,30 +32,41 @@ import {
   deleteGdsReducer
 } from "./manage-gds/";
 
-export const store = configureStore({
-  reducer: {
-    // auth reducer
-    auth: loginReducer,
-    createAdmin: createAdminReducer,
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
-    // admin reducer
-    fetchAllAdmin: fetchAllAdminReducer,
-    fetchAdmin: fetchAdminReducer,
-    patchAdmin: patchAdminReducer,
-    deleteAdmin: deleteAdminReducer,
+const rootReducer = combineReducers({
+  // auth reducer
+  auth: loginReducer,
+  createAdmin: createAdminReducer,
 
-    // gds reducer
-    fetchAllGds: fetchAllGdsReducer,
-    fetchGds: fetchGdsReducer,
-    deleteGds: deleteGdsReducer,
-    patchGds: patchGdsReducer,
-    createGds: createGdsReducer,
+  // admin reducers
+  fetchAllAdmin: fetchAllAdminReducer,
+  fetchAdmin: fetchAdminReducer,
+  patchAdmin: patchAdminReducer,
+  deleteAdmin: deleteAdminReducer,
 
-    // patient reducer
-    fetchAllPatient: fetchAllPatientReducer,
-    fetchPatient: fetchPatientReducer,
-    patchPatient: patchPatientReducer,
-    deletePatient: deletePatientReducer,
-    createPatient: createPatientReducer,
-  },
+  // gds reducers
+  fetchAllGds: fetchAllGdsReducer,
+  fetchGds: fetchGdsReducer,
+  deleteGds: deleteGdsReducer,
+  patchGds: patchGdsReducer,
+  createGds: createGdsReducer,
+
+  // patient reducers
+  fetchAllPatient: fetchAllPatientReducer,
+  fetchPatient: fetchPatientReducer,
+  patchPatient: patchPatientReducer,
+  deletePatient: deletePatientReducer,
+  createPatient: createPatientReducer,
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export const persistor = persistStore(store);

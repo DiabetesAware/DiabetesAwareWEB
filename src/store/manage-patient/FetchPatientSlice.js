@@ -30,7 +30,7 @@ export const fetchPatientSlice = createSlice({
     });
     builder.addCase(fetchPatient.rejected, (state, action) => {
       state.status = "failed";
-      state.message = action.payload?.message || action.error.message || "Login failed";
+      state.message = action.error.message;
     });
   },
 });

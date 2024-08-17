@@ -46,11 +46,30 @@ export class AuthService {
 
   getAdminRole() {
     if (this.isAuthorized()) {
-      const { id, role } = jwtDecode(this.getToken());
+      const { id, role, nama, email } = jwtDecode(this.getToken());
       console.log("Admin role:", role);
-      return { id, role };
+      return { id, role, nama, email }; // Return nama and email as well
     }
     return null;
+  }
+
+  getDataAdmin() {
+    if (this.isAuthorized()) {
+      const { nama, email } = jwtDecode(this.getToken());
+      return { nama, email };
+    }
+    return null;
+  }
+
+  setDataAdmin({ nama, email }) {
+    const exp = jwtDecode(this.getToken()).exp;
+    const data = {
+      nama: nama,
+      email: email,
+    };
+    Cookies.set("data", JSON.stringify(data), {
+      expires: new Date(exp * 1000),
+    });
   }
 
   async getUserData(token) {

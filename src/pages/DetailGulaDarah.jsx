@@ -1,32 +1,44 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
 import { Flex, Heading } from "@chakra-ui/react";
 import { DetailDataTableGulaDarah } from "@/components/tables/manage-data-gula-darah/DetailDataTableGulaDarah";
 import { Spinner } from "@/components/spinner";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchGds,
-  fetchGdsSelector,
-  clearFetchGdsState,
-} from "@/store/manage-gds";
+import { fetchPatient, fetchPatientSelector } from "@/store/manage-patient";
+import { clearPatchGdsState, patchGdsSelector } from "@/store/manage-gds";
 
 const DetailGulaDarah = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { data, status } = useSelector(fetchGdsSelector);
-  console.log("Data dari Redux store:", data);
+  const { status, data } = useSelector(fetchPatientSelector);
+  console.log("data from redux", data);
+
+  const { updateStatus } = useSelector(patchGdsSelector);
+
+  useEffect(() => {
+    if (updateStatus === "success") {
+      fetchPatientData();
+    }
+    return () => {
+      if (updateStatus !== "idle") dispatch(clearPatchGdsState());
+    };
+  }, []);
+
+  const fetchPatientData = useCallback(() => {
+    dispatch(fetchPatient(id));
+  }, [dispatch]);
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchGds(id));
+      fetchPatientData();
     }
-    return () => {
-      dispatch(clearFetchGdsState());
-    };
-  }, [id, dispatch]);
+  }, [fetchPatientData]);
+
+  if (status === "loading") return <Spinner />;
 
   const tableData = Array.isArray(data) ? data : [data];
+  console.log("ini data table", tableData);
 
   return (
     <LayoutDashboardContent>
