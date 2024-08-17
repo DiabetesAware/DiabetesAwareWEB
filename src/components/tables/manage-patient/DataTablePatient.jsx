@@ -75,7 +75,7 @@ export const DataTablePatient = ({ data, currentPage, itemsPerPage }) => {
         deleteStatus={deleteStatusPatient}
         isLoading={deleteStatusPatient === "loading"}
       />
-      <BaseTable data={data} heads={TablesHead}>
+      <BaseTable data={data} heads={TablesHead} >
         {data.map((row, rowIndex) => (
           <TableBodyRow key={rowIndex} index={rowIndex}>
             <CenteredCell>

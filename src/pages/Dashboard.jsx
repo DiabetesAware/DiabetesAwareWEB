@@ -44,7 +44,7 @@ export default function Dashboard() {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-wrap gap-5 p-5 border bg-[#fff] h-full">
+        <div className="flex flex-wrap gap-5 p-5 border bg-[#fff] max-h-[730px] ">
           <div className="w-full total-info grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-5">
             {totalUsers.map((item, i) => (
               <div

@@ -134,7 +134,7 @@ const ManageGulaDarah = () => {
         gap={"1.5rem"}
         p={"1.5rem"}
       >
-        <Flex alignItems={"center"} justifyContent={"space-between"}>
+        <Flex alignItems={"center"} maxH={"730px"} justifyContent={"space-between"}>
           <Searchbar className="wrapper w-3/12" onSearch={handleSearch} />
           <Button
             backgroundColor={"#073D5B"}

@@ -76,7 +76,7 @@ const ManageContentArticle = () => {
     <>
       <LayoutDashboardContent>
         <p className="text-title text-3xl font-bold mb-5">Daftar Konten</p>
-        <div className="w-full h-full flex flex-col p-5 border bg-[#fff] gap-5 ">
+        <div className="w-full max-h-[730px] flex flex-col p-5 border bg-[#fff] gap-5 ">
           <div className="flex justify-between items-center">
             <Searchbar
               onSearch={handleSearch}

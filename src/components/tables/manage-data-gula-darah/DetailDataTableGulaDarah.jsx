@@ -6,10 +6,10 @@ import { Edit2 } from "iconsax-react";
 import { CustomIconButton } from "@/components/buttons/IconButton";
 import { useDisclosure } from "@chakra-ui/react";
 import { ModalEditGds } from "@/components/modals/data-gds/ModalEditGds";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchGds, patchGds } from "@/store/manage-gds/";
-
+import { clearFetchGdsState } from "@/store/manage-gds";
 export const DetailDataTableGulaDarah = ({ data }) => {
   const TablesHead = [
     "Tanggal Periksa",
@@ -31,6 +31,12 @@ export const DetailDataTableGulaDarah = ({ data }) => {
     dispatch(fetchGds(target));
     onOpen();
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearFetchGdsState());
+    };
+  }, [dispatch]);
 
   const handleSubmitEdit = (data) => {
     console.log("ini data dari tabel detail", data);

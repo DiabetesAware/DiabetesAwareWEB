@@ -5,10 +5,7 @@ import { DetailDataTableGulaDarah } from "@/components/tables/manage-data-gula-d
 import { Spinner } from "@/components/spinner";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchPatient,
-  fetchPatientSelector,
-} from "@/store/manage-patient";
+import { fetchPatient, fetchPatientSelector,clearFetchPatientState } from "@/store/manage-patient";
 
 const DetailGulaDarah = () => {
   const { id } = useParams();
@@ -17,15 +14,23 @@ const DetailGulaDarah = () => {
   console.log("data from redux", data);
 
   useEffect(() => {
-    if(id){
+    if (id) {
       dispatch(fetchPatient(id));
     }
   }, [dispatch, id]);
 
-  if (status === "loading") return <Spinner />;
+  useEffect(() => {
+    return () => {
+      dispatch(clearFetchPatientState());
+    };
+  }, [dispatch]);
 
+  if (status === "loading") return <Spinner />;
   const tableData = Array.isArray(data) ? data : [data];
-console.log("ini data table",tableData)
+  const patientData = data?.datas?.find((patient) => patient.id === id);
+
+  console.log("ini data table", tableData);
+  console.log("ini data patient", patientData);
 
   return (
     <LayoutDashboardContent>

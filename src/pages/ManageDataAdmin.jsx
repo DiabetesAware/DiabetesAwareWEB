@@ -123,7 +123,7 @@ const ManageDataAdmin = () => {
           onSubmit={handleSubmitData}
         />
         <p className="text-title text-3xl font-bold mb-5">Manage Admin</p>
-        <div className="w-full h-full flex flex-col p-5 border bg-[#fff] gap-5 ">
+        <div className="w-full max-h-[730px]  flex flex-col p-5 border bg-[#fff] gap-5 ">
           <div className="flex justify-between items-center">
             <Searchbar className="w-3/12" onSearch={handleSearch} />
             <button

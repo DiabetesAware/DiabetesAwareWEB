@@ -6,7 +6,7 @@ import { useState, useCallback, useEffect } from "react";
 import { DataTablePatient } from "@/components/tables/manage-patient/DataTablePatient";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure,Heading,Flex, Button } from "@chakra-ui/react";
 import { Spinner } from "@/components/spinner";
 import { ModalAddPatient } from "@/components/modals/manage-patient/ModalAddPatient";
 import { useDispatch, useSelector } from "react-redux";
@@ -114,46 +114,69 @@ const ManageDataUser = () => {
   };
 
   return (
-    <>
-      <LayoutDashboardContent>
-        <ModalAddPatient
-          isOpen={isOpen}
-          onClose={onClose}
-          onSubmit={handleSubmitData}
-        />
-        <p className="text-title text-2xl font-bold mb-5">Manage User</p>
-        <div className="w-full h-full flex flex-col p-5 border bg-[#fff] gap-5 ">
-          <div className="flex justify-between items-center">
-            <Searchbar className="w-3/12" onSearch={handleSearch} />
-            <button
-              className="my-auto flex items-center h-fit py-4 px-5 gap-[10px] rounded-[10px] bg-[#073D5B] text-white"
-              onClick={handleAddModal}
-            >
-              <BsPlus className="text-2xl" />
-              <p>Tambah Data</p>
-            </button>
-          </div>
-          {status === "success" && (
-            <>
-              <DataTablePatient
-                currentPage={currentPage}
-                data={filteredData}
-                itemsPerPage={itemsPerPage}
-              />
-              <Pagination
-                currentPage={currentPage}
-                itemsPerPage={itemsPerPage}
-                onChangeItemsPerPage={setItemsPerPage}
-                onChangePage={setCurrentPage}
-                totalItems={count_data}
-              />
-            </>
-          )}
-        </div>
+    <LayoutDashboardContent>
+      <ModalAddPatient
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleSubmitData}
+      />
+      <Heading
+        as="h1"
+        color={"#201A18"}
+        fontSize={"2xl"}
+        fontWeight="bold"
+        mb={"1.5rem"}
+      >
+        Manage User
+      </Heading>
+      <Flex
+        bg={"white"}
+        borderRadius={"xl"}
+        // maxH={"730px"}
+        boxShadow={"md"}
+        direction={"column"}
+        gap={"1.5rem"}
+        p={"1.5rem"}
+      >
+        <Flex
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Searchbar className="wrapper w-3/12" onSearch={handleSearch} />
+          <Button
+            backgroundColor={"#073D5B"}
+            color={"white"}
+            width={"12rem"}
+            height={"4rem"}
+            _hover={"#073D5B"}
+            borderRadius={"10px"}
+            gap={"10px"}
+            onClick={handleAddModal}
+          >
+            <BsPlus className="text-2xl" />
+            Tambah Data
+          </Button>
+        </Flex>
+        {status === "success" && (
+          <>
+            <DataTablePatient
+              currentPage={currentPage}
+              data={filteredData}
+              itemsPerPage={itemsPerPage}
+            />
+            <Pagination
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              onChangeItemsPerPage={setItemsPerPage}
+              onChangePage={setCurrentPage}
+              totalItems={count_data}
+            />
+          </>
+        )}
         {status === "loading" && <Spinner />}
         {status === "failed" && <p>{message}</p>}
-      </LayoutDashboardContent>
-    </>
+      </Flex>
+    </LayoutDashboardContent>
   );
 };
 
