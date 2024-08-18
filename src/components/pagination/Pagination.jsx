@@ -38,11 +38,16 @@ export function Pagination({
 		<Flex
 			justify="space-between"
 			align="center"
+			direction={{ base: "column", sm: "row" }} // responsive direction
+			wrap="wrap"
+			gap={{ base: "1rem", sm: "0" }} // spacing for small screens
+			py={2} // padding for spacing
 		>
 			<Flex
-				justify="start"
+				justify={{ base: "center", sm: "start" }}
 				align="center"
-				gap={"1.5rem"}
+				gap={{ base: "0.5rem", sm: "1.5rem" }}
+				direction={{ base: "column", sm: "row" }} // responsive direction
 			>
 				<Flex
 					justify="start"
@@ -50,14 +55,14 @@ export function Pagination({
 					gap={"1.25rem"}
 				>
 					<Text
-						fontSize="sm"
+						fontSize={{ base: "xs", sm: "sm" }} // responsive font size
 						color="gray.400"
 					>
 						Menampilkan
 					</Text>
 					<Select
 						variant="outline"
-						fontSize="sm"
+						fontSize={{ base: "xs", sm: "sm" }} // responsive font size
 						defaultValue={itemsPerPage}
 						cursor={"pointer"}
 						onChange={(e) => handleLimitPage(e)}
@@ -73,8 +78,9 @@ export function Pagination({
 					</Select>
 				</Flex>
 				<Text
-					fontSize="sm"
+					fontSize={{ base: "xs", sm: "sm" }} // responsive font size
 					color="gray.400"
+					textAlign={{ base: "center", sm: "left" }} // centered text on small screens
 				>
 					Menampilkan {startItem} sampai {endItem} dari {totalItems} data
 				</Text>
@@ -83,6 +89,7 @@ export function Pagination({
 				justify="start"
 				align="center"
 				gap={2.5}
+				mt={{ base: "1rem", sm: "0" }} // spacing for small screens
 			>
 				<IconButton
 					icon={<ArrowLeft2 />}
@@ -95,7 +102,7 @@ export function Pagination({
 						variant="outline"
 						borderColor="#073D5B"
 						color="#073D5B"
-						fontSize="sm"
+						fontSize={{ base: "xs", sm: "sm" }} // responsive font size
 						isDisabled
 					>
 						1
@@ -109,7 +116,7 @@ export function Pagination({
 								currentPage === startPage + index ? "#073D5B" : "none"
 							}
 							color={currentPage === startPage + index ? "#073D5B" : "black "}
-							fontSize="sm"
+							fontSize={{ base: "xs", sm: "sm" }} // responsive font size
 							onClick={() => onChangePage(startPage + index)}
 						>
 							{startPage + index}

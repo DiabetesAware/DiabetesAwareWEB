@@ -1,73 +1,66 @@
 import { AxiosError } from "axios";
-import { axiosInstance } from "@/config/axios";
+import { axiosInstance } from "@/config";
 
 export const APIArticle = {
-  getAllArticle: async (search, limit, page = 1) => {
+  getAllArticle: async (title = "", page, pageSize) => {
     try {
       const response = await axiosInstance.get(
-        `?search=${search}&limit=${limit}&page=${page}`
+        `/article?title=${title}&page=${page}&pageSize=${pageSize}`
       );
-      console.log("Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Article error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
-  getArticleById: async (id) => {
+  getArticle: async (id) => {
     try {
       const response = await axiosInstance.get(`/article/${id}`);
-      console.log("Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Article error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
-  addArticle: async (data) => {
+  createArticle: async (data) => {
     try {
       const response = await axiosInstance.post(
         "/article/create-article",
         data,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            'Content-Type': 'multipart/form-data'
+          }
         }
       );
-      console.log("Create Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Article error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
-  updateArticle: async (data, id) => {
+  patchArticle: async ({data, id}) => {
     try {
       const response = await axiosInstance.patch(
         `/article/update-article/${id}`,
-        data
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       );
-      console.log("Update Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Article error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
@@ -76,11 +69,9 @@ export const APIArticle = {
       const response = await axiosInstance.delete(
         `/article/delete-article/${id}`
       );
-      console.log("Delete Article response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Article error response:", error.response);
         throw new Error(error.response.data.message);
       }
     }

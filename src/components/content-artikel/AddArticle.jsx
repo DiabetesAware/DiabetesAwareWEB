@@ -2,16 +2,19 @@ import { useRef, useState } from "react";
 import TextEditor from "./TextEditor";
 import { UploadImageIcon } from "../icons";
 import { APIArticle } from "@/apis/APIArticle";
-import {Spinner} from '../spinner'
+import { Spinner } from "../spinner";
+import { InputFields } from "@/components/fields/InputFields";
 
-function AddArticle({ onClose, setToastMessage }) {
+function AddArticle({ onClose }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [previewImage, setPreviewImage] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
   const [articleData, setArticleData] = useState({
     title: "",
-    content: "",
-    image: null,
+    description: "",
+    img_url: null,
+    pdf_url: null,
   });
+
   const [errorImage, setErrorImage] = useState("");
   const categoryHeight = useRef(null);
   const titleWidth = useRef(null);
@@ -19,44 +22,99 @@ function AddArticle({ onClose, setToastMessage }) {
   // HandleImage Error
   function handleImage(e) {
     setErrorImage("");
-    const validTypes = ["image/jpg", "image/png"];
+    const validTypes = ["image/jpg", "image/jpeg", "image/png"];
+
     try {
       if (e.target.files && e.target.files[0]) {
-        if (!validTypes.includes(e.target.files[0].type))
-          return setErrorImage("format file berupa .jpg atau .png");
-        if (e.target.files[0].size > 5000000)
-          return setErrorImage("ukuran file maksimal 5 Mb");
-        const objUrl = URL.createObjectURL(e.target.files[0]);
-        setPreviewImage(objUrl);
-        setArticleData((prev) => ({ ...prev, image: e.target.files[0] }));
+        const file = e.target.files[0];
+        console.log("File type:", file.type);
+
+        if (!validTypes.includes(file.type)) {
+          return setErrorImage("Format file berupa .jpg, .jpeg, atau .png");
+        }
+
+        if (file.size > 10000000) {
+          return setErrorImage("Ukuran file maksimal 10 MB");
+        }
+
+        convertToBase64(file)
+          .then((base64String) => {
+            setPreviewImage(URL.createObjectURL(file));
+            setArticleData((prev) => ({
+              ...prev,
+              img_url: base64String,
+            }));
+          })
+          .catch((error) => {
+            console.error("Error converting file to base64:", error);
+          });
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  // Log articleData to see if values are being set correctly
-  console.log('articleData:', articleData);
+  // HandlePdfFile
+  function handlePdfFile(e) {
+    const validPdfTypes = ["application/pdf"];
+    const file = e.target.files[0];
+
+    if (file) {
+      const fileType = file.type;
+
+      if (validPdfTypes.includes(fileType)) {
+        if (file.size > 10000000) {
+          setErrorImage("Ukuran file maksimal 10 MB");
+          return;
+        }
+
+        convertToBase64(file)
+          .then((base64String) => {
+            setArticleData((prev) => ({
+              ...prev,
+              pdf_url: base64String,
+            }));
+          })
+          .catch((error) => {
+            console.error("Error converting PDF to base64:", error);
+          });
+      } else {
+        setErrorImage("Format file tidak sesuai, hanya PDF yang diperbolehkan.");
+      }
+    }
+  }
+
+  // Convert file to base64
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   // HandleCreate Article
   function handleCreateArticle() {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("title", articleData.title);
-    formData.append("content", articleData.content);
-    formData.append("image", articleData.image);
-    console.log("Sending article data:", articleData);
+    formData.append("description", articleData.description);
+    formData.append("img_url", articleData.img_url);  // Ensure this is handled correctly on the backend
+    formData.append("pdf_url", articleData.pdf_url);  // Ensure this is handled correctly on the backend
 
-    APIArticle.addArticle(formData)
+    APIArticle.createArticle(formData)
       .then((res) => {
         console.log("Article added successfully:", res);
-        setToastMessage({ status: "success", message: res.message });
         setIsLoading(false);
         onClose(true);
       })
       .catch((err) => {
         console.error("Error adding article:", err);
-        setToastMessage({ status: "error", message: err.message });
         setIsLoading(false);
       });
   }
@@ -88,6 +146,11 @@ function AddArticle({ onClose, setToastMessage }) {
         </div>
 
         <div ref={categoryHeight} className="flex flex-col max-w-[328px]">
+          <InputFields
+            type={"file"}
+            placeholder="files"
+            onChange={handlePdfFile}
+          />
           <div
             className={`relative mt-6 h-52 rounded-xl ${
               !previewImage && "border"
@@ -116,7 +179,7 @@ function AddArticle({ onClose, setToastMessage }) {
           </div>
           <p className="text-sm text-center text-red-500">{errorImage}</p>
           <p className="mt-2 text-sm text-center text-[#828282]">
-            Max 5 Mb, Format JPG & PNG
+            Max 10 Mb, Format JPG & PNG
           </p>
           <div className="mt-auto flex gap-3 justify-between text-white">
             <button
@@ -130,8 +193,8 @@ function AddArticle({ onClose, setToastMessage }) {
               disabled={
                 isLoading ||
                 !articleData.title ||
-                !articleData.image ||
-                !articleData.content
+                !articleData.img_url ||
+                !articleData.description
               }
               onClick={handleCreateArticle}
               className="p-4 w-full rounded-lg bg-[#073D5B] disabled:opacity-50 hover:opacity-90 flex gap-2 justify-center"
@@ -147,4 +210,3 @@ function AddArticle({ onClose, setToastMessage }) {
 }
 
 export default AddArticle;
-

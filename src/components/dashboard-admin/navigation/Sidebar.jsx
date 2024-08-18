@@ -1,24 +1,33 @@
+import { useState, useEffect } from "react";
 import { SideBarItem, LogoutItem } from "./SidebarItem";
 import { LuScrollText } from "react-icons/lu";
 import { FaRegUser, FaStethoscope, FaLaptop } from "react-icons/fa";
-import { useState } from "react";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { authService } from "@/config";
+
 export const SideBar = ({ setCollapse, collapse }) => {
   const [expandedMenu, setExpandedMenu] = useState("");
+  const [userRole, setUserRole] = useState("");
 
+  useEffect(() => {
+    const { role } = authService.getAdminRole();
+    setUserRole(role);
+  }, []);
 
   const menuItems = [
-    { name: "Dashboard", logo: <FaLaptop />, path: "/dashboard-admin" },
-    { name: "Manage Admin", logo: <FaRegUser />, path: "/manage-admin" },
-    { name: "Manage Artikel", logo: <LuScrollText />, path: "/manage-artikel" },
-
-    { name: "Manage Gula Darah", logo: <FaStethoscope />, path: "/manage-gds" },
+    { name: "Dashboard", logo: <FaLaptop />, path: "/dashboard" },
+    ...(userRole === "SUPER_ADMIN" ? [{ name: "Manage Admin", logo: <MdOutlineAdminPanelSettings />, path: "/dashboard/manage-admin" }] : []),
+    { name: "Manage User", logo: <FaRegUser />, path: "/dashboard/manage-user" },
+    { name: "Manage Artikel", logo: <LuScrollText />, path: "/dashboard/manage-article" },
+    { name: "Manage Gula Darah", logo: <FaStethoscope />, path: "/dashboard/manage-gds" },
   ];
+
 
   return (
     <nav
-      className={`fixed h-screen  flex flex-col justify-between items-center py-10 shadow-md transition-all bg-white z-10 ${
+      className={`fixed h-screen flex flex-col justify-between items-center py-10 shadow-md transition-all bg-white z-10 ${
         collapse ? "w-[96px]" : "w-[450px]"
-      } `}
+      }`}
     >
       <div
         className={`nav-brand p-5 text-4xl font-bold hide-scrollbar ${
@@ -43,19 +52,13 @@ export const SideBar = ({ setCollapse, collapse }) => {
           />
         ))}
       </ul>
-      {/* <button
-        className="flex gap-4 text-xl text-center items-center"
-        onClick={handleLogout}
-      >
-        <FiLogOut />
-        <p className="font-medium">Logout</p>
-      </button> */}
+
       <LogoutItem
-          expandedMenu={expandedMenu}
-          setExpandedMenu={setExpandedMenu}
-          sideBarCollapse={collapse}
-          setCollapse={setCollapse}
-        />
+        expandedMenu={expandedMenu}
+        setExpandedMenu={setExpandedMenu}
+        sideBarCollapse={collapse}
+        setCollapse={setCollapse}
+      />
     </nav>
   );
 };

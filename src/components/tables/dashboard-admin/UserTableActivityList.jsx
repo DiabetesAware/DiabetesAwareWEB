@@ -5,7 +5,6 @@ import { patients } from "./patientsList";
 
 export function UserTableActivityList() {
   // { data, currentPage, itemsPerPage }
-  const TablesHead = ["ID", "No. Pasien", "Nama", "Usia", "Data Gula Darah"];
     const colsItem = [
       { text: "ID" },
       { text: "No. Pasien" },

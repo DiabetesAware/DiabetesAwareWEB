@@ -3,4 +3,11 @@ export {
 	adminLoginSelector,
 	adminLogin,
 	clearAuthState,
-} from "./loginSlice";
+} from "./LoginSlice"
+
+export {
+	createAdminReducer,
+	createAdminSelector,
+	createAdmin,
+	clearCreateAdminState,
+} from "./CreatePatientSlice"
