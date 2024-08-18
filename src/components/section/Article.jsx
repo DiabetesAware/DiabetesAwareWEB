@@ -16,6 +16,7 @@ const truncateText = (text, maxWords) => {
   return text;
 };
 
+
 export const Article = () => {
   const [articleData, setArticleData] = useState([]);
   const [_searchTerm, setSearchTerm] = useState("");

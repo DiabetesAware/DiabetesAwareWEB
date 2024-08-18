@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { InputFields } from "@/components/fields/InputFields";
 import { useForm } from "react-hook-form";
@@ -7,9 +7,10 @@ import NavbarBack from "@/components/navigation/NavbarBack";
 import ilustrasi from "@/assets/ilustrasi-pendaftaran.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createPatient } from "@/store/manage-patient/CreatePatientSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createPatient, createPatientSelector } from "@/store/manage-patient";
 import * as yup from "yup";
+import { useCustomToast } from "@/hooks/useCustomToast";
 
 export const validationSchema = yup.object().shape({
   nama: yup.string().required("Nama lengkap wajib diisi"),
@@ -34,6 +35,7 @@ const FormPendaftaran = () => {
     resolver: yupResolver(validationSchema),
   });
 
+  const { status, message } = useSelector(createPatientSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,6 +66,7 @@ const FormPendaftaran = () => {
       });
   };
 
+  useCustomToast(status, message);
   return (
     <>
       <NavbarBack />

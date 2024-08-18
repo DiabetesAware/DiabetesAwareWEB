@@ -4,19 +4,20 @@ import { AxiosError } from "axios";
 export const APIGulaDarah = {
   createGds: async (data) => {
     try {
+      const token = localStorage.getItem("patient_token");
+
       const response = await axiosInstance.post("/gds/create-gds", data, {
         headers: {
-          "Content-Type": "application/json", // Ubah jika data yang dikirim bukan multipart/form-data
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Create Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         console.error("Create Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
@@ -25,14 +26,11 @@ export const APIGulaDarah = {
       const response = await axiosInstance.get(
         `/gds?keyword=${keyword}&page=${page}&pageSize=${pageSize}`
       );
-      console.log("Get Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error.response) {
-        console.error("Get Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
@@ -40,14 +38,11 @@ export const APIGulaDarah = {
   getGds: async (id) => {
     try {
       const response = await axiosInstance.get(`/gds/${id}`);
-      console.log("Get Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Get Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
@@ -58,32 +53,26 @@ export const APIGulaDarah = {
         data,
         {
           headers: {
-            "Content-Type": "application/json", // Ubah jika data yang dikirim bukan multipart/form-data
+            "Content-Type": "application/json", // Ubah jika data yangyyy
           },
         }
       );
-      console.log("Update Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Update Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },
-  deleteGds: async (data, id) => {
+  deleteGds: async ({ id }) => {
     try {
       const response = await axiosInstance.patch(`/gds/delete-gds/${id}`, data);
-      console.log("Delete Gula Darah response:", response.data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
-        console.error("Delete Gula Darah error response:", error.response);
         throw new Error(error.response.data.message);
       }
-      console.error("Unexpected error:", error);
       throw error;
     }
   },

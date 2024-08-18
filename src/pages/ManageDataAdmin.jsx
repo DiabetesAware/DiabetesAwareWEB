@@ -54,8 +54,7 @@ const ManageDataAdmin = () => {
   useCustomToast(createStatus, createMessage);
 
   const fetchAdminData = useCallback(() => {
-    console.log("Fetching GDS data with page:", currentPage, " and pageSize:", itemsPerPage);
-
+    // console.log("Fetching GDS data with page:", currentPage, " and pageSize:", itemsPerPage);
     dispatch(
       fetchAllAdmin({
         adminName: searchTerm,

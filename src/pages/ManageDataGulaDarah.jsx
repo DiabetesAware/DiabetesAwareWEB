@@ -1,5 +1,4 @@
 import { Pagination } from "@/components/pagination/Pagination";
-import { BsPlus } from "react-icons/bs";
 import { Searchbar } from "@/components/fields/Searchbar";
 import { LayoutDashboardContent } from "@/layouts/LayoutDashboardContent";
 import { useState, useCallback, useEffect } from "react";
@@ -9,6 +8,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useDisclosure } from "@chakra-ui/react";
 import { Spinner } from "@/components/spinner";
 import { ModalGDS } from "@/components/modals/data-gds/ModalGDS";
+import axios from "axios";
 import { Heading, Flex, Button } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,9 +23,10 @@ import {
   deletePatientSelector,
   createPatientSelector,
 } from "@/store/manage-patient";
-import {
-  clearFetchGdsState
-} from "@/store/manage-gds"
+import { clearFetchGdsState } from "@/store/manage-gds";
+import { saveAs } from "file-saver";
+import { APIExportToExcel } from "@/apis/APIExportToExcel";
+
 const ManageGulaDarah = () => {
   const dispatch = useDispatch();
 
@@ -55,6 +56,27 @@ const ManageGulaDarah = () => {
   useCustomToast(updateStatus, updateMessage);
   useCustomToast(deleteStatus, deleteMessage);
   useCustomToast(createStatus, createMessage);
+
+
+  const handleExportToExcel = async (data) => {
+    try {
+      const { start_date, end_date } = data;
+      const response = await APIExportToExcel.getExcelData({
+        start_date,
+        end_date,
+      });
+
+      const fileUrl = response.data
+      console.log(fileUrl);
+      const excelResponse = await axios.get(fileUrl, { responseType: "blob" });
+      const blob = new Blob([excelResponse.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(blob, "Data_GDS.xlsx");
+    } catch (error) {
+      console.error("Failed to export data to Excel:", error);
+    }
+  };
 
   // fetching data users
   const fetchPatientData = useCallback(() => {
@@ -93,6 +115,7 @@ const ManageGulaDarah = () => {
       dispatch(clearFetchGdsState());
     };
   }, [dispatch]);
+
   useEffect(() => {
     return () => {
       dispatch(clearFetchAllPatientState());
@@ -109,13 +132,8 @@ const ManageGulaDarah = () => {
   };
 
   const handleSubmitData = (data) => {
-    console.log("Submitting Data from Modal:", data);
-    dispatch(createPatient(data)).then((res) => {
-      if (res.payload) {
-        console.log("Response from CreatePatientSlice:", res.payload);
-        onClose();
-      }
-    });
+    console.log("cek aja bang", data);
+    handleExportToExcel(data);
   };
 
   const handleAddModal = () => {
@@ -142,7 +160,11 @@ const ManageGulaDarah = () => {
         gap={"1.5rem"}
         p={"1.5rem"}
       >
-        <Flex alignItems={"center"} maxH={"730px"} justifyContent={"space-between"}>
+        <Flex
+          alignItems={"center"}
+          maxH={"730px"}
+          justifyContent={"space-between"}
+        >
           <Searchbar className="wrapper w-3/12" onSearch={handleSearch} />
           <Button
             backgroundColor={"#073D5B"}
@@ -154,8 +176,7 @@ const ManageGulaDarah = () => {
             gap={"10px"}
             onClick={handleAddModal}
           >
-            <BsPlus className="text-2xl" />
-            Tambah Data
+            Export to Excel
           </Button>
         </Flex>
         {status === "success" && (

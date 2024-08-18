@@ -23,6 +23,48 @@ export const TanggalPeriksaFields = ({ control, error }) => {
     />
   );
 };
+export const StartDateFields = ({ control, error }) => {
+  return (
+    <Controller
+      name="start_date"
+      control={control}
+      defaultValue=""
+      render={({ field }) => (
+        <FormControl isInvalid={error}>
+          <InputFields
+            label="Tanggal Mulai"
+            autoComplete="off"
+            error={error}
+            {...field}
+            type="date"
+          />
+          <FormErrorMessage>{error?.message}</FormErrorMessage>
+        </FormControl>
+      )}
+    />
+  );
+};
+export const EndDateFields = ({ control, error }) => {
+  return (
+    <Controller
+      name="end_date"
+      control={control}
+      defaultValue=""
+      render={({ field }) => (
+        <FormControl isInvalid={error}>
+          <InputFields
+            label="Tanggal Akhir"
+            autoComplete="off"
+            error={error}
+            {...field}
+            type="date"
+          />
+          <FormErrorMessage>{error?.message}</FormErrorMessage>
+        </FormControl>
+      )}
+    />
+  );
+};
 
 
 export const GdsFields = ({ control, error }) => {

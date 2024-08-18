@@ -50,6 +50,7 @@ const FormPemantauanGDS = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("patient_token");
+    console.log,"patientToken",(token)
     if (!token) {
       navigate("/form-pendaftaran");
     } else {
@@ -66,6 +67,7 @@ const FormPemantauanGDS = () => {
   const handleOnSubmit = async (formData) => {
     setLoading(true);
     try {
+
       const token = localStorage.getItem("patient_token");
       if (token) {
         axiosInstance.defaults.headers.common[
@@ -75,11 +77,13 @@ const FormPemantauanGDS = () => {
 
       const res = await dispatch(createGds(formData));
       if (res.payload?.code === 201) {
+        localStorage.removeItem("patient_token");
         console.log("Response from createGds", res);
         navigate("/done-gds");
       } else {
         console.error("Unexpected response:", res);
       }
+
     } catch (error) {
       console.error("Error creating GDS form:", error);
     } finally {

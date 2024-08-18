@@ -13,7 +13,7 @@ export function PatientNameFields({ control, error }) {
         <FormControl isInvalid={error}>
           <InputFields
             label="Nama"
-            placeholder="Nama Lengkap"
+            placeholder="Nama"
             autoComplete="off"
             error={error}
             {...field}

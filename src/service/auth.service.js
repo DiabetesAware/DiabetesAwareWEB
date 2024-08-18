@@ -38,6 +38,7 @@ export class AuthService {
 
   clearCredentialsFromCookie() {
     Cookies.remove("idToken");
+    Cookies.remove("patient_token");
   }
 
   logout() {

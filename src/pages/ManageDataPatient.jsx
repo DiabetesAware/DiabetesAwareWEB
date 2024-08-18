@@ -132,7 +132,6 @@ const ManageDataUser = () => {
       <Flex
         bg={"white"}
         borderRadius={"xl"}
-        // maxH={"730px"}
         boxShadow={"md"}
         direction={"column"}
         gap={"1.5rem"}

@@ -15,9 +15,11 @@ export const Jombotron = () => {
           <h2 className="lg:text-4xl md:text-2xl sm:text-lg mb-4 font-semibold">
             Be Aware,
           </h2>
-          <p className="lg:text-2xl md:text-xl sm:text-xs font-thin tracking-normal max-w-sm">
-            Kebanyakan kasus kematian lansia disebabkan karena diabetes yang
-            terlalu banyak dan gejala komplikasi.
+          <p className="lg:text-2xl md:text-xl sm:text-xs font-thin tracking-normal max-w-xl">
+            Inovasi ini merupakan salah satu langkah dalam menekan kejadian DM
+            dan Hipertensi. SIDIHIMENS merupakan suatu rangkaian kegiatan dimana
+            di dalamnya terlaksana upaya-upaya untuk pencegahan dan pengendalian
+            penyakit DM dan Hipertensi pada keluarga Anda
           </p>
         </div>
       </div>
