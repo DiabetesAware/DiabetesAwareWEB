@@ -33,7 +33,8 @@ const Login = () => {
   const handleOnSubmit = async (data) => {
     try {
       const res = await dispatch(adminLogin(data));
-      if (res.payload.success) {
+      if (res.payload.code === 200) {
+        console.log("cek aja res",res.payload)
         navigate("/dashboard");
       }
     }catch(error){

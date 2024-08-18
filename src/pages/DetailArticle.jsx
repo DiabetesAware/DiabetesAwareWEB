@@ -76,7 +76,7 @@ const ArticleDetail = () => {
                 <span>{formatDateToLocalDate(article.createdAt)}</span>
               </p>
               <img
-                className="w-auto mx-auto border object-contain border-[#ddd]"
+                className="w-full h-[500px] mx-auto border object-contain border-[#ddd]"
                 src={article.img_url}
                 alt={article.title}
                 onError={(e) => {
