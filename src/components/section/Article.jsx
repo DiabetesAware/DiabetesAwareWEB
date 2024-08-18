@@ -1,6 +1,6 @@
 import { FaStethoscope } from "react-icons/fa";
 import { CiCircleChevRight } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import banner from "@/assets/landing-page/banner 2.png";
 import { useState, useEffect } from "react";
 import { APIArticle } from "@/apis/APIArticle";
@@ -16,7 +16,6 @@ const truncateText = (text, maxWords) => {
   return text;
 };
 
-
 export const Article = () => {
   const [articleData, setArticleData] = useState([]);
   const [_searchTerm, setSearchTerm] = useState("");
@@ -25,6 +24,11 @@ export const Article = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const navigate = useNavigate();
+
+  const handleOnClick = (id) => {
+    navigate(`/article/${id}`);
+  };
 
   function getArticleData() {
     APIArticle.getAllArticle(searchTerm, currentPage, itemsPerPage).then(
@@ -56,8 +60,9 @@ export const Article = () => {
           <div className="grid justify-center items-center lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xl:gap-10 sm:gap-5 ">
             {articleData.map((item, i) => (
               <div
-                className="card max-w-xl xl:h-[450px] sm:h-[300px] rounded-3xl shadow-md transform transition-transform duration-500 ease-out hover:scale-[105%] bg-white"
+                className="card max-w-xl xl:h-[450px] sm:h-[320px] rounded-3xl shadow-md transform transition-transform duration-500 ease-out hover:scale-[105%] bg-white cursor-pointer"
                 key={i}
+                onClick={() => handleOnClick(item.id)}  // Tambahkan onClick handler disini
               >
                 <div className="card-header">
                   <img
@@ -68,11 +73,11 @@ export const Article = () => {
                 </div>
                 <div className="card-body p-5">
                   {/* Batasi jumlah kata pada judul */}
-                  <p className="text-2xl font-bold">
+                  <p className="xl:text-2xl sm:text-md font-bold">
                     {truncateText(item.title, 8)}
                   </p>
                   {/* Batasi jumlah kata pada deskripsi */}
-                  <p className="text-md font-thin">
+                  <p className="xl:text-md sm:text-xs font-thin">
                     {Parse(truncateText(item.description, 15))}
                   </p>
                 </div>

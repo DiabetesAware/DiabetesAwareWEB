@@ -6,7 +6,7 @@ import { AllArticleList } from "@/components/content-artikel/AllArticleList";
 import { Pagination } from "@/components/pagination/Pagination";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useCustomToast } from "@/hooks/useCustomToast";
-import { Navbar } from "@/components/navigation/Navbar"
+import { Navbar } from "@/components/navigation/Navbar";
 const AllArticle = () => {
   const [articleData, setArticleData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,17 +46,22 @@ const AllArticle = () => {
   return (
     <>
       <Navbar />
-      <div className="p-10 bg-[#e7e7e7] h-screen">
-        <div className="px-20 py-10 border bg-white rounded-xl ">
-          <div className="header-article flex justify-between items-center">
-            <p className="text-xl text-[#073D5B] py-2 px-3 border-b-[4px] border-[#073D5B] font-bold uppercase">semua article</p>
-            <Searchbar value={searchTerm} onSearch={handleSearch} />
+      <div className="xl:p-10 sm:p-3 bg-[#e7e7e7] md:h-screen sm:h-full">
+        <div className="xl:px-20 sm:p-8 xl:py-10 sm:py-5 border bg-white rounded-xl ">
+          <div className="header-article flex md:flex-row sm:flex-col justify-between items-center">
+            <p className="xl:text-xl sm:text-md text-[#073D5B] py-2 px-3 border-b-[4px] border-[#073D5B] font-bold uppercase">
+              semua article
+            </p>
+            <Searchbar
+              className={"md:w-auto sm:w-full md:mt-0 sm:mt-5"}
+              value={searchTerm}
+              onSearch={handleSearch}
+            />
           </div>
           {isLoading ? (
             <Spinner />
           ) : (
-            <AllArticleList
-            articleData={articleData} />
+            <AllArticleList articleData={articleData} />
           )}
           <Pagination
             currentPage={currentPage}

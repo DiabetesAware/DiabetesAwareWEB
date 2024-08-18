@@ -51,6 +51,8 @@ const ArticleDetail = () => {
 
   if (error) return <p>{error}</p>;
 
+  const hasPdfUrl = article.pdf_url && article.pdf_url.trim() !== "";
+
   return (
     <>
       <Navbar />
@@ -89,11 +91,19 @@ const ArticleDetail = () => {
           <div className="content-detail w-full">
             <p className="text-lg text-justify">{Parse(article.description)}</p>
           </div>
-          <iframe
-            src={`${article.pdf_url}#toolbar=0&navpanes=0&scrollbar=0`}
-            className="w-full max-w-[800px] h-[600px] mx-auto border border-[#ddd]"
-            title="Article PDF"
-          ></iframe>
+
+          {hasPdfUrl &&
+            (article.pdf_url.startsWith("http") ? (
+              <iframe
+                src={`${article.pdf_url}#toolbar=0&navpanes=0&scrollbar=0`}
+                className={`w-full max-w-[800px] border h-[600px] mx-auto  border-[#ddd] ${
+                  hasPdfUrl ? "block" : "hidden"
+                }`}
+                title="Article PDF"
+              ></iframe>
+            ) : (
+              <></>
+            ))}
         </div>
       </div>
       <Footer />
