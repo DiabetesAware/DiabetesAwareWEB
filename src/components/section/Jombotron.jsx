@@ -8,13 +8,13 @@ export const Jombotron = () => {
         <div className="cover absolute inset-0 z-10 bg-gradient-to-r from-[#073D5B] to-transparent"></div>
       </div>
       <div className="absolute inset-0 flex flex-col justify-center lg:pl-44 sm:pl-20  z-20 text-white">
-        <h1 className="lg:text-6xl md:text-4xl sm:text-lg font-bold lg:mb-2 sm:mb-0">
+        <p className="lg:text-6xl md:text-4xl sm:text-lg font-bold lg:mb-2 sm:mb-0">
           WE PROTECT
-        </h1>
-        <div className="wrapper lg:ml-10 lg:my-5  sm:my-0">
-          <h2 className="lg:text-4xl md:text-2xl sm:text-lg mb-4 font-semibold">
+        </p>
+        <div className="wrapper lg:ml-10 lg:my-5 sm:my-0">
+          <p className="lg:text-4xl md:text-2xl sm:text-lg mb-4 font-semibold">
             Be Aware,
-          </h2>
+          </p>
           <p className="lg:text-2xl md:text-xl sm:text-xs font-thin tracking-normal max-w-xl">
             Inovasi ini merupakan salah satu langkah dalam menekan kejadian DM
             dan Hipertensi. SIDIHIMENS merupakan suatu rangkaian kegiatan dimana

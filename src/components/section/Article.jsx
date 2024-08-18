@@ -56,7 +56,7 @@ export const Article = () => {
           <div className="grid justify-center items-center lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xl:gap-10 sm:gap-5 ">
             {articleData.map((item, i) => (
               <div
-                className="card max-w-xl rounded-3xl shadow-md transform transition-transform duration-500 ease-out hover:scale-[105%] bg-white"
+                className="card max-w-xl sm:h-[300px] rounded-3xl shadow-md transform transition-transform duration-500 ease-out hover:scale-[105%] bg-white"
                 key={i}
               >
                 <div className="card-header">
@@ -68,11 +68,11 @@ export const Article = () => {
                 </div>
                 <div className="card-body p-5">
                   {/* Batasi jumlah kata pada judul */}
-                  <p className="text-2xl font-bold">
+                  <p className="xl:text-2xl sm:text-sm font-bold">
                     {truncateText(item.title, 8)}
                   </p>
                   {/* Batasi jumlah kata pada deskripsi */}
-                  <p className="text-md font-thin">
+                  <p className="xl:text-md sm:text-xs font-thin">
                     {Parse(truncateText(item.description, 15))}
                   </p>
                 </div>
