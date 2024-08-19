@@ -31,7 +31,7 @@ export function ModalAddAdmin({ isOpen, onClose, onSubmit }) {
   const { status: createStatus } = useSelector(createAdminSelector);
 
   const handleOnSubmit = (data) => {
-    console.log("Data from Modal form:", data);
+    // console.log("Data from Modal form:", data);
     onSubmit(data);
   };
 

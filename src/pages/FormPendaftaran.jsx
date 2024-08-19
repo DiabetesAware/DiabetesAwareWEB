@@ -36,6 +36,8 @@ const FormPendaftaran = () => {
   });
 
   const { status, message } = useSelector(createPatientSelector);
+  useCustomToast(status, message);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,7 +68,6 @@ const FormPendaftaran = () => {
       });
   };
 
-  useCustomToast(status, message);
   return (
     <>
       <NavbarBack />

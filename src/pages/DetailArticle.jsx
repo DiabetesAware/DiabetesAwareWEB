@@ -56,29 +56,29 @@ const ArticleDetail = () => {
   return (
     <>
       <Navbar />
-      <div className="p-10 bg-[#e7e7e7] min-h-screen">
-        <div className="px-20 py-10 border bg-white rounded-xl flex flex-wrap gap-10">
+      <div className="xl:p-10 sm:p-3 bg-[#e7e7e7] min-h-screen">
+        <div className="xl:px-20 sm:px-6 xl:py-10 sm:py-4 border bg-white rounded-xl flex flex-wrap xl:gap-10 sm:gap-4">
           <Button
             bg={"transparent"}
             onClick={handleOnClick}
-            className="flex items-center justify-around gap-3 "
+            className="flex items-center justify-around gap-1  "
           >
-            <i className="text-3xl">
+            <i className="xl:text-3xl sm:text-xl">
               <CiCircleChevLeft />
             </i>
-            <p className="text-xl">Kembali</p>
+            <p className="xl:text-xl sm:text-md">Kembali</p>
           </Button>
           <div className="header-detail w-full">
-            <h1 className="header-detail-title text-3xl font-bold mb-4 text-[#073D5B]">
+            <h1 className="header-detail-title xl:text-3xl sm:text-xl font-bold mb-4 text-[#073D5B]">
               {article.title}
             </h1>
             <div className="header-detail-img mx-auto max-w-[900px]">
-              <p className="header-detail-created text-[#D9D9D9] my-3">
+              <p className="header-detail-created sm:text-xs xl:text-md text-[#D9D9D9] my-3">
                 Diposting pada{" "}
                 <span>{formatDateToLocalDate(article.createdAt)}</span>
               </p>
               <img
-                className="w-full h-[500px] mx-auto border object-contain border-[#ddd]"
+                className="w-full xl:h-[500px]  mx-auto border object-contain border-[#ddd]"
                 src={article.img_url}
                 alt={article.title}
                 onError={(e) => {
@@ -89,7 +89,7 @@ const ArticleDetail = () => {
             </div>
           </div>
           <div className="content-detail w-full">
-            <p className="text-lg text-justify">{Parse(article.description)}</p>
+            <p className="xl:text-lg sm:text-sm text-justify">{Parse(article.description)}</p>
           </div>
 
           {hasPdfUrl &&

@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { InputFields } from "@/components/fields/InputFields";
 import { Footer } from "@/components/section/Footer";
 import NavbarBack from "@/components/navigation/NavbarBack";
 import ilustrasi from "@/assets/ilustrasi-pendaftaran.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createGds } from "@/store/manage-gds/CreateGdsSlice";
+import { createGds,createGdsSelector } from "@/store/manage-gds";
 import { authService } from "@/config";
 import { axiosInstance } from "@/config/axios";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCustomToast } from "@/hooks/useCustomToast";
 import * as yup from "yup";
 
 export const validationSchema = yup.object().shape({
@@ -47,6 +48,9 @@ const FormPemantauanGDS = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
+
+const {status, message} = useSelector(createGdsSelector)
+  useCustomToast(status, message);
 
   useEffect(() => {
     const token = localStorage.getItem("patient_token");
