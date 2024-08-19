@@ -15,7 +15,7 @@ export const Jombotron = () => {
           <p className="lg:text-4xl md:text-2xl sm:text-lg mb-4 font-semibold">
             Be Aware,
           </p>
-          <p className="lg:text-2xl md:text-xl sm:text-xs font-thin tracking-normal max-w-xl">
+          <p className="lg:text-2xl md:text-xl sm:text-xs font-thin tracking-normal md:w-4/12 sm:w-10/12">
             Inovasi ini merupakan salah satu langkah dalam menekan kejadian DM
             dan Hipertensi. SIDIHIMENS merupakan suatu rangkaian kegiatan dimana
             di dalamnya terlaksana upaya-upaya untuk pencegahan dan pengendalian

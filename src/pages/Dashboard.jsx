@@ -15,7 +15,6 @@ export default function Dashboard() {
     setIsLoading(true);
     try {
       const response = await APISummary.getSummary();
-      console.log("API Response Data:", response.data);
       setSummaryData(response.data);
     } catch (error) {
       setToastMessage({ status: "error", message: error.message });

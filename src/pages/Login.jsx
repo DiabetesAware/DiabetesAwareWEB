@@ -20,8 +20,6 @@ const Login = () => {
   // use-state
   const [passwordType, setPasswordType] = useState("password");
   const { status, message } = useSelector(adminLoginSelector);
-  console.log("Toast status:", status);
-  console.log("Toast message:", message);
 
   // react-router-dom
   const navigate = useNavigate();
@@ -34,7 +32,6 @@ const Login = () => {
     try {
       const res = await dispatch(adminLogin(data));
       if (res.payload.code === 200) {
-        console.log("cek aja res",res.payload)
         navigate("/dashboard");
       }
     }catch(error){

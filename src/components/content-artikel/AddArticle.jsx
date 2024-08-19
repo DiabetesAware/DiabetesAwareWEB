@@ -27,7 +27,6 @@ function AddArticle({ onClose }) {
     try {
       if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0];
-        console.log("File type:", file.type);
 
         if (!validTypes.includes(file.type)) {
           return setErrorImage("Format file berupa .jpg, .jpeg, atau .png");
@@ -50,7 +49,7 @@ function AddArticle({ onClose }) {
           });
       }
     } catch (error) {
-      console.log(error);
+throw error
     }
   }
 
@@ -109,13 +108,12 @@ function AddArticle({ onClose }) {
 
     APIArticle.createArticle(formData)
       .then((res) => {
-        console.log("Article added successfully:", res);
         setIsLoading(false);
         onClose(true);
       })
       .catch((err) => {
-        console.error("Error adding article:", err);
         setIsLoading(false);
+        throw err
       });
   }
 

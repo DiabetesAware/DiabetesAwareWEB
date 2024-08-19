@@ -45,10 +45,8 @@ const FormPendaftaran = () => {
     setLoading(true);
     dispatch(createPatient(data))
       .then((res) => {
-        console.log("Response from createPatient:", res);
         if (res.payload && res.payload.code === 201) {
           if (res.payload.data && res.payload.data.token) {
-            console.log("ini token patient", res.payload.data.token);
             localStorage.setItem("patient_token", res.payload.data.token);
           } else {
             console.warn("Token is not present in the response.");

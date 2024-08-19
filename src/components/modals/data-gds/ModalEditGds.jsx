@@ -44,7 +44,6 @@ export function ModalEditGds({ isOpen, onClose, onSubmit }) {
   }, [data, setValue]);
 
   const handleOnSubmit = (data) => {
-    console.log("ini data dari modal",data)
     onSubmit(data);
     onClose()
   };

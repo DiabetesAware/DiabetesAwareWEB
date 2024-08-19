@@ -67,7 +67,6 @@ const ManageGulaDarah = () => {
       });
 
       const fileUrl = response.data
-      console.log(fileUrl);
       const excelResponse = await axios.get(fileUrl, { responseType: "blob" });
       const blob = new Blob([excelResponse.data], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -132,7 +131,6 @@ const ManageGulaDarah = () => {
   };
 
   const handleSubmitData = (data) => {
-    console.log("cek aja bang", data);
     handleExportToExcel(data);
   };
 
