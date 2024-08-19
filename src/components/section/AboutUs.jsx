@@ -1,4 +1,4 @@
-import about from "@/assets/landing-page/about-us-asset.png";
+import about from "@/assets/landing-page/about-us-asset.webp";
 import banner from "@/assets/landing-page/banner 1.png";
 import { Button } from "@chakra-ui/react";
 import { FaStethoscope } from "react-icons/fa";
@@ -27,9 +27,9 @@ export const AboutUs = () => {
               dari kepedulian disekitar kita
             </p>
           </div>
-          <div className="xl:w-5/12 sm:w-10/12 wrapper bg-[#073D5B] rounded-l-full py-16 rounded-lg">
+          <div className="xl:w-4/12 sm:w-8/12 wrapper bg-[#073D5B] rounded-l-[4rem] py-16 rounded-lg">
             <img
-              className="border-[#333]  mx-16 xl:w-5/12 sm:w-7/12"
+              className="border-[#333]  mx-auto xl:w-6/12 sm:w-7/12 rounded-[4rem]"
               src={about}
               alt=""
             />
