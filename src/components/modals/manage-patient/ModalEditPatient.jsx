@@ -105,7 +105,7 @@ export function ModalEditPatient({ isOpen, onClose, onSubmit }) {
                   control={control}
                   error={errors.alamat}
                 />
-                <Fields.PatientJenisKelaminFields
+                <Fields.SelectedGender
                   control={control}
                   error={errors.jenis_kelamin}
                 />

@@ -1,8 +1,8 @@
-import { FormControl, FormErrorMessage } from "@chakra-ui/react";
-import { Message, User } from "react-iconly";
+import { Button, FormControl, FormErrorMessage, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { ChevronDown, ChevronUp, Document } from "react-iconly";
 import { Controller } from "react-hook-form";
 import { InputFields } from "@/components/fields";
-
+import { useState } from "react";
 export function PatientNameFields({ control, error }) {
   return (
     <Controller
@@ -118,68 +118,68 @@ export function PatientTglLahirFields({ control, error }) {
   );
 }
 
-// export function PatientSelectGender({ control, error }) {
-// 	const [menuOpen, setMenuOpen] = useState(false);
+export function SelectedGender({ control, error }) {
+	const [menuOpen, setMenuOpen] = useState(false);
 
-// 	const handleMenuOpen = () => {
-// 		setMenuOpen(!menuOpen);
-// 	};
+	const handleMenuOpen = () => {
+		setMenuOpen(!menuOpen);
+	};
 
-// 	return (
-// 		<Controller
-// 			name="status"
-// 			control={control}
-// 			render={({ field }) => (
-// 				<FormControl isInvalid={error}>
-// 					<Menu>
-// 						<MenuButton
-// 							as={Button}
-// 							px={4}
-// 							py={2}
-// 							width={"100%"}
-// 							height={"53.6px"}
-// 							transition="all 0.2s"
-// 							borderRadius="lg"
-// 							borderWidth="1px"
-// 							borderColor={"#949494"}
-// 							backgroundColor={"white"}
-// 							_hover={{ bg: "gray.100" }}
-// 							_expanded={{
-// 								bg: "#35CC33",
-// 								textColor: "white",
-// 								textTransform: "capitalize",
-// 								borderColor: "#35CC33",
-// 							}}
-// 							rightIcon={menuOpen ? <ChevronUp /> : <ChevronDown />}
-// 							leftIcon={<Document />}
-// 							onClick={handleMenuOpen}
-// 							isActive={menuOpen}
-// 							textAlign="left"
-// 							fontWeight="normal"
-// 							fontSize={"14px"}
-// 						>
-// 							{field.value || "Pilih Status"}
-// 						</MenuButton>
-// 						<MenuList fontSize={"14px"}>
-// 							<MenuItem
-// 								onClick={() => {
-// 									field.onChange("Aktif");
-// 								}}
-// 							>
-// 								Laki-Laki
-// 							</MenuItem>
-// 							<MenuItem
-// 								onClick={() => {
-// 									field.onChange("Tidak Aktif");
-// 								}}
-// 							>
-// 								Perempuan
-// 							</MenuItem>
-// 						</MenuList>
-// 					</Menu>
-// 					<FormErrorMessage>{error?.message}</FormErrorMessage>
-// 				</FormControl>
-// 			)}
-// 		/>
-// 	);
-// }
+	return (
+		<Controller
+			name="jenis_kelamin"
+			control={control}
+			render={({ field }) => (
+				<FormControl isInvalid={error}>
+					<Menu>
+						<MenuButton
+							as={Button}
+							px={4}
+							py={2}
+							width={"100%"}
+							height={"53.6px"}
+							transition="all 0.2s"
+							borderRadius="lg"
+							borderWidth="1px"
+							borderColor={"#949494"}
+							backgroundColor={"white"}
+							_hover={{ bg: "gray.100" }}
+							_expanded={{
+								bg: "#073D5B",
+								textColor: "white",
+								textTransform: "capitalize",
+								borderColor: "#073D5B",
+							}}
+							rightIcon={menuOpen ? <ChevronUp /> : <ChevronDown />}
+							leftIcon={<Document />}
+							onClick={handleMenuOpen}
+							isActive={menuOpen}
+							textAlign="left"
+							fontWeight="normal"
+							fontSize={"14px"}
+						>
+							{field.value || "Pilih Jenis Kelamin"}
+						</MenuButton>
+						<MenuList fontSize={"14px"}>
+							<MenuItem
+								onClick={() => {
+									field.onChange("Laki-Laki");
+								}}
+							>
+								Laki-Laki
+							</MenuItem>
+							<MenuItem
+								onClick={() => {
+									field.onChange("Perempuan");
+								}}
+							>
+								Perempuan
+							</MenuItem>
+						</MenuList>
+					</Menu>
+					<FormErrorMessage>{error?.message}</FormErrorMessage>
+				</FormControl>
+			)}
+		/>
+	);
+}
