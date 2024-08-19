@@ -11,6 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPatient, createPatientSelector } from "@/store/manage-patient";
 import * as yup from "yup";
 import { useCustomToast } from "@/hooks/useCustomToast";
+import { ChevronDown, ChevronUp, Document } from "react-iconly";
+import { Button, FormControl, FormErrorMessage, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+
 
 export const validationSchema = yup.object().shape({
   nama: yup.string().required("Nama lengkap wajib diisi"),
@@ -21,11 +24,18 @@ export const validationSchema = yup.object().shape({
     .matches(/^[0-9]*$/, "NIK hanya boleh berisi angka"),
   alamat: yup.string().required("Alamat wajib diisi"),
   tanggal_lahir: yup.date().required("Tanggal lahir wajib diisi").nullable(),
+  jenis_kelamin: yup.string().required("Jenis kelamin wajib diisi"),
 });
 
 const FormPendaftaran = () => {
   const [loading, setLoading] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState(null);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+	const handleMenuOpen = () => {
+		setMenuOpen(!menuOpen);
+	};
 
   const {
     control,
@@ -153,7 +163,7 @@ const FormPendaftaran = () => {
             </div>
 
             {/* TGL Lahir */}
-            <div className="wrapper-input mt-4 mb-10">
+            <div className="wrapper-input mt-4">
               <p>Tanggal Lahir</p>
               <Controller
                 name="tanggal_lahir"
@@ -171,6 +181,71 @@ const FormPendaftaran = () => {
               {errors.tanggal_lahir && (
                 <span className="text-red-500 text-sm">
                   {errors.tanggal_lahir.message}
+                </span>
+              )}
+            </div>
+
+            {/* Jenis Kelamin*/}
+            <div className="wrapper-input mt-4 mb-10">
+              <p>Jenis Kelamin</p>
+              <Controller
+                name="jenis_kelamin"
+                control={control}
+                render={({ field }) => (
+                  <FormControl isInvalid={errors}>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        px={4}
+                        py={2}
+                        width={"100%"}
+                        height={"53.6px"}
+                        transition="all 0.2s"
+                        borderRadius="lg"
+                        borderWidth="1px"
+                        borderColor={"#949494"}
+                        backgroundColor={"white"}
+                        _hover={{ bg: "gray.100" }}
+                        _expanded={{
+                          bg: "#073D5B",
+                          textColor: "white",
+                          textTransform: "capitalize",
+                          borderColor: "#073D5B",
+                        }}
+                        rightIcon={menuOpen ? <ChevronUp /> : <ChevronDown />}
+                        leftIcon={<Document />}
+                        onClick={handleMenuOpen}
+                        isActive={menuOpen}
+                        textAlign="left"
+                        fontWeight="normal"
+                        fontSize={"14px"}
+                      >
+                        {field.value || "Pilih Jenis Kelamin"}
+                      </MenuButton>
+                      <MenuList fontSize={"14px"}>
+                        <MenuItem
+                          onClick={() => {
+                            field.onChange("Laki-Laki");
+                          }}
+                        >
+                          Laki-Laki
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            field.onChange("Perempuan");
+                          }}
+                        >
+                          Perempuan
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                    <FormErrorMessage>{errors?.message}</FormErrorMessage>
+                  </FormControl>
+                )}
+              />
+              {errors.jenis_kelamin && (
+                <span className="text-red-500 text-sm">
+                  {errors.jenis_kelamin.message}
                 </span>
               )}
             </div>

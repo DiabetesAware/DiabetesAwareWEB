@@ -85,6 +85,7 @@ export const DataTablePatient = ({ data, currentPage, itemsPerPage }) => {
             <TextCell content={row.nama} />
             <TextCell content={row.alamat} />
             <TextCell content={row.tanggal_lahir} />
+            <TextCell content={row.jenis_kelamin} />
             <CenteredCell>
               <CustomIconButton
                 icon={<Edit2 />}
