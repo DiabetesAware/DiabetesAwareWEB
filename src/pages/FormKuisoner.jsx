@@ -5,13 +5,14 @@ const FormKuisoner = () => {
   return (
     <>
       <Navbar />
-      <div className="pt-5 px-10 bg-[#e7e7e7]">
-        <p className="text-4xl p-4 font-bold text-[#073D5B]">Form Kuisioner</p>
-        <div className="wrapper p-32 bg-white grid items-center justify-center lg:grid-cols-1 shadow-xl rounded-t-3xl">
+      <div className="pt-5 xl:px-10 sm:px-4  bg-[#e7e7e7]">
+        <p className="xl:text-4xl sm:text-xl md:text-left sm:text-center xl:p-4 sm:p-2 font-bold text-[#073D5B]">Form Kuisioner</p>
+        <div className="wrapper xl:p-14 md:w-5/12 mx-auto bg-white grid items-center justify-center lg:grid-cols-1 shadow-xl rounded-t-[1rem]">
           <iframe
             src="https://forms.gle/BVvSRe3fUzRAkU2u6"
             width="100%"
-            height="600"
+            className="rounded-[1rem]"
+            height="800px"
           >
             Loading…
           </iframe>
