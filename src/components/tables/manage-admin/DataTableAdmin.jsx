@@ -16,7 +16,6 @@ import {
 } from "@/store/manage-admin";
 
 export const DataTableAdmin = ({ data, currentPage, itemsPerPage }) => {
-  // console.log("DataTableAdmin Data:", data)
   const [id, setId] = useState(null);
   const [idAdmin, setIdAdmin] = useState(null);
   const dispatch = useDispatch();

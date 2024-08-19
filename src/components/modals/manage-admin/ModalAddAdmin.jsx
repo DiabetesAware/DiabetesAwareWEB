@@ -20,7 +20,6 @@ import { createAdminSelector } from "@/store/auth";
 import * as Fields from "./AdminFormFields";
 
 export function ModalAddAdmin({ isOpen, onClose, onSubmit }) {
-  console.log("ModalAddAdmin - isOpen:", isOpen);
   const {
     control,
     handleSubmit,
@@ -31,7 +30,7 @@ export function ModalAddAdmin({ isOpen, onClose, onSubmit }) {
   const { status: createStatus } = useSelector(createAdminSelector);
 
   const handleOnSubmit = (data) => {
-    // console.log("Data from Modal form:", data);
+    // ("Data from Modal form:", data);
     onSubmit(data);
   };
 

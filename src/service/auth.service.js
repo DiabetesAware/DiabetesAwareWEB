@@ -6,7 +6,6 @@ export class AuthService {
   isTokenValid() {
     try {
       const token = this.getToken();
-      // console.log("Token in isTokenValid:", token);
       if (!token) {
         return false;
       }
@@ -33,7 +32,6 @@ export class AuthService {
   setCredentialsToCookie({ token }) {
     const { exp } = jwtDecode(token);
     Cookies.set("idToken", token, { expires: new Date(exp * 1000) });
-    console.log("Set credentials to cookie, token:", token);
   }
 
   clearCredentialsFromCookie() {
@@ -48,7 +46,6 @@ export class AuthService {
   getAdminRole() {
     if (this.isAuthorized()) {
       const { id, role, nama, email } = jwtDecode(this.getToken());
-      console.log("Admin role:", role);
       return { id, role, nama, email }; // Return nama and email as well
     }
     return null;

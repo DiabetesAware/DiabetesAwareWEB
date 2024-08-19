@@ -90,7 +90,7 @@ function EditArticle({ editArticleData, onClose, setToastMessage }) {
           });
       }
     } catch (error) {
-      console.log(error);
+throw error
     }
   }
 
@@ -116,8 +116,6 @@ function EditArticle({ editArticleData, onClose, setToastMessage }) {
     formData.append("description", articleData.description);
     if (previewImage) formData.append("img_url", articleData.img_url);
     if (articleData.pdf_url) formData.append("pdf_url", articleData.pdf_url);
-
-    console.log("Article ID:", editArticleData.id);
 
     APIArticle.patchArticle({ id: editArticleData.id, data: formData })
       .then((res) => {
@@ -146,7 +144,6 @@ function EditArticle({ editArticleData, onClose, setToastMessage }) {
 
   useEffect(() => {
     if (editArticleData) {
-      console.log("editArticleData:", editArticleData);
       setArticleData({ ...editArticleData });
       setPreviewImage(editArticleData.img_url);
     }

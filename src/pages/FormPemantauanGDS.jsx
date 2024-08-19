@@ -54,7 +54,6 @@ const {status, message} = useSelector(createGdsSelector)
 
   useEffect(() => {
     const token = localStorage.getItem("patient_token");
-    console.log,"patientToken",(token)
     if (!token) {
       navigate("/form-pendaftaran");
     } else {
@@ -82,7 +81,6 @@ const {status, message} = useSelector(createGdsSelector)
       const res = await dispatch(createGds(formData));
       if (res.payload?.code === 201) {
         localStorage.removeItem("patient_token");
-        console.log("Response from createGds", res);
         navigate("/done-gds");
       } else {
         console.error("Unexpected response:", res);

@@ -44,7 +44,6 @@ export const DetailDataTableGulaDarah = ({ data }) => {
   }, [dispatch, updateStatus]);
 
   const handleSubmitEdit = (data) => {
-    console.log("ini data dari tabel detail", data);
     dispatch(patchGds({ id, data }));
     onClose();
   };

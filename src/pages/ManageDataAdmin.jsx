@@ -54,7 +54,6 @@ const ManageDataAdmin = () => {
   useCustomToast(createStatus, createMessage);
 
   const fetchAdminData = useCallback(() => {
-    // console.log("Fetching GDS data with page:", currentPage, " and pageSize:", itemsPerPage);
     dispatch(
       fetchAllAdmin({
         adminName: searchTerm,
@@ -101,10 +100,8 @@ const ManageDataAdmin = () => {
   };
 
   const handleSubmitData = (data) => {
-    console.log("Submitting Data from Modal:", data);
     dispatch(createAdmin(data)).then((res) => {
       if (res.payload) {
-        console.log("Response from CreatePatientSlice:", res.payload);
         onClose();
       }
     });

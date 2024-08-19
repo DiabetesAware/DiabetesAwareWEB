@@ -100,10 +100,8 @@ const ManageDataUser = () => {
   };
 
   const handleSubmitData = (data) => {
-    console.log("Submitting Data from Modal:", data);
     dispatch(createPatient(data)).then((res) => {
       if (res.payload) {
-        console.log("Response from CreatePatientSlice:", res.payload);
         onClose();
       }
     });

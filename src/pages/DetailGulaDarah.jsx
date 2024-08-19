@@ -18,9 +18,7 @@ const DetailGulaDarah = () => {
   const { status, data } = useSelector(fetchPatientSelector);
   const { updateStatus } = useSelector(patchGdsSelector);
 
-  console.log("ini merupakan data detail", data);
   const [getData, setGetData] = useState(null);
-  console.log("ini data getData", getData);
   useEffect(() => {
     if (id) {
       dispatch(fetchPatient(id));

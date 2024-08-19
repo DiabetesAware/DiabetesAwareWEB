@@ -20,7 +20,6 @@ import { createPatientSelector } from "@/store/manage-patient";
 import * as Fields from "./PatientFormFields";
 
 export function ModalAddPatient({ isOpen, onClose, onSubmit }) {
-  console.log("ModalAddPatient - isOpen:", isOpen);
   const {
     control,
     handleSubmit,
@@ -31,7 +30,6 @@ export function ModalAddPatient({ isOpen, onClose, onSubmit }) {
   const { status: createStatus } = useSelector(createPatientSelector);
 
   const handleOnSubmit = (data) => {
-    console.log("ini data add modal: ", data);
     onSubmit(data);
   };
 
