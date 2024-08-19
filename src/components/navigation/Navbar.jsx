@@ -13,10 +13,11 @@ export const Navbar = ({ className }) => {
   const { ref: inViewRef, inView: isInView } = useInView({ triggerOnce: true });
 
   const menuItems = [
-    { text: "Home", link: "#home" },
-    { text: "Tentang", link: "#tentang" },
-    { text: "Artikel", link: "#artikel" },
-    { text: "Informasi", link: "#informasi" },
+    { text: "Home", link: "/#home" },
+    { text: "Tentang", link: "/#tentang" },
+    { text: "Artikel", link: "/#artikel" },
+    { text: "Informasi", link: "/#informasi" },
+    { text: "Kuisoner", link: "/form-kuisoner" },
   ];
 
   useEffect(() => {

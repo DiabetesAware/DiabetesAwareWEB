@@ -39,7 +39,7 @@ export const fetchAllPatientSlice = createSlice({
     });
     builder.addCase(fetchAllPatient.fulfilled, (state, action) => {
       state.status = "success";
-      state.message = "Success";
+      state.message = action.payload.message;
       state.data = action.payload.datas;
       state.pagination = {
         current_page: action.payload.current_page,

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { APIManageUser } from "@/apis"; 
+import { APIManageUser } from "@/apis";
 
 const initialState = {
   status: "idle",
@@ -50,8 +50,8 @@ export const createPatientSlice = createSlice({
         state.status = "loading";
       })
       .addCase(createPatient.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.message = "Patient created successfully!";
+        state.status = "success";
+        state.message = action.payload.message;
         const { token } = action.payload.data;
         if (token) {
           state.token = token;
