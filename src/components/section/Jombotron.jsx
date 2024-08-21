@@ -1,4 +1,4 @@
-import banner from "@/assets/landing-page/Team of young specialist doctors standing in the corridor of the hospital.webp";
+import banner from "@/assets/landing-page/Team of young specialist doctors standing in the corridor of the hospital.png";
 
 export const Jombotron = () => {
   return (
