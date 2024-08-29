@@ -8,7 +8,7 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { CiCircleChevLeft } from "react-icons/ci";
 import ReactHtmlParser from "html-react-parser";
 import { Button } from "@chakra-ui/react";
-import "@/css/textEditor.css";
+import "@/css/TextEditor.css";
 
 const ArticleDetail = () => {
   const { id } = useParams();
