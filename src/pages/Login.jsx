@@ -58,26 +58,26 @@ const Login = () => {
         <div className="container sm:p-5">
           {/* Form */}
           <form
-            className="xl:px-16 xl:py-20 xl:w-6/12 sm:py-4 mx-auto border bg-white rounded-3xl"
+            className="lg:px-16 lg:py-20 lg:w-6/12 sm:py-4 mx-auto border bg-white rounded-3xl"
             onSubmit={handleSubmit(handleOnSubmit)}
           >
             {/* wrapper text */}
             <div className="wrapper-text my-5">
               <img
                 src={logo}
-                className="rounded-full mx-auto my-5 xl:w-[225px] xl:h-[225px] sm:w-[150px] sm:h-[150px]"
+                className="rounded-full mx-auto my-5 lg:w-[225px] lg:h-[225px] sm:w-[150px] sm:h-[150px]"
                 alt="Logo"
               />
-              <h1 className="xl:text-4xl sm:text-2xl font-bold text-center text-[#073D5B]">
+              <h1 className="lg:text-4xl sm:text-2xl font-bold text-center text-[#073D5B]">
                 Selamat Datang
               </h1>
-              <p className="text-[#073D5B] xl:text-xl sm:text-sm text-center capitalize mt-2">
+              <p className="text-[#073D5B] lg:text-xl sm:text-sm text-center capitalize mt-2">
                 Silahkan login terlebih dahulu
               </p>
             </div>
 
             {/* wrapper input */}
-            <div className="wrapper-input flex flex-col xl:w-8/12 sm:w-10/12 mx-auto">
+            <div className="wrapper-input flex flex-col lg:w-8/12 sm:w-10/12 mx-auto">
               {/* email */}
               <Controller
                 name="email"
@@ -156,10 +156,10 @@ const Login = () => {
             </div>
 
             {/* wrapper button */}
-            <div className="button-group xl:mt-10 sm:mt-5 xl:w-8/12 sm:w-10/12 mx-auto">
+            <div className="button-group lg:mt-10 sm:mt-5 lg:w-8/12 sm:w-10/12 mx-auto">
               <button
                 type="submit"
-                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm xl:p-5 sm:p-3 mr-2 mb-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="text-white w-full tracking-widest uppercase bg-[#073D5B] hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm lg:p-5 sm:p-3 mr-2 mb-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 disabled={status === "loading"}
               >
                 {status === "loading" ? "Loading..." : "Login"}

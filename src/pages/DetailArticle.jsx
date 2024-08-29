@@ -6,9 +6,9 @@ import { formatDateToLocalDate } from "@/utils";
 import { Footer } from "@/components/section/Footer";
 import { Navbar } from "@/components/navigation/Navbar";
 import { CiCircleChevLeft } from "react-icons/ci";
-// import Parse from "html-react-parser";
 import ReactHtmlParser from "html-react-parser";
 import { Button } from "@chakra-ui/react";
+import "@/css/textEditor.css";
 
 const ArticleDetail = () => {
   const { id } = useParams();
@@ -57,34 +57,34 @@ const ArticleDetail = () => {
   return (
     <>
       <Navbar />
-      <div className="xl:p-10 sm:p-3 bg-[#e7e7e7] min-h-screen">
-        <div className="xl:px-20 sm:px-6 xl:py-10 sm:py-4 border bg-white rounded-xl flex flex-wrap xl:gap-10 sm:gap-4">
+      <div className="lg:p-10 sm:p-3 bg-[#e7e7e7] min-h-screen">
+        <div className="lg:px-20 sm:px-6 lg:py-10 sm:py-4 border bg-white rounded-xl flex flex-wrap lg:gap-10 sm:gap-4">
           <Button
             bg={"transparent"}
             onClick={handleOnClick}
             className="flex items-center justify-around gap-1"
           >
-            <i className="xl:text-3xl sm:text-xl">
+            <i className="lg:text-3xl sm:text-xl">
               <CiCircleChevLeft />
             </i>
-            <p className="xl:text-xl sm:text-md">Kembali</p>
+            <p className="lg:text-xl sm:text-md">Kembali</p>
           </Button>
           <div className="header-detail w-full">
-            <h1 className="header-detail-title xl:text-3xl sm:text-xl font-bold mb-4 text-[#073D5B] uppercase">
+            <h1 className="header-detail-title lg:text-3xl sm:text-xl font-bold mb-4 text-[#073D5B] uppercase">
               {article.title}
             </h1>
             <figure className="header-detail-img mx-auto max-w-[600px]">
               <img
-                className="w-full xl:h-[500px]  mx-auto border object-contain border-[#ddd]"
+                className="w-full lg:h-[500px]  mx-auto border object-contain border-[#ddd]"
                 src={article.img_url}
                 alt={article.title}
                 onError={(e) => {
                   console.error("Failed to load image:", e.target.src);
-                  e.target.src = "https://via.placeholder.com/900x600.png"; 
+                  e.target.src = "https://via.placeholder.com/900x600.png";
                 }}
               />
               <figcaption>
-                <p className="header-detail-created sm:text-xs xl:text-md text-[#D9D9D9] my-3">
+                <p className="header-detail-created sm:text-xs lg:text-md text-[#D9D9D9] my-3">
                   Diposting pada{" "}
                   <span>{formatDateToLocalDate(article.createdAt)}</span>
                 </p>
@@ -92,7 +92,9 @@ const ArticleDetail = () => {
             </figure>
           </div>
           <div className="content-detail w-full lg:px-44">
-            <p className="xl:text-lg sm:text-sm text-justify">{ReactHtmlParser(article.description)}</p>
+            <div className="article-content">
+              {ReactHtmlParser(article.description)}
+            </div>
           </div>
 
           {hasPdfUrl &&

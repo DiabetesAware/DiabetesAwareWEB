@@ -1,7 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { combineReducers } from "redux";
 
 // auth
 import { loginReducer, createAdminReducer } from "./auth";
@@ -29,44 +26,33 @@ import {
   fetchGdsReducer,
   createGdsReducer,
   patchGdsReducer,
-  deleteGdsReducer
+  deleteGdsReducer,
 } from "./manage-gds/";
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
-
-const rootReducer = combineReducers({
-  // auth reducer
-  adminLogin: loginReducer,
-  createAdmin: createAdminReducer,
-
-  // admin reducers
-  fetchAllAdmin: fetchAllAdminReducer,
-  fetchAdmin: fetchAdminReducer,
-  patchAdmin: patchAdminReducer,
-  deleteAdmin: deleteAdminReducer,
-
-  // gds reducers
-  fetchAllGds: fetchAllGdsReducer,
-  fetchGds: fetchGdsReducer,
-  deleteGds: deleteGdsReducer,
-  patchGds: patchGdsReducer,
-  createGds: createGdsReducer,
-
-  // patient reducers
-  fetchAllPatient: fetchAllPatientReducer,
-  fetchPatient: fetchPatientReducer,
-  patchPatient: patchPatientReducer,
-  deletePatient: deletePatientReducer,
-  createPatient: createPatientReducer,
-});
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-  reducer: persistedReducer,
-});
+  reducer: {
+    // auth reducer
+    adminLogin: loginReducer,
+    createAdmin: createAdminReducer,
 
-export const persistor = persistStore(store);
+    // admin reducers
+    fetchAllAdmin: fetchAllAdminReducer,
+    fetchAdmin: fetchAdminReducer,
+    patchAdmin: patchAdminReducer,
+    deleteAdmin: deleteAdminReducer,
+
+    // gds reducers
+    fetchAllGds: fetchAllGdsReducer,
+    fetchGds: fetchGdsReducer,
+    deleteGds: deleteGdsReducer,
+    patchGds: patchGdsReducer,
+    createGds: createGdsReducer,
+
+    // patient reducers
+    fetchAllPatient: fetchAllPatientReducer,
+    fetchPatient: fetchPatientReducer,
+    patchPatient: patchPatientReducer,
+    deletePatient: deletePatientReducer,
+    createPatient: createPatientReducer,
+  },
+});
