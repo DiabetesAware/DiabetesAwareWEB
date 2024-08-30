@@ -1,10 +1,17 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useEffect, useState } from 'react';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import { useEffect, useRef, useState } from "react";
 
-function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduceHeight = 0 }) {
+function TextEditor({
+  text,
+  setArticleData,
+  titleWidth,
+  peerHeight,
+  reduceHeight = 0,
+}) {
   const [textData, setTextData] = useState("");
-  
+  const toolbarContainerRef = useRef(null);
+
   function uploadAdapter(loader) {
     return {
       upload: () => {
@@ -14,34 +21,37 @@ function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduceHeight
             resolve({ default: imageLink });
           });
         });
-      }
+      },
     };
   }
 
   function uploadPlugin(editor) {
-    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-      return uploadAdapter(loader);
-    };
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader) =>
+      uploadAdapter(loader);
   }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setTextData(text || "");
+      return () => clearTimeout(timeoutId);
     }, 500);
-    return () => clearTimeout(timeoutId);
   }, [text]);
 
   return (
-    <div className="mt-6"> {/* Perbaikan penggunaan className */}
+    <div className="mt-6">
+      <div ref={toolbarContainerRef} />
       <CKEditor
-        className="w-full"
-        editor={ ClassicEditor }
+        editor={DecoupledEditor}
         config={{
           extraPlugins: [uploadPlugin],
-          removePlugins: ["EasyImage","ImageUpload","MediaEmbed"]
+          removePlugins: ["MediaEmbed"],
         }}
         data={textData}
         onReady={(editor) => {
+          if (toolbarContainerRef.current) {
+            toolbarContainerRef.current.appendChild(editor.ui.view.toolbar.element);
+          }
+
           editor.editing.view.change((writer) => {
             writer.setStyle(
               "height",
@@ -60,9 +70,9 @@ function TextEditor({ text, setArticleData, titleWidth, peerHeight, reduceHeight
             );
           });
         }}
-        onChange={ (_, editor ) => {
+        onChange={(_, editor) => {
           const data = editor.getData();
-          setArticleData(prev => ({ ...prev, description: data }));
+          setArticleData((prev) => ({ ...prev, description: data }));
         }}
       />
     </div>

@@ -79,13 +79,13 @@ const FormPendaftaran = () => {
   return (
     <>
       <NavbarBack />
-      <div className="pt-5 xl:px-10 sm:p-5 bg-[#e7e7e7]">
-        <p className="xl:text-4xl sm:text-lg xl:text-left  sm:text-center xl:p-4 sm:p-2 font-bold text-[#073D5B]">
+      <div className="pt-5 lg:px-10 sm:p-5 bg-[#e7e7e7]">
+        <p className="lg:text-4xl sm:text-lg lg:text-left  sm:text-center lg:p-4 sm:p-2 font-bold text-[#073D5B]">
           Form Pendaftaran Akun Baru
         </p>
-        <div className="wrapper xl:p-32 sm:p-5 bg-white grid items-center justify-center lg:grid-cols-2  shadow-xl xl:rounded-t-3xl sm:rounded-3xl">
+        <div className="wrapper lg:p-32 sm:p-5 bg-white grid items-center justify-center lg:grid-cols-2  shadow-xl lg:rounded-t-3xl sm:rounded-3xl">
           <form
-            className="form-register xl:p-16 sm:p-8 bg-white xl:shadow-xl rounded-lg xl:border"
+            className="form-register lg:p-16 sm:p-8 bg-white lg:shadow-xl rounded-lg lg:border"
             onSubmit={handleSubmit(handleOnSubmit)}
           >
             {feedbackMessage && (
@@ -253,7 +253,7 @@ const FormPendaftaran = () => {
             {/* Button */}
             <button
               type="submit"
-              className={`w-full xl:p-5 sm:p-2.5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg xl:mt-10  ${
+              className={`w-full lg:p-5 sm:p-2.5 bg-[#073D5B] hover:opacity-90 text-white font-semibold border rounded-lg lg:mt-10  ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={loading}

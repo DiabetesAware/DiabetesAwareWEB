@@ -46,10 +46,10 @@ const AllArticle = () => {
   return (
     <>
       <Navbar />
-      <div className="xl:p-10 sm:p-3 bg-[#e7e7e7] md:h-screen sm:h-full">
-        <div className="xl:px-20 sm:p-8 xl:py-10 sm:py-5 border bg-white rounded-xl ">
+      <div className="lg:p-10 sm:p-3 bg-[#e7e7e7] md:h-screen sm:h-full">
+        <div className="lg:px-20 sm:p-8 lg:py-10 sm:py-5 border bg-white rounded-xl ">
           <div className="header-article flex md:flex-row sm:flex-col justify-between items-center">
-            <p className="xl:text-xl sm:text-md text-[#073D5B] py-2 px-3 border-b-[4px] border-[#073D5B] font-bold uppercase">
+            <p className="lg:text-xl sm:text-md text-[#073D5B] py-2 px-3 border-b-[4px] border-[#073D5B] font-bold uppercase">
               semua article
             </p>
             <Searchbar

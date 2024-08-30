@@ -2,7 +2,7 @@ import banner from "@/assets/landing-page/Team of young specialist doctors stand
 
 export const Jombotron = () => {
   return (
-    <div id="home" className="w-full xl:h-auto sm:h-[300px] border relative">
+    <div id="home" className="w-full lg:h-auto sm:h-[300px] border relative">
       <div className="wrapper relative z-0 h-full">
         <img className="w-full h-full object-cover relative z-0" src={banner} alt="Banner" />
         <div className="cover absolute inset-0 z-10 bg-gradient-to-r from-[#073D5B] to-transparent"></div>

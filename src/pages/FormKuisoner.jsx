@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Footer } from "@/components/section/Footer";
 import { Navbar } from "@/components/navigation/Navbar";
 
@@ -15,11 +15,15 @@ const FormKuisoner = () => {
     setFormLink("https://forms.gle/X8tyoPV17AXmkvDN8");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
+  
   return (
     <>
       <Navbar />
-      <div className="pt-5 xl:px-10 sm:px-4 bg-[#e7e7e7]">
-        <p className="xl:text-4xl sm:text-xl md:text-left sm:text-center xl:p-4 sm:p-2 font-bold text-[#073D5B]">
+      <div id="form-pemantauan" className="pt-5 lg:px-10 sm:px-4 bg-[#e7e7e7]">
+        <p className="lg:text-4xl sm:text-xl md:text-left sm:text-center lg:p-4 sm:p-2 font-bold text-[#073D5B]">
           Form Kuisoner
         </p>
         <div className="wrapper md:w-5/12 mx-auto">
