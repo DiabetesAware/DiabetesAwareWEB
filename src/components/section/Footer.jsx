@@ -10,9 +10,6 @@ export const Footer = () => {
               Privacy policy
             </a>
             <a href="#" className="hover:underline font-bold mb-2 lg:mb-0">
-              Privacy policy
-            </a>
-            <a href="#" className="hover:underline font-bold mb-2 lg:mb-0">
               Cookie Policy
             </a>
             <a href="#" className="hover:underline font-bold mb-2 lg:mb-0">
